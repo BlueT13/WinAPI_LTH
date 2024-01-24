@@ -1,5 +1,6 @@
 #include "IsaacCore.h"
 #include "Isaac.h"
+#include "TitleLevel.h"
 
 IsaacCore::IsaacCore()
 {
@@ -10,13 +11,14 @@ IsaacCore::~IsaacCore()
 }
 
 // 게임시작
-void IsaacCore::Start()
+void IsaacCore::BeginPlay()
 {
-	// 이미 윈도우 창은 만들어져 있는 상태
-	Isaac isaac;
+	CreateLevel<UTitleLevel>("TitleLevel");
+
+	ChangeLevel("TitleLevel");
 }
 
-void IsaacCore::Update()
+void IsaacCore::Tick(float _DeltaTime)
 {
 }
 

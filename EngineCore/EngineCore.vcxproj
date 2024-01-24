@@ -163,14 +163,14 @@
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="NameObject.cpp" />
-    <ClCompile Include="UpdateObject.cpp" />
+    <ClCompile Include="TickObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="EngineCore.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="NameObject.h" />
-    <ClInclude Include="UpdateObject.h" />
+    <ClInclude Include="TickObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

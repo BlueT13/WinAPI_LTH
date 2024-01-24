@@ -3,9 +3,11 @@
   <ItemGroup>
     <ClInclude Include="IsaacCore.h" />
     <ClInclude Include="Isaac.h" />
+    <ClInclude Include="TitleLevel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IsaacCore.cpp" />
     <ClCompile Include="Isaac.cpp" />
+    <ClCompile Include="TitleLevel.cpp" />
   </ItemGroup>
 </Project>
