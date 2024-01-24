@@ -18,6 +18,14 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="EngineDebug.cpp" />
+    <ClCompile Include="EngineString.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EngineDebug.h" />
+    <ClInclude Include="EngineString.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -150,14 +158,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="EngineDebug.cpp" />
-    <ClCompile Include="EngineString.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="EngineDebug.h" />
-    <ClInclude Include="EngineString.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
