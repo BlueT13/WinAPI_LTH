@@ -1,6 +1,7 @@
 #include "EngineCore.h"
 #include <Windows.h>
 #include "Level.h"
+#include "EnginePlatform\EngineInput.h"
 
 
 EngineCore* GEngine = nullptr;
@@ -16,14 +17,20 @@ EngineCore::~EngineCore()
 
 void EngineCore::EngineTick()
 {
+
+	float DeltaTime = GEngine->MainTimer.TimeCheck();
+	EngineInput::KeyCheckTick(DeltaTime);
 	if (nullptr == GEngine->CurLevel)
 	{
 		MsgBoxAssert("엔진을 시작할 레벨이 지정되지 않았습니다 치명적인 오류입니다");
 	}
 
 	// 레벨이 먼저 틱을 돌리고
-	GEngine->CurLevel->Tick(0.0f);
-	GEngine->CurLevel->ActorTick(0.0f);
+	GEngine->CurLevel->Tick(DeltaTime);
+	GEngine->CurLevel->ActorTick(DeltaTime);
+
+	//HDC WindowDC = GEngine->MainWindow.GetWindowDC();
+	//Rectangle(WindowDC, -200, -200, 3000, 3000);
 }
 
 void EngineCore::EngineEnd()
@@ -48,6 +55,7 @@ void EngineCore::EngineStart(HINSTANCE _hInstance, EngineCore* _UserCore)
 {
 	EngineCore* Ptr = _UserCore;
 	GEngine = Ptr;
+	Ptr->MainTimer.TimeCheckStart();
 	Ptr->CoreInit(_hInstance); 
 	Ptr->BeginPlay();
 	EngineWindow::WindowMessageLoop(EngineTick, EngineEnd);
@@ -62,6 +70,8 @@ void EngineCore::CoreInit(HINSTANCE _HINSTANCE)
 
 	EngineWindow::Init(_HINSTANCE);
 	MainWindow.Open();
+
+	this->AllLevel;
 
 	EngineInit = true;
 }

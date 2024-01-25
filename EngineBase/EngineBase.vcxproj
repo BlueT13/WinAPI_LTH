@@ -22,12 +22,14 @@
     <ClCompile Include="EngineDebug.cpp" />
     <ClCompile Include="EngineMath.cpp" />
     <ClCompile Include="EngineString.cpp" />
+    <ClCompile Include="EngineTime.cpp" />
     <ClCompile Include="FTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDebug.h" />
     <ClInclude Include="EngineMath.h" />
     <ClInclude Include="EngineString.h" />
+    <ClInclude Include="EngineTime.h" />
     <ClInclude Include="FTransform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

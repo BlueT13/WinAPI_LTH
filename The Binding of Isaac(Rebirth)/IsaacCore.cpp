@@ -1,5 +1,5 @@
 #include "IsaacCore.h"
-#include "Isaac.h"
+#include "Player.h"
 #include "TitleLevel.h"
 
 IsaacCore::IsaacCore()

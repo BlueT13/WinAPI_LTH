@@ -4,39 +4,48 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{84ac3c7a-c12b-4444-a0ac-cad67d86f770}</UniqueIdentifier>
     </Filter>
-    <Filter Include="String">
-      <UniqueIdentifier>{e27cfbaa-b0ed-4107-b1f1-33f98d2eaaf6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{fc57a9b8-2ce4-487b-a113-bbf9db923a80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{7452ea90-7046-4dcc-a50c-93b03f972732}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{e27cfbaa-b0ed-4107-b1f1-33f98d2eaaf6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineDebug.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="EngineMath.cpp">
+    <ClCompile Include="FTransform.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="FTransform.cpp">
+    <ClCompile Include="EngineMath.cpp">
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="EngineString.cpp">
       <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTime.cpp">
+      <Filter>Time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDebug.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="EngineMath.h">
+    <ClInclude Include="FTransform.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="FTransform.h">
+    <ClInclude Include="EngineMath.h">
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="EngineString.h">
       <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTime.h">
+      <Filter>Time</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
