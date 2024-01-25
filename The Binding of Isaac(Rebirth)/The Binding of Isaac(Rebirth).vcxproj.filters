@@ -5,11 +5,13 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="TitleLevel.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="PlayLevel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IsaacCore.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="TitleLevel.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="PlayLevel.cpp" />
   </ItemGroup>
 </Project>
