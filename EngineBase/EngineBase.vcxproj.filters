@@ -18,10 +18,10 @@
     <ClCompile Include="EngineDebug.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="FTransform.cpp">
+    <ClCompile Include="EngineMath.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="EngineMath.cpp">
+    <ClCompile Include="Transform.cpp">
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="EngineString.cpp">
@@ -35,10 +35,10 @@
     <ClInclude Include="EngineDebug.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="FTransform.h">
+    <ClInclude Include="EngineMath.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="EngineMath.h">
+    <ClInclude Include="Transform.h">
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="EngineString.h">

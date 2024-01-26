@@ -23,14 +23,14 @@
     <ClCompile Include="EngineMath.cpp" />
     <ClCompile Include="EngineString.cpp" />
     <ClCompile Include="EngineTime.cpp" />
-    <ClCompile Include="FTransform.cpp" />
+    <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDebug.h" />
     <ClInclude Include="EngineMath.h" />
     <ClInclude Include="EngineString.h" />
     <ClInclude Include="EngineTime.h" />
-    <ClInclude Include="FTransform.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
