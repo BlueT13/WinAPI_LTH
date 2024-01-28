@@ -21,5 +21,8 @@ protected:
 
 private:
 	float fireRate = 0.0f;
+
+	UImageRenderer* HeadRenderer;
+	UImageRenderer* BodyRenderer;
 };
 
