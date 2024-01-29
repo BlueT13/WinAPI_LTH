@@ -162,6 +162,8 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="EngineCore.cpp" />
+    <ClCompile Include="EngineResourcesManager.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageRenderer.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="NameObject.cpp" />
@@ -172,6 +174,8 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="EngineCore.h" />
+    <ClInclude Include="EngineResourcesManager.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="ImageRenderer.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="NameObject.h" />
