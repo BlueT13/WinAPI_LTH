@@ -13,15 +13,8 @@ ABullet::~ABullet()
 
 void ABullet::BeginPlay()
 {
-	{
-		UImageRenderer* Renderer = CreateImageRenderer(0);
-		Renderer->SetScale({ 10, 50 });
-	}
-
-	{
-		UImageRenderer* Renderer = CreateImageRenderer(0);
-		Renderer->SetScale({ 50, 10 });
-	}
+	UImageRenderer* Renderer = CreateImageRenderer(-10);
+	Renderer->SetImageToScale("Tears.png");
 
 	Destroy(2.0f);
 }
@@ -29,9 +22,5 @@ void ABullet::BeginPlay()
 void ABullet::Tick(float _DeltaTime)
 {
 	AddActorLocation(Dir * Speed * _DeltaTime);
-
-	HDC WindowDC = GEngine->MainWindow.GetWindowDC();
-	FTransform Trans = GetTransform();
-	Rectangle(WindowDC, Trans.iLeft(), Trans.iTop(), Trans.iRight(), Trans.iBottom());
 }
 

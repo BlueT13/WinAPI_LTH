@@ -19,19 +19,19 @@ void Player::BeginPlay()
 	AActor::BeginPlay();
 
 	{
-		BodyRenderer = CreateImageRenderer(0);
-		BodyRenderer->SetPosition({ 0, 30 });
-		BodyRenderer->SetScale({ 80, 80 });
+		HeadRenderer = CreateImageRenderer(0);
+		HeadRenderer->SetPosition({ 0, 0 });
+		HeadRenderer->SetImageToScale("Head.png");
 	}
 
 	{
-		HeadRenderer = CreateImageRenderer(0);
-		HeadRenderer->SetPosition({ 0, -25 });
-		HeadRenderer->SetScale({ 60, 60 });
+		BodyRenderer = CreateImageRenderer(0);
+		BodyRenderer->SetPosition({ 0, 20 });
+		BodyRenderer->SetImageToScale("Body.png");
 	}
 
-	SetActorLocation({ 100, 100 });
-	SetActorScale({ 100, 100 });
+	SetActorLocation({ 500, 500 });
+	//SetActorScale({ 100, 100 });
 }
 
 void Player::Tick(float _DeltaTime)

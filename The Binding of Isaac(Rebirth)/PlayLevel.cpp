@@ -18,9 +18,14 @@ void UPlayLevel::BeginPlay()
 
 	FilePath.MoveParent();
 	FilePath.Move("Res");
-	FilePath.Move("gfx");
 
 	std::list<UEngineFile> AllFileList = FilePath.AllFile({ ".png", ".bmp" }, true);
+	for (UEngineFile& File : AllFileList)
+	{
+		std::string FullPath = File.GetFullPath();
+		// 싱글톤 잊지 말라고 일부러 GetInst를 사용하겠습니다.
+		UEngineResourcesManager::GetInst().LoadImg(FullPath);
+	}
 
 	this->SpawnActor<Player>();
 }
