@@ -158,10 +158,12 @@
   <ItemGroup>
     <ClCompile Include="EngineInput.cpp" />
     <ClCompile Include="EngineWindow.cpp" />
+    <ClCompile Include="WindowImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineInput.h" />
     <ClInclude Include="EngineWindow.h" />
+    <ClInclude Include="WindowImage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

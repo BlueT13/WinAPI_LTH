@@ -39,16 +39,10 @@
     <ClCompile Include="Level.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="NameObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="TickObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="EngineResourcesManager.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="Image.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,16 +65,10 @@
     <ClInclude Include="Level.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="NameObject.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="TickObject.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="EngineResourcesManager.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Image.h">
       <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>

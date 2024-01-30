@@ -26,6 +26,8 @@
     <ClCompile Include="EnginePath.cpp" />
     <ClCompile Include="EngineString.cpp" />
     <ClCompile Include="EngineTime.cpp" />
+    <ClCompile Include="NameObject.cpp" />
+    <ClCompile Include="PathObject.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +38,8 @@
     <ClInclude Include="EnginePath.h" />
     <ClInclude Include="EngineString.h" />
     <ClInclude Include="EngineTime.h" />
+    <ClInclude Include="NameObject.h" />
+    <ClInclude Include="PathObject.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
