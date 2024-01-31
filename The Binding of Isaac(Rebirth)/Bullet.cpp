@@ -14,8 +14,9 @@ ABullet::~ABullet()
 void ABullet::BeginPlay()
 {
 	UImageRenderer* Renderer = CreateImageRenderer(-10);
-	Renderer->SetImageToScale("Tears.png");
-
+	Renderer->SetImage("Tears.png");
+	Renderer->SetTransform({ {0,0}, {30, 30} });
+	Renderer->SetImageCuttingTransform({ {0,0}, {26, 25} });
 	Destroy(2.0f);
 }
 

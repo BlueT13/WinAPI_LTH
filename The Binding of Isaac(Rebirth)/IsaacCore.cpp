@@ -3,17 +3,21 @@
 #include "TitleLevel.h"
 #include "PlayLevel.h"
 
-IsaacCore::IsaacCore()
+UIsaacCore::UIsaacCore()
 {
 }
 
-IsaacCore::~IsaacCore()
+UIsaacCore::~UIsaacCore()
 {
 }
 
 // 게임시작
-void IsaacCore::BeginPlay()
+void UIsaacCore::BeginPlay()
 {
+	MainWindow.SetWindowScale({ 1280, 720 });
+
+	UEngineCore::BeginPlay();
+
 	SetFrame(60);
 
 	CreateLevel<UTitleLevel>("TitleLevel");
@@ -22,10 +26,10 @@ void IsaacCore::BeginPlay()
 	ChangeLevel("PlayLevel");
 }
 
-void IsaacCore::Tick(float _DeltaTime)
+void UIsaacCore::Tick(float _DeltaTime)
 {
 }
 
-void IsaacCore::End()
+void UIsaacCore::End()
 {
 }

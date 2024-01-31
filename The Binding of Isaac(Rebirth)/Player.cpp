@@ -18,20 +18,14 @@ void Player::BeginPlay()
 {
 	AActor::BeginPlay();
 
+	SetActorLocation({ 300, 300 });
+
 	{
 		HeadRenderer = CreateImageRenderer(0);
-		HeadRenderer->SetPosition({ 0, 0 });
-		HeadRenderer->SetImageToScale("Head.png");
+		HeadRenderer->SetImage("Head.png");
+		HeadRenderer->SetTransform({ { 0,0 }, { 30,30 } });
+		HeadRenderer->SetImageCuttingTransform({ {0,0}, {30, 30} });
 	}
-
-	{
-		BodyRenderer = CreateImageRenderer(0);
-		BodyRenderer->SetPosition({ 0, 20 });
-		BodyRenderer->SetImageToScale("Body.png");
-	}
-
-	SetActorLocation({ 500, 500 });
-	//SetActorScale({ 100, 100 });
 }
 
 void Player::Tick(float _DeltaTime)

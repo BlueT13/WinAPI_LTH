@@ -2,18 +2,18 @@
 #include <EngineCore\EngineCore.h>
 
 // Ό³Έν :
-class IsaacCore : public EngineCore
+class UIsaacCore : public UEngineCore
 {
 public:
 	// constrcuter destructer
-	IsaacCore();
-	~IsaacCore();
+	UIsaacCore();
+	~UIsaacCore();
 
 	// delete Function
-	IsaacCore(const IsaacCore& _Other) = delete;
-	IsaacCore(IsaacCore&& _Other) noexcept = delete;
-	IsaacCore& operator=(const IsaacCore& _Other) = delete;
-	IsaacCore& operator=(IsaacCore&& _Other) noexcept = delete;
+	UIsaacCore(const UIsaacCore& _Other) = delete;
+	UIsaacCore(UIsaacCore&& _Other) noexcept = delete;
+	UIsaacCore& operator=(const UIsaacCore& _Other) = delete;
+	UIsaacCore& operator=(UIsaacCore&& _Other) noexcept = delete;
 
 protected:
 	void BeginPlay() override;

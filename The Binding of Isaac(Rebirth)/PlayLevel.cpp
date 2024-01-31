@@ -29,3 +29,8 @@ void UPlayLevel::BeginPlay()
 
 	this->SpawnActor<Player>();
 }
+
+void UPlayLevel::Tick(float _DeltaTime)
+{
+	ULevel::Tick(_DeltaTime);
+}
