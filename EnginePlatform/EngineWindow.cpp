@@ -116,7 +116,6 @@ void UEngineWindow::Open(std::string_view _Title /*= "Title"*/)
 
 	ShowWindow(hWnd, SW_SHOW);
 	UpdateWindow(hWnd);
-
 }
 
 unsigned __int64 UEngineWindow::WindowMessageLoop(void(*_Update)(), void(*_End)())

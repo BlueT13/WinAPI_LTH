@@ -1,17 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="IsaacCore.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="TitleLevel.h" />
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="PlayLevel.h" />
+    <ClInclude Include="PlayLevel.h">
+      <Filter>Level\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleLevel.h">
+      <Filter>Level\TitleLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Level\PlayLevel\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Level\PlayLevel\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="IsaacCore.h">
+      <Filter>GameCore</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="IsaacCore.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="TitleLevel.cpp" />
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="PlayLevel.cpp" />
+    <ClCompile Include="PlayLevel.cpp">
+      <Filter>Level\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleLevel.cpp">
+      <Filter>Level\TitleLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Level\PlayLevel\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Level\PlayLevel\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="IsaacCore.cpp">
+      <Filter>GameCore</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Level">
+      <UniqueIdentifier>{bb607b65-b543-409c-9cd4-61e542ca7689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\PlayLevel">
+      <UniqueIdentifier>{2f4b55dc-6c6a-4947-98d2-cbc5ccc33c91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\TitleLevel">
+      <UniqueIdentifier>{7fb0ff4b-f7e7-43e1-9d7f-0a1d09289f65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\PlayLevel\Actor">
+      <UniqueIdentifier>{22989a66-11ba-45da-87df-ef68a9cafda8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\TitleLevel\Actor">
+      <UniqueIdentifier>{17571ce6-6908-4654-bff2-8eb2f6e8b276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCore">
+      <UniqueIdentifier>{fe7ea387-705f-405f-a77a-1e486350a7bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
