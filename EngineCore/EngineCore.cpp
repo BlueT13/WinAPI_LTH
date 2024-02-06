@@ -56,12 +56,40 @@ void UEngineCore::CoreTick()
 		DeltaTime = FrameTime;
 	}
 
+	// 이것도 옵션
+	if (1.0f / 60.0f <= DeltaTime)
+	{
+		DeltaTime = 1.0f / 60.0f;
+	}
+
 	EngineInput::KeyCheckTick(DeltaTime);
+
+
+	// 한프레임동안 레벨이 절대로 변하지 않고
+	// 프레임이 시작할때 레벨이 변화한다.
+	// 지키기 위해서 release 프레임이 실행되는 동안에는 절대로
+	// 구조를 바꾸지 않는다.
+	if (nullptr != NextLevel)
+	{
+		// 최초에는 현재 레벨이 존재하지 않을 것이다.
+		// 바꿀 레벨이 있다는 이야기입니다.
+		if (nullptr != CurLevel)
+		{
+			// 레베링 끝났음을 알립니다.
+			CurLevel->LevelEnd(NextLevel);
+		}
+
+		NextLevel->LevelStart(CurLevel);
+		CurLevel = NextLevel;
+		NextLevel = nullptr;
+	}
+
 
 	if (nullptr == CurLevel)
 	{
 		MsgBoxAssert("엔진을 시작할 레벨이 지정되지 않았습니다 치명적인 오류입니다");
 	}
+
 
 	// 레벨이 먼저 틱을 돌리고
 	CurLevel->Tick(DeltaTime);
@@ -159,7 +187,7 @@ void UEngineCore::ChangeLevel(std::string_view _Name)
 	}
 
 	// 눈에 보여야할 레벨이죠?
-	CurLevel = AllLevel[UpperName];
+	NextLevel = AllLevel[UpperName];
 }
 
 void UEngineCore::LevelInit(ULevel* _Level)

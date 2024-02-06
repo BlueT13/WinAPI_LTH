@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineBase\NameObject.h>
+#include <EngineBase\EngineMath.h>
 #include <map>
 #include <list>
 
@@ -27,6 +28,14 @@ public:
 	virtual void BeginPlay() {};
 	virtual void Tick(float _DeltaTime) {};
 
+	// 어떠한 레벨이 시작할때마다 실행됩니다.
+	// 이전레벨이 들어온다.
+	virtual void LevelStart(ULevel* _PrevLevel) {};
+
+	// 내가 현재 실행되고 있는 레벨인데.
+	// 그 레벨이 끝나는 순간 실행된다.
+	virtual void LevelEnd(ULevel* _NextLevel) {};
+
 	template<typename ActorType>
 	ActorType* SpawnActor(int _Order = 0)
 	{
@@ -36,6 +45,21 @@ public:
 		return NewActor;
 	}
 
+	void SddCameraPos(FVector _CameraPos)
+	{
+		CameraPos = _CameraPos;
+	}
+
+
+	void AddCameraPos(FVector _CameraPos)
+	{
+		CameraPos += _CameraPos;
+	}
+
+	FVector GetCameraPos()
+	{
+		return CameraPos;
+	}
 
 
 protected:
@@ -49,5 +73,7 @@ private:
 	void LevelRelease(float _DeltaTime);
 
 	std::map<int, std::list<UImageRenderer*>> Renderers;
+
+	FVector CameraPos = FVector::Zero;
 };
 

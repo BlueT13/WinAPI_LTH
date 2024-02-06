@@ -10,5 +10,7 @@ namespace EngineDebug
 	#define MsgBoxAssert(Value) \
 	std::string ErrorText = std::string(Value); \
 	MessageBoxA(nullptr, ErrorText.c_str(), "치명적 에러", MB_OK); assert(false);
+
+	void /*EngineDebug::*/OutPutDebugText(std::string_view _DebugText);
 }
 

@@ -99,24 +99,33 @@ void UImageRenderer::Render(float _DeltaTime)
 	// 부모의 위치를 더해줘야 한다.
 	RendererTrans.AddPosition(ActorTrans.GetPosition());
 
-	std::string Out = std::to_string(InfoIndex);
+	AActor* Actor = GetOwner();
+	ULevel* World = Actor->GetWorld();
+	FVector CameraPos = World->GetCameraPos();
+	// RendererTrans.AddPosition(CameraPos *= -1.0f);
+	RendererTrans.AddPosition(-CameraPos);
 
-	Out += "\n";
-	OutputDebugStringA(Out.c_str());
+	// TransColor 원리 특정 색상과 1비트도 차이가 나지 않는 색상은 출력을 삭제한다.
+	// TransCopy 에서만 
+	// Png일 경우에 
 
-	// 이려면 윈도우 이미지에 그리면 화면의 갱신이 산발적으로 일어나므로
-	// GEngine->MainWindow.GetWindowImage()->BitCopy(Image, ThisTrans);
+	EWIndowImageType ImageType = Image->GetImageType();
 
-	// 
-	// GEngine->MainWindow.GetBackBufferImage()->BitCopy(Image, ThisTrans);
-	// Rectangle(WindowDC, ThisTrans.iLeft(), ThisTrans.iTop(), ThisTrans.iRight(), ThisTrans.iBottom());
 
-	// 1, 0, 0, 255
 
-	// 여기입니다.
-
-	GEngine->MainWindow.GetBackBufferImage()->TransCopy(Image, RendererTrans, InfoIndex);
-
+	switch (ImageType)
+	{
+	case EWIndowImageType::IMG_BMP:
+		GEngine->MainWindow.GetBackBufferImage()->TransCopy(Image, RendererTrans, InfoIndex, TransColor);
+		// bmp일때는 일반적으로 Transcopy로 투명처리를 한다.
+		break;
+	case EWIndowImageType::IMG_PNG:
+		GEngine->MainWindow.GetBackBufferImage()->AlphaCopy(Image, RendererTrans, InfoIndex, TransColor);
+		break;
+	default:
+		MsgBoxAssert("투명처리가 불가능한 이미지 입니다.");
+		break;
+	}
 }
 
 void UImageRenderer::BeginPlay()
@@ -177,6 +186,7 @@ void UImageRenderer::CreateAnimation(
 	// AnimationInfos.operator[](Key)
 
 	UAnimationInfo& Info = AnimationInfos[UpperAniName];
+	Info.Name = UpperAniName;
 	Info.Image = FindImage;
 	Info.CurFrame = 0;
 	Info.Start = _Start;
@@ -199,13 +209,19 @@ void UImageRenderer::CreateAnimation(
 	}
 }
 
-void UImageRenderer::ChangeAnimation(std::string_view _AnimationName)
+void UImageRenderer::ChangeAnimation(std::string_view _AnimationName, bool _IsForce)
 {
 	std::string UpperAniName = UEngineString::ToUpper(_AnimationName);
 
 	if (false == AnimationInfos.contains(UpperAniName))
 	{
 		MsgBoxAssert(std::string(UpperAniName) + "라는 이름의 애니메이션이 존재하지 않습니다.");
+		return;
+	}
+
+	// 지금 진행중인 애니메이션과 완전히 똑같은 애니메이션을 실행하라고하면 그걸 실행하지 않는다.
+	if (false == _IsForce && nullptr != CurAnimation && CurAnimation->Name == UpperAniName)
+	{
 		return;
 	}
 
