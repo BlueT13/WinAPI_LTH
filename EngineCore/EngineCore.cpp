@@ -190,7 +190,8 @@ void UEngineCore::ChangeLevel(std::string_view _Name)
 	NextLevel = AllLevel[UpperName];
 }
 
-void UEngineCore::LevelInit(ULevel* _Level)
+void UEngineCore::LevelInit(ULevel* _Level, std::string_view _Name)
 {
+	_Level->SetName(_Name);
 	_Level->BeginPlay();
 }
