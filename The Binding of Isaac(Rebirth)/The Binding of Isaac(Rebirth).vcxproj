@@ -170,6 +170,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ContentsHelper.h" />
     <ClInclude Include="IntroBackground.h" />
     <ClInclude Include="IntroLevel.h" />
     <ClInclude Include="Player.h">
@@ -194,6 +195,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ContentsHelper.cpp" />
     <ClCompile Include="IntroBackground.cpp" />
     <ClCompile Include="IntroLevel.cpp" />
     <ClCompile Include="Player.cpp">

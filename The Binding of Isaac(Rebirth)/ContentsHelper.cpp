@@ -1,10 +1,10 @@
 #include "ContentsHelper.h"
 
-ContentsHelper::ContentsHelper() 
+UContentsHelper::UContentsHelper()
 {
 }
 
-ContentsHelper::~ContentsHelper() 
+UContentsHelper::~UContentsHelper()
 {
 }
 

@@ -32,4 +32,5 @@ void UIsaacCore::BeginPlay()
 
 void UIsaacCore::Tick(float _DeltaTime)
 {
+	UEngineCore::Tick(_DeltaTime);
 }
