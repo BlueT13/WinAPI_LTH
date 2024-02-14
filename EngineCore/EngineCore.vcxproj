@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ActorComponent.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="EngineResourcesManager.cpp" />
     <ClCompile Include="ImageRenderer.cpp" />
@@ -175,6 +176,7 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="ActorComponent.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="EngineCore.h" />
     <ClInclude Include="EngineResourcesManager.h" />
     <ClInclude Include="ImageRenderer.h" />

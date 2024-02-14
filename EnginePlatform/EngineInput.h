@@ -7,14 +7,14 @@
 
 // AllStateClass
 // 설명 :
-class EngineInput
+class UEngineInput
 {
 	friend class InputInitCreator;
 
 private:
 	class /*EngineInput::*/EngineKey
 	{
-		friend EngineInput;
+		friend UEngineInput;
 
 	public:
 		bool Down = false; // 누른 순간
@@ -26,7 +26,7 @@ private:
 
 		int Key = -1; // VK_LBUTTON
 
-		void KeyCheck();
+		void KeyCheck(float _DeltaTime);
 
 		EngineKey()
 		{
@@ -42,14 +42,14 @@ private:
 
 public:
 	// constrcuter destructer
-	EngineInput();
-	~EngineInput();
+	UEngineInput();
+	~UEngineInput();
 
 	// delete Function
-	EngineInput(const EngineInput& _Other) = delete;
-	EngineInput(EngineInput&& _Other) noexcept = delete;
-	EngineInput& operator=(const EngineInput& _Other) = delete;
-	EngineInput& operator=(EngineInput&& _Other) noexcept = delete;
+	UEngineInput(const UEngineInput& _Other) = delete;
+	UEngineInput(UEngineInput&& _Other) noexcept = delete;
+	UEngineInput& operator=(const UEngineInput& _Other) = delete;
+	UEngineInput& operator=(UEngineInput&& _Other) noexcept = delete;
 
 	static bool IsDown(int _Key)
 	{
@@ -60,6 +60,17 @@ public:
 
 		return AllKeys[_Key].Down;
 	}
+
+	static float GetPressTime(int _Key)
+	{
+		if (false == AllKeys.contains(_Key))
+		{
+			MsgBoxAssert("입력설정이 존재하지 않는 키 입니다");
+		}
+
+		return AllKeys[_Key].PressTime;
+	}
+
 
 	static bool IsPress(int _Key)
 	{

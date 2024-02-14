@@ -30,32 +30,32 @@ void Player::BeginPlay()
 
 void Player::Tick(float _DeltaTime)
 {
-	if (true == EngineInput::IsPress('A'))
+	if (true == UEngineInput::IsPress('A'))
 	{
 		AddActorLocation(FVector::Left * 500.0f * _DeltaTime);
 	}
 
-	if (true == EngineInput::IsPress('D'))
+	if (true == UEngineInput::IsPress('D'))
 	{
 		AddActorLocation(FVector::Right * 500.0f * _DeltaTime);
 	}
 
-	if (true == EngineInput::IsPress('W'))
+	if (true == UEngineInput::IsPress('W'))
 	{
 		AddActorLocation(FVector::Up * 500.0f * _DeltaTime);
 	}
 
-	if (true == EngineInput::IsPress('S'))
+	if (true == UEngineInput::IsPress('S'))
 	{
 		AddActorLocation(FVector::Down * 500.0f * _DeltaTime);
 	}
 
-	if (true == EngineInput::IsDown('T'))
+	if (true == UEngineInput::IsDown('T'))
 	{
 		BodyRenderer->Destroy();
 	}
 
-	if (true == EngineInput::IsDown('Q'))
+	if (true == UEngineInput::IsDown('Q'))
 	{
 		ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
 		NewBullet->SetActorLocation(GetActorLocation());

@@ -1,9 +1,22 @@
 #pragma once
 #include "EngineMath.h"
 
+enum ECollisionType
+{
+	Point,
+	CirCle,
+	Rect,
+};
+
 // 설명 :
+class CollisionFunctionInit;
 class FTransform
 {
+	friend CollisionFunctionInit;
+
+private:
+	static bool (*CollisionFunction[static_cast<int>(Rect)][static_cast<int>(Rect)])(const FTransform& _Left, const FTransform& _Right);
+
 public:
 	// constrcuter destructer
 	FTransform();
@@ -19,6 +32,10 @@ public:
 	//FTransform(FTransform&& _Other) noexcept = delete;
 	//FTransform& operator=(const FTransform& _Other) = delete;
 	//FTransform& operator=(FTransform&& _Other) noexcept = delete;
+
+	// bool CircleToPoint(const FTransform& _Left, const FTransform& _Right);
+
+	static bool CircleToCircle(const FTransform& _Left, const FTransform& _Right);
 
 public:
 	void SetScale(FVector _Value)
@@ -46,13 +63,13 @@ public:
 	{
 		return Position.X - Scale.hX();
 	}
-	float Right() const
-	{
-		return Position.X + Scale.hX();
-	}
 	float Top() const
 	{
 		return Position.Y - Scale.hY();
+	}
+	float Right() const
+	{
+		return Position.X + Scale.hX();
 	}
 	float Bottom() const
 	{
@@ -75,6 +92,10 @@ public:
 	{
 		return std::lround(Bottom());
 	}
+
+	// 충돌을 이녀석이 가질까?
+	// 위치와 크기를 가지고 있기 때문에.
+	bool Collision(ECollisionType _ThisType, ECollisionType _OtherType, const FTransform& _Other);
 
 protected:
 

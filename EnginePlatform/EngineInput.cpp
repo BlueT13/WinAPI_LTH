@@ -1,13 +1,13 @@
 #include "EngineInput.h"
 
-std::map<int, EngineInput::EngineKey> EngineInput::AllKeys;
+std::map<int, UEngineInput::EngineKey> UEngineInput::AllKeys;
 
-bool EngineInput::AnykeyDown = false;
-bool EngineInput::AnykeyPress = false;
-bool EngineInput::AnykeyUp = false;
-bool EngineInput::AnykeyFree = true;
+bool UEngineInput::AnykeyDown = false;
+bool UEngineInput::AnykeyPress = false;
+bool UEngineInput::AnykeyUp = false;
+bool UEngineInput::AnykeyFree = true;
 
-void EngineInput::EngineKey::KeyCheck()
+void UEngineInput::EngineKey::KeyCheck(float _DeltaTime)
 {
 	// 이 키가 눌렸다는 거죠?
 	// if (0 != GetAsyncKeyState('A'))
@@ -16,6 +16,7 @@ void EngineInput::EngineKey::KeyCheck()
 	{
 		if (true == Free)
 		{
+			PressTime = 0.0f;
 			// 이전까지 이 키는 눌리고 있지 않았다
 			Down = true;
 			Press = true;
@@ -24,6 +25,7 @@ void EngineInput::EngineKey::KeyCheck()
 		}
 		else if(true == Down)
 		{
+			PressTime += _DeltaTime;
 			// 이전까지 이 키는 눌리고 있었다.
 			Down = false;
 			Press = true;
@@ -35,6 +37,7 @@ void EngineInput::EngineKey::KeyCheck()
 	{
 		if (true == Press)
 		{
+			PressTime = 0.0f;
 			// 이전까지 이 키는 눌리고 있었다.
 			Down = false;
 			Press = false;
@@ -43,6 +46,7 @@ void EngineInput::EngineKey::KeyCheck()
 		}
 		else if(true == Up)
 		{
+			PressTime = 0.0f;
 			// 이전까지 이 키는 안눌리고 있었고 앞으로도 안눌릴거다.
 			Down = false;
 			Press = false;
@@ -53,15 +57,15 @@ void EngineInput::EngineKey::KeyCheck()
 	}
 }
 
-EngineInput::EngineInput()
+UEngineInput::UEngineInput()
 {
 }
 
-EngineInput::~EngineInput()
+UEngineInput::~UEngineInput()
 {
 }
 
-void EngineInput::InputInit()
+void UEngineInput::InputInit()
 {
 	AllKeys[VK_LBUTTON] = EngineKey(VK_LBUTTON);
 	AllKeys[VK_RBUTTON] = EngineKey(VK_RBUTTON);
@@ -168,14 +172,14 @@ void EngineInput::InputInit()
 
 }
 
-void EngineInput::KeyCheckTick(float _DeltaTime)
+void UEngineInput::KeyCheckTick(float _DeltaTime)
 {
 	bool KeyCheck = false;
 
 	for (std::pair<const int, EngineKey>& Key : AllKeys)
 	{
 		EngineKey& CurKey = Key.second;
-		CurKey.KeyCheck();
+		CurKey.KeyCheck(_DeltaTime);
 
 		if (true == CurKey.Press)
 		{
@@ -230,7 +234,7 @@ class InputInitCreator
 public:
 	InputInitCreator()
 	{
-		EngineInput::InputInit();
+		UEngineInput::InputInit();
 	}
 };
 

@@ -40,7 +40,7 @@ void UIntroLevel::Tick(float _DeltaTime)
 {
 	ULevel::Tick(_DeltaTime);
 
-	if (EngineInput::IsDown(VK_SPACE))
+	if (UEngineInput::IsDown(VK_SPACE))
 	{
 		GEngine->ChangeLevel("TitleLevel");
 	}
