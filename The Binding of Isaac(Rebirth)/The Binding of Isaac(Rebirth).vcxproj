@@ -173,6 +173,10 @@
     <ClInclude Include="ContentsHelper.h" />
     <ClInclude Include="IntroBackground.h" />
     <ClInclude Include="IntroLevel.h" />
+    <ClInclude Include="Map.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -182,6 +186,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PlayLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="StartImage.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -198,6 +206,10 @@
     <ClCompile Include="ContentsHelper.cpp" />
     <ClCompile Include="IntroBackground.cpp" />
     <ClCompile Include="IntroLevel.cpp" />
+    <ClCompile Include="Map.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>
@@ -207,6 +219,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="StartImage.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -1,6 +1,6 @@
 #include "IntroLevel.h"
 #include "IntroBackground.h"
-#include "EngineCore/EngineCore.h"
+#include <EngineCore/EngineCore.h>
 #include <EngineBase/EngineDirectory.h>
 #include <EngineBase/EngineFile.h>
 #include <EngineCore/EngineResourcesManager.h>

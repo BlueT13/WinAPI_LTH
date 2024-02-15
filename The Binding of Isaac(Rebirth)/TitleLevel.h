@@ -1,5 +1,5 @@
 #pragma once
-#include <EngineCore\Level.h>
+#include <EngineCore/Level.h>
 
 // Ό³Έν :
 class UTitleLevel : public ULevel
@@ -17,6 +17,7 @@ public:
 
 protected:
 	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
 
 private:
 

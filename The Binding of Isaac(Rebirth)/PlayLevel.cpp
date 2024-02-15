@@ -1,5 +1,6 @@
 #include "PlayLevel.h"
 #include "Player.h"
+#include "Map.h"
 #include <EngineCore/EngineResourcesManager.h>
 #include <EngineBase/EngineDirectory.h>
 #include <EngineBase/EngineFile.h>
@@ -28,6 +29,7 @@ void UPlayLevel::BeginPlay()
 	}
 
 	this->SpawnActor<Player>();
+	this->SpawnActor<Map>();
 }
 
 void UPlayLevel::Tick(float _DeltaTime)

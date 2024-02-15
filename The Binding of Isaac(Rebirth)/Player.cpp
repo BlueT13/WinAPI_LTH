@@ -21,7 +21,7 @@ void Player::BeginPlay()
 	SetActorLocation({ 300, 300 });
 
 	{
-		HeadRenderer = CreateImageRenderer(0);
+		HeadRenderer = CreateImageRenderer(2);
 		HeadRenderer->SetImage("Head.png");
 		HeadRenderer->SetTransform({ { 0,0 }, { 30,30 } });
 		HeadRenderer->SetImageCuttingTransform({ {0,0}, {30, 30} });

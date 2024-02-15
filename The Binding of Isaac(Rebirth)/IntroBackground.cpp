@@ -13,7 +13,7 @@ void AIntroBackground::BeginPlay()
 {
 	AActor::BeginPlay();
 
-	FVector halfScale = GEngine->MainWindow.GetWindowScale().Half2D();
+	FVector HalfScale = GEngine->MainWindow.GetWindowScale().Half2D();
 
 	UImageRenderer* Background = CreateImageRenderer(0);
 	Background->SetImage("intro_bg.png");
@@ -23,11 +23,10 @@ void AIntroBackground::BeginPlay()
 
 	UImageRenderer* intro_1 = CreateImageRenderer(1);
 	intro_1->SetImage("intro_1.png");
-
-	intro_1->SetTransform({ halfScale, {512, 512} });
+	intro_1->SetTransform({ HalfScale, {600, 600} });
 	intro_1->CreateAnimation("intro_1", "intro_1.png", 0, 1, 0.1f, true);
-	intro_1->SetActive(true, 1.0f);
-	intro_1->Destroy(2.0f);
+	/*intro_1->SetActive(true, 1.0f);
+	intro_1->Destroy(2.0f);*/
 
 	intro_1->ChangeAnimation("intro_1");
 }

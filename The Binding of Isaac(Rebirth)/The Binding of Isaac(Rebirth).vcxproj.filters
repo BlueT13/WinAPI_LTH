@@ -23,6 +23,12 @@
       <Filter>Object\IntroLevel\Actor</Filter>
     </ClInclude>
     <ClInclude Include="ContentsHelper.h" />
+    <ClInclude Include="StartImage.h">
+      <Filter>Object\TitleLevel\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Object\PlayLevel\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -47,6 +53,12 @@
       <Filter>Object\IntroLevel\Actor</Filter>
     </ClCompile>
     <ClCompile Include="ContentsHelper.cpp" />
+    <ClCompile Include="StartImage.cpp">
+      <Filter>Object\TitleLevel\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Object\PlayLevel\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameCore">
