@@ -73,6 +73,12 @@ void AActor::Destroy(float _DestroyTime /*= 0.0f*/)
 	{
 		Renderer->Destroy(_DestroyTime);
 	}
+
+	for (UCollision* Collision : Collisions)
+	{
+		Collision->Destroy(_DestroyTime);
+	}
+
 }
 
 void AActor::DestroyUpdate(float _DeltaTime)
@@ -84,6 +90,11 @@ void AActor::DestroyUpdate(float _DeltaTime)
 	{
 		Renderer->DestroyUpdate(_DeltaTime);
 	}
+
+	for (UCollision* Collision : Collisions)
+	{
+		Collision->DestroyUpdate(_DeltaTime);
+	}
 }
 
 void AActor::ActiveUpdate(float _DeltaTime)
@@ -94,5 +105,10 @@ void AActor::ActiveUpdate(float _DeltaTime)
 	for (UImageRenderer* Renderer : Renderers)
 	{
 		Renderer->ActiveUpdate(_DeltaTime);
+	}
+
+	for (UCollision* Collision : Collisions)
+	{
+		Collision->ActiveUpdate(_DeltaTime);
 	}
 }
