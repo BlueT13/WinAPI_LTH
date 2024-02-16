@@ -6,29 +6,29 @@
 #include <vector>
 #include <list>
 
-Player::Player()
+APlayer::APlayer()
 {
 }
 
-Player::~Player()
+APlayer::~APlayer()
 {
 }
 
-void Player::BeginPlay()
+void APlayer::BeginPlay()
 {
 	AActor::BeginPlay();
 
 	SetActorLocation({ 300, 300 });
 
 	{
-		HeadRenderer = CreateImageRenderer(2);
+		HeadRenderer = CreateImageRenderer(IsaacRenderOrder::Player);
 		HeadRenderer->SetImage("Head.png");
-		HeadRenderer->SetTransform({ { 0,0 }, { 30,30 } });
+		HeadRenderer->SetTransform({ { 0,0 }, { 50,50 } });
 		HeadRenderer->SetImageCuttingTransform({ {0,0}, {30, 30} });
 	}
 }
 
-void Player::Tick(float _DeltaTime)
+void APlayer::Tick(float _DeltaTime)
 {
 	if (true == UEngineInput::IsPress('A'))
 	{
@@ -61,4 +61,103 @@ void Player::Tick(float _DeltaTime)
 		NewBullet->SetActorLocation(GetActorLocation());
 		NewBullet->SetDir(FVector::Right);
 	}
+}
+
+void APlayer::DirCheck()
+{
+}
+
+void APlayer::StateChange(EPlayState _State)
+{
+}
+
+void APlayer::StateUpdate(float _DeltaTime)
+{
+}
+
+void APlayer::CameraFreeMove(float _DeltaTime)
+{
+}
+
+void APlayer::FreeMove(float _DeltaTime)
+{
+}
+
+void APlayer::Idle(float _DeltaTime)
+{
+}
+
+void APlayer::Run(float _DeltaTime)
+{
+}
+
+void APlayer::Attack(float _DeltaTime)
+{
+}
+
+void APlayer::IdleStart()
+{
+}
+
+void APlayer::RunStart()
+{
+}
+
+void APlayer::CalMoveVector(float _DeltaTime)
+{
+	FVector CheckPos = GetActorLocation();
+	switch (DirState)
+	{
+	case EActorDir::Left:
+		CheckPos.X -= 30;
+		break;
+	case EActorDir::Right:
+		CheckPos.X += 30;
+		break;
+	default:
+		break;
+	}
+	
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
+
+	if (Color == Color8Bit(255, 0, 255, 0))
+	{
+		MoveVector = FVector::Zero;
+	}
+
+	if (true == UEngineInput::IsFree(VK_LEFT) && true == UEngineInput::IsFree(VK_RIGHT))
+	{
+		//static int Count = 0;
+		//EngineDebug::OutPutDebugText(std::to_string(++Count));
+		if (0.001 <= MoveVector.Size2D())
+		{
+			MoveVector += (-MoveVector.Normalize2DReturn()) * _DeltaTime * MoveAcc;
+		}
+		else {
+			MoveVector = float4::Zero;
+		}
+	}
+
+	if (MoveMaxSpeed <= MoveVector.Size2D())
+	{
+		MoveVector = MoveVector.Normalize2DReturn() * MoveMaxSpeed;
+	}
+}
+
+void APlayer::AddMoveVector(const FVector& _DirDelta)
+{
+	MoveVector += _DirDelta * MoveAcc;
+}
+
+void APlayer::CalLastMoveVector(float _DeltaTime)
+{
+}
+
+void APlayer::MoveLastMoveVector(float _DeltaTime)
+{
+	AddActorLocation(LastMoveVector * _DeltaTime);
+}
+
+void APlayer::MoveUpdate(float _DeltaTime)
+{
 }

@@ -10,6 +10,13 @@ enum IsaacRenderOrder
 	Player
 };
 
+enum class IsaacCollisionOrder
+{
+	Bullet,
+	Monster,
+	Player
+};
+
 enum class EActorDir
 {
 	Left,
@@ -30,6 +37,7 @@ enum class EPlayState
 class UContentsHelper
 {
 public:
+	static class APlayer* MainPlayer;
 	static UWindowImage* ColMapImage;
 
 private:

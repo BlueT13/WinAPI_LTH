@@ -18,11 +18,9 @@ void UIntroLevel::BeginPlay()
 	ULevel::BeginPlay();
 
 	UEngineDirectory FilePath;
-
 	FilePath.MoveParent();
 	FilePath.Move("Res");
 	FilePath.Move("IntroLevel");
-
 	std::list<UEngineFile> AllFileList = FilePath.AllFile({ ".png", ".bmp" }, true);
 	for (UEngineFile& File : AllFileList)
 	{

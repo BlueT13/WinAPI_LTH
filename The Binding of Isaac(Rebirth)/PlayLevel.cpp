@@ -15,12 +15,12 @@ UPlayLevel::~UPlayLevel()
 
 void UPlayLevel::BeginPlay()
 {
-	UEngineDirectory FilePath;
+	ULevel::BeginPlay();
 
+	UEngineDirectory FilePath;
 	FilePath.MoveParent();
 	FilePath.Move("Res");
 	FilePath.Move("PlayLevel");
-
 	std::list<UEngineFile> AllFileList = FilePath.AllFile({ ".png", ".bmp" }, true);
 	for (UEngineFile& File : AllFileList)
 	{
@@ -28,8 +28,9 @@ void UPlayLevel::BeginPlay()
 		UEngineResourcesManager::GetInst().LoadImg(FullPath);
 	}
 
-	this->SpawnActor<Player>();
-	this->SpawnActor<Map>();
+	SpawnActor<APlayer>();
+	SpawnActor<AMap>();
+	
 }
 
 void UPlayLevel::Tick(float _DeltaTime)

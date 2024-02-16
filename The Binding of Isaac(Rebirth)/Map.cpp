@@ -1,27 +1,65 @@
 #include "Map.h"
+#include "ContentsHelper.h"
+//#include <EngineCore\EngineResourcesManager.h>
 
-Map::Map() 
+AMap::AMap()
 {
 }
 
-Map::~Map() 
+AMap::~AMap()
 {
 }
 
-void Map::BeginPlay()
+void AMap::SetMapImage(std::string_view _MapImageName)
+{
+	Renderer->SetImage(_MapImageName);
+	UWindowImage* Image = Renderer->GetImage();
+	FVector ImageScale = Image->GetScale();
+	Renderer->SetTransform({ ImageScale.Half2D(), ImageScale });
+}
+
+void AMap::SetColMapImage(std::string_view _MapImageName)
+{
+	ColRenderer->SetImage(_MapImageName);
+	UWindowImage* Image = ColRenderer->GetImage();
+	UContentsHelper::ColMapImage = Image;
+	FVector ImageScale = Image->GetScale();
+	ColRenderer->SetTransform({ ImageScale.Half2D(), ImageScale });
+}
+
+void AMap::Tick(float _DeltaTime)
+{
+	AActor::Tick(_DeltaTime);
+
+	if (UEngineInput::IsDown('O'))
+	{
+		SwitchDebug();
+	}
+}
+
+void AMap::SwitchDebug()
+{
+	if (true == Renderer->IsActive())
+	{
+		Renderer->SetActive(false);
+		ColRenderer->SetActive(true);
+	}
+	else
+	{
+		Renderer->SetActive(true);
+		ColRenderer->SetActive(false);
+	}
+
+}
+
+void AMap::BeginPlay()
 {
 	AActor::BeginPlay();
 
-	UImageRenderer* Background = CreateImageRenderer(0);
-	Background->SetImage("01_map.png");
-	UWindowImage* Image = Background->GetImage();
-	FVector BackgroundScale = Image->GetScale();
-	Background->SetTransform({ BackgroundScale.Half2D(), BackgroundScale });
+	Renderer = CreateImageRenderer(IsaacRenderOrder::Map);
+	ColRenderer = CreateImageRenderer(IsaacRenderOrder::Map);
+	ColRenderer->SetActive(false);
 
+	SetMapImage("01_map.png");
+	SetColMapImage("map_col.png");
 }
-
-void Map::Tick(float _DeltaTime)
-{
-	AActor::Tick(_DeltaTime);
-}
-

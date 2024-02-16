@@ -2,24 +2,30 @@
 #include <EngineCore/Actor.h>
 
 // Ό³Έν :
-class Map : public AActor
+class AMap : public AActor
 {
 public:
 	// constrcuter destructer
-	Map();
-	~Map();
+	AMap();
+	~AMap();
 
 	// delete Function
-	Map(const Map& _Other) = delete;
-	Map(Map&& _Other) noexcept = delete;
-	Map& operator=(const Map& _Other) = delete;
-	Map& operator=(Map&& _Other) noexcept = delete;
+	AMap(const AMap& _Other) = delete;
+	AMap(AMap&& _Other) noexcept = delete;
+	AMap& operator=(const AMap& _Other) = delete;
+	AMap& operator=(AMap&& _Other) noexcept = delete;
+
+	void SetMapImage(std::string_view _MapImageName);
+	void SetColMapImage(std::string_view _MapImageName);
+
+	void SwitchDebug();
 
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
 private:
-
+	UImageRenderer* Renderer = nullptr;
+	UImageRenderer* ColRenderer = nullptr;
 };
 
