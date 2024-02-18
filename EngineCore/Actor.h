@@ -74,6 +74,11 @@ public:
 
 	void ActiveUpdate(float _DeltaTime) override;
 
+	void CheckReleaseChild();
+
+	void AllRenderersActiveOff();
+	void AllRenderersActiveOn();
+
 protected:
 	void Tick(float _DeltaTime) override;
 
