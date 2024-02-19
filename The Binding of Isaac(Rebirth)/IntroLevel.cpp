@@ -27,8 +27,9 @@ void UIntroLevel::BeginPlay()
 		std::string FullPath = File.GetFullPath();
 		UEngineResourcesManager::GetInst().LoadImg(FullPath);
 	}
-	UEngineResourcesManager::GetInst().LoadFolder(FilePath.AppendPath("intro"));
+	UEngineResourcesManager::GetInst().LoadFolder(FilePath.AppendPath("intro0_"));
 	UEngineResourcesManager::GetInst().LoadFolder(FilePath.AppendPath("fadeout"));
+	UEngineResourcesManager::GetInst().LoadFolder(FilePath.AppendPath("intro1_"));
 
 	AIntroBackground* Background = SpawnActor<AIntroBackground>();
 
