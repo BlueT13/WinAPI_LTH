@@ -93,4 +93,6 @@ void AIntroBackground::Tick(float _DeltaTime)
 			CurAniCount++;
 		}
 	}
+
+
 }

@@ -40,4 +40,8 @@ void UTitleLevel::Tick(float _DeltaTime)
 	{
 		GEngine->ChangeLevel("PlayLevel");
 	}
+	if (UEngineInput::IsDown(VK_ESCAPE))
+	{
+		
+	}
 }

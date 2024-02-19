@@ -20,11 +20,19 @@ void APlayer::BeginPlay()
 
 	SetActorLocation({ 300, 300 });
 
-	{
+	/*{
 		HeadRenderer = CreateImageRenderer(IsaacRenderOrder::Player);
 		HeadRenderer->SetImage("Head.png");
 		HeadRenderer->SetTransform({ { 0,0 }, { 50,50 } });
 		HeadRenderer->SetImageCuttingTransform({ {0,0}, {30, 30} });
+	}*/
+
+	{
+		BodyRenderer = CreateImageRenderer(IsaacRenderOrder::Player);
+		BodyRenderer->SetImage("IsaacRight_0.png");
+		UWindowImage* Image = BodyRenderer->GetImage();
+		FVector ImageScale = Image->GetScale();
+		BodyRenderer->SetTransform({ { 0,10 }, ImageScale});
 	}
 }
 
@@ -33,6 +41,7 @@ void APlayer::Tick(float _DeltaTime)
 	if (true == UEngineInput::IsPress('A'))
 	{
 		AddActorLocation(FVector::Left * 500.0f * _DeltaTime);
+
 	}
 
 	if (true == UEngineInput::IsPress('D'))
@@ -117,7 +126,7 @@ void APlayer::CalMoveVector(float _DeltaTime)
 	default:
 		break;
 	}
-	
+
 	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
 
 	if (Color == Color8Bit(255, 0, 255, 0))
