@@ -17,44 +17,62 @@ void AIntroBackground::BeginPlay()
 
 	FVector HalfScale = GEngine->MainWindow.GetWindowScale().Half2D();
 
-	intro = CreateImageRenderer(0);
-	
-	intro->SetImage("intro");
-	intro->SetTransform({ HalfScale, {960, 540} });
-	
-	int count = 0;
-	for (int i = 0; i < 10; i += 2)
+	intro_0 = CreateImageRenderer(0);
+	intro_0->SetImage("intro");
+	intro_0->SetTransform({ HalfScale, {960, 540} });
+	for (int i = 0; i < 4; i += 2)
 	{
-		std::string AnimationName = "IntroAnimation_" + std::to_string(count);
-
+		std::string AnimationName = "IntroAnimation_" + std::to_string(AniCount);
 		std::vector<int> Index;
-
 		for (size_t j = 0; j < 10; j++)
 		{
 			Index.push_back(i);
 			Index.push_back(i + 1);
 		}
 
-		intro->CreateAnimation(AnimationName, "intro", Index, 0.1f, false);
-		count++;
+		intro_0->CreateAnimation(AnimationName, "intro", Index, 0.1f, false);
+		AniCount++;
 	}
 
+	fadeout = CreateImageRenderer(0);
+	fadeout->SetImage("fadeout");
+	fadeout->SetTransform({ HalfScale, {960, 540} });
+	fadeout->CreateAnimation("Fade", "fadeout", 0, 15, 0.05f, false);
 
-	
-	intro->ChangeAnimation("IntroAnimation_" + std::to_string(CurAniCount));
+	intro_1 = CreateImageRenderer(0);
+	intro_1->SetImage("intro");
+	intro_1->SetTransform({ HalfScale, {960, 540} });
+	for (int i = 4; i < TotalAniCount * 2; i += 2)
+	{
+		std::string AnimationName = "IntroAnimation_" + std::to_string(AniCount);
+		std::vector<int> Index;
+		for (size_t j = 0; j < 10; j++)
+		{
+			Index.push_back(i);
+			Index.push_back(i + 1);
+		}
 
+		intro_1->CreateAnimation(AnimationName, "intro", Index, 0.1f, false);
+		AniCount++;
+	}
 
-	/*intro->ChangeAnimation("IntroAnimation_1");
-	intro->SetActive(true, 2.0f);
-	intro->Destroy(4.0f);*/
+	intro_1->ChangeAnimation("IntroAnimation_" + std::to_string(CurAniCount));
 }
 
 void AIntroBackground::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-	if (intro->IsCurAnimationEnd())
+	if (intro_0->IsCurAnimationEnd())
 	{
-		intro->ChangeAnimation("IntroAnimation_" + std::to_string(++CurAniCount));
+		if (CurAniCount == TotalAniCount - 1)
+		{
+			GEngine->ChangeLevel("TitleLevel");
+		}
+		else
+		{
+			CurAniCount++;
+			intro_0->ChangeAnimation("IntroAnimation_" + std::to_string(CurAniCount));
+		}
 	}
 }

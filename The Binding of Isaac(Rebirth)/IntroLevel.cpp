@@ -28,6 +28,7 @@ void UIntroLevel::BeginPlay()
 		UEngineResourcesManager::GetInst().LoadImg(FullPath);
 	}
 	UEngineResourcesManager::GetInst().LoadFolder(FilePath.AppendPath("intro"));
+	UEngineResourcesManager::GetInst().LoadFolder(FilePath.AppendPath("fadeout"));
 
 	AIntroBackground* Background = SpawnActor<AIntroBackground>();
 
@@ -37,6 +38,11 @@ void UIntroLevel::BeginPlay()
 void UIntroLevel::Tick(float _DeltaTime)
 {
 	ULevel::Tick(_DeltaTime);
+
+	if (UEngineInput::IsDown(VK_ESCAPE))
+	{
+		//
+	}
 
 	if (UEngineInput::IsDown(VK_SPACE))
 	{

@@ -22,8 +22,11 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 private:
-	UImageRenderer* CreateIntroAnimation(UImageRenderer* _intro, int _introIndex);
+	int TotalAniCount = 7;
+	int AniCount = 0;
 	int CurAniCount = 0;
-	UImageRenderer* intro;
+	UImageRenderer* intro_0 = nullptr;
+	UImageRenderer* fadeout = nullptr;
+	UImageRenderer* intro_1 = nullptr;
 };
 
