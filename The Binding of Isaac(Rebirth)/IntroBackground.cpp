@@ -24,12 +24,12 @@ void AIntroBackground::BeginPlay()
 	FilePath.Move("Res");
 	FilePath.Move("IntroLevel");
 	AllFileList = FilePath.AllFile({ ".png", ".bmp" }, true);
-	
+
 	StartIter = AllFileList.begin();
 	EndIter = AllFileList.end();
 
 	intro = CreateImageRenderer(0);
-	intro->SetTransform({ HalfScale, {960, 540} });
+	intro->SetTransform({ HalfScale, GEngine->MainWindow.GetWindowScale() });
 
 	UEngineFile& File = (*StartIter);
 	UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
@@ -40,19 +40,23 @@ void AIntroBackground::BeginPlay()
 void AIntroBackground::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
-	
+
 	if (StartIter == EndIter)
 	{
 		GEngine->ChangeLevel("TitleLevel");
 	}
-	
+
 	Time += _DeltaTime;
-	if (Time >= 0.06f)
+	if (Time >= FrameTime)
 	{
 		UEngineFile& File = (*StartIter);
 		UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
 		intro->SetImage(File.GetFileName());
 		++StartIter;
-		Time = 0.0f;
+		Time = _DeltaTime - FrameTime;
+	}
+	else
+	{
+		return;
 	}
 }
