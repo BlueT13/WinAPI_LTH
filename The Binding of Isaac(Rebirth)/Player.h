@@ -32,15 +32,14 @@ protected:
 	void StateUpdate(float _DeltaTime);
 
 	// 상태 함수들
-	void CameraFreeMove(float _DeltaTime);
-	void FreeMove(float _DeltaTime);
 	void Idle(float _DeltaTime);
-	void Run(float _DeltaTime);
+	void Move(float _DeltaTime);
 	void Attack(float _DeltaTime);
 
 	// 상태 시작 함수들
 	void IdleStart();
-	void RunStart();
+	void MoveStart();
+	void AttackStart();
 
 	EPlayState State = EPlayState::None;
 	EActorDir DirState = EActorDir::Right;
@@ -57,18 +56,15 @@ private:
 	int AnimationFrame = 0;
 	float AlphaTime = 0.0f;
 	bool Dir = false;
-	float FreeMoveSpeed = 1000.0f;
 
 	FVector MoveVector = FVector::Zero;
-	void CalMoveVector(float _DeltaTime);
-
 	FVector MoveAcc = FVector::Right * 500.0f;
 	float MoveMaxSpeed = 500.0f;
 	void AddMoveVector(const FVector& _DirDelta);
 
 	FVector LastMoveVector = FVector::Zero;
 	void CalLastMoveVector(float _DeltaTime);
-	
+	void CalMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
 	void MoveUpdate(float _DeltaTime);
 };

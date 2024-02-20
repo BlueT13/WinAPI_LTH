@@ -21,14 +21,16 @@ enum class EActorDir
 {
 	Left,
 	Right,
+	Up,
+	Down,
 };
 
 enum class EPlayState
 {
 	None,
-	FreeMove,
 	Idle,
-	Move
+	Move,
+	Attack,
 };
 
 

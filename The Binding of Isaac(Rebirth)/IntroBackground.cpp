@@ -47,7 +47,7 @@ void AIntroBackground::Tick(float _DeltaTime)
 	}
 	
 	Time += _DeltaTime;
-	if (Time >= 0.1f)
+	if (Time >= 0.06f)
 	{
 		UEngineFile& File = (*StartIter);
 		UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());

@@ -1,10 +1,8 @@
 #include "Player.h"
-#include <EngineCore/EngineCore.h>
-#include <EnginePlatform/EngineInput.h>
 #include "Bullet.h"
-#include <EngineBase\EngineTime.h>
-#include <vector>
-#include <list>
+#include <EnginePlatform/EngineInput.h>
+#include <EngineBase/EngineDebug.h>
+#include "ContentsHelper.h"
 
 APlayer::APlayer()
 {
@@ -32,125 +30,150 @@ void APlayer::BeginPlay()
 		BodyRenderer->SetImage("IsaacRight_0.png");
 		UWindowImage* Image = BodyRenderer->GetImage();
 		FVector ImageScale = Image->GetScale();
-		BodyRenderer->SetTransform({ { 0,10 }, ImageScale});
+		BodyRenderer->SetTransform({ { 0,10 }, ImageScale });
 	}
 }
 
 void APlayer::Tick(float _DeltaTime)
 {
-	if (true == UEngineInput::IsPress('A'))
-	{
-		AddActorLocation(FVector::Left * 500.0f * _DeltaTime);
+	AActor::Tick(_DeltaTime);
 
-	}
+	StateUpdate(_DeltaTime);
 
-	if (true == UEngineInput::IsPress('D'))
-	{
-		AddActorLocation(FVector::Right * 500.0f * _DeltaTime);
-	}
+	//if (true == UEngineInput::IsPress('A'))
+	//{
+	//	AddActorLocation(FVector::Left * 500.0f * _DeltaTime);
 
-	if (true == UEngineInput::IsPress('W'))
-	{
-		AddActorLocation(FVector::Up * 500.0f * _DeltaTime);
-	}
+	//}
 
-	if (true == UEngineInput::IsPress('S'))
-	{
-		AddActorLocation(FVector::Down * 500.0f * _DeltaTime);
-	}
+	//if (true == UEngineInput::IsPress('D'))
+	//{
+	//	AddActorLocation(FVector::Right * 500.0f * _DeltaTime);
+	//}
 
-	if (true == UEngineInput::IsDown('T'))
-	{
-		BodyRenderer->Destroy();
-	}
+	//if (true == UEngineInput::IsPress('W'))
+	//{
+	//	AddActorLocation(FVector::Up * 500.0f * _DeltaTime);
+	//}
 
-	if (true == UEngineInput::IsDown('Q'))
-	{
-		ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
-		NewBullet->SetActorLocation(GetActorLocation());
-		NewBullet->SetDir(FVector::Right);
-	}
+	//if (true == UEngineInput::IsPress('S'))
+	//{
+	//	AddActorLocation(FVector::Down * 500.0f * _DeltaTime);
+	//}
+
+	//if (true == UEngineInput::IsDown('T'))
+	//{
+	//	BodyRenderer->Destroy();
+	//}
+
+	//if (true == UEngineInput::IsDown('Q'))
+	//{
+	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+	//	NewBullet->SetActorLocation(GetActorLocation());
+	//	NewBullet->SetDir(FVector::Right);
+	//}
 }
 
 void APlayer::DirCheck()
 {
+	EActorDir Dir = DirState;
+	if (UEngineInput::IsPress('A'))
+	{
+		Dir = EActorDir::Left;
+	}
+	if (UEngineInput::IsPress('D'))
+	{
+		Dir = EActorDir::Right;
+	}
+	if (UEngineInput::IsPress('W'))
+	{
+		Dir = EActorDir::Up;
+	}
+	if (UEngineInput::IsPress('S'))
+	{
+		Dir = EActorDir::Down;
+	}
 }
 
-void APlayer::StateChange(EPlayState _State)
+std::string APlayer::GetAnimationName(std::string _Name)
 {
-}
+	std::string DirName = "";
 
-void APlayer::StateUpdate(float _DeltaTime)
-{
-}
-
-void APlayer::CameraFreeMove(float _DeltaTime)
-{
-}
-
-void APlayer::FreeMove(float _DeltaTime)
-{
-}
-
-void APlayer::Idle(float _DeltaTime)
-{
-}
-
-void APlayer::Run(float _DeltaTime)
-{
-}
-
-void APlayer::Attack(float _DeltaTime)
-{
-}
-
-void APlayer::IdleStart()
-{
-}
-
-void APlayer::RunStart()
-{
-}
-
-void APlayer::CalMoveVector(float _DeltaTime)
-{
-	FVector CheckPos = GetActorLocation();
 	switch (DirState)
 	{
 	case EActorDir::Left:
-		CheckPos.X -= 30;
+		DirName = "_Left";
 		break;
 	case EActorDir::Right:
-		CheckPos.X += 30;
+		DirName = "_Right";
 		break;
 	default:
 		break;
 	}
 
-	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
+	CurAnimationName = _Name;
 
-	if (Color == Color8Bit(255, 0, 255, 0))
-	{
-		MoveVector = FVector::Zero;
-	}
+	return _Name + DirName;
+}
 
-	if (true == UEngineInput::IsFree(VK_LEFT) && true == UEngineInput::IsFree(VK_RIGHT))
+void APlayer::StateChange(EPlayState _State)
+{
+	if (State != _State)
 	{
-		//static int Count = 0;
-		//EngineDebug::OutPutDebugText(std::to_string(++Count));
-		if (0.001 <= MoveVector.Size2D())
+		switch (_State)
 		{
-			MoveVector += (-MoveVector.Normalize2DReturn()) * _DeltaTime * MoveAcc;
+		case EPlayState::Idle:
+			IdleStart();
+			break;
+		case EPlayState::Move:
+			MoveStart();
+			break;
+		case EPlayState::Attack:
+			AttackStart();
+			break;
+		default:
+			break;
 		}
-		else {
-			MoveVector = float4::Zero;
-		}
+	}
+}
+
+void APlayer::StateUpdate(float _DeltaTime)
+{
+	switch (State)
+	{
+	case EPlayState::Idle:
+		Idle(_DeltaTime);
+		break;
+	case EPlayState::Move:
+		Move(_DeltaTime);
+		break;
+	case EPlayState::Attack:
+		Attack(_DeltaTime);
+		break;
+	default:
+		break;
+	}
+}
+
+void APlayer::Idle(float _DeltaTime)
+{
+	if (true == BodyRenderer->IsCurAnimationEnd())
+	{
 	}
 
-	if (MoveMaxSpeed <= MoveVector.Size2D())
+	if (UEngineInput::IsPress('A') || UEngineInput::IsPress('D') || UEngineInput::IsPress('W') || UEngineInput::IsPress('S'))
 	{
-		MoveVector = MoveVector.Normalize2DReturn() * MoveMaxSpeed;
+		StateChange(EPlayState::Move);
+		return;
 	}
+
+	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT) || UEngineInput::IsPress(VK_UP) || UEngineInput::IsPress(VK_DOWN))
+	{
+		StateChange(EPlayState::Attack);
+		return;
+	}
+
+	MoveUpdate(_DeltaTime);
 }
 
 void APlayer::AddMoveVector(const FVector& _DirDelta)
@@ -158,15 +181,32 @@ void APlayer::AddMoveVector(const FVector& _DirDelta)
 	MoveVector += _DirDelta * MoveAcc;
 }
 
-void APlayer::CalLastMoveVector(float _DeltaTime)
+void APlayer::Move(float _DeltaTime)
 {
+	DirCheck();
+
+	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S') &&
+		UEngineInput::IsPress(VK_LEFT) && UEngineInput::IsPress(VK_RIGHT) && UEngineInput::IsPress(VK_UP) && UEngineInput::IsPress(VK_DOWN))
+	{
+		StateChange(EPlayState::Idle);
+		return;
+	}
+
+	if (UEngineInput::IsPress('A'))
+	{
+		AddMoveVector(FVector::Left * _DeltaTime);
+	}
+	if (UEngineInput::IsPress('D'))
+	{
+		AddMoveVector(FVector::Right * _DeltaTime);
+	}
+	if (UEngineInput::IsPress('W'))
+	{
+		AddMoveVector(FVector::Up * _DeltaTime);
+	}
+	if (UEngineInput::IsPress('S'))
+	{
+		AddMoveVector(FVector::Down * _DeltaTime);
+	}
 }
 
-void APlayer::MoveLastMoveVector(float _DeltaTime)
-{
-	AddActorLocation(LastMoveVector * _DeltaTime);
-}
-
-void APlayer::MoveUpdate(float _DeltaTime)
-{
-}
