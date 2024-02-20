@@ -209,6 +209,7 @@ FTransform UImageRenderer::GetRenderTransForm()
 		AActor* Actor = GetOwner();
 		ULevel* World = Actor->GetWorld();
 		FVector CameraPos = World->GetCameraPos();
+		CameraPos *= CameraRatio;
 		RendererTrans.AddPosition(-CameraPos);
 	}
 
