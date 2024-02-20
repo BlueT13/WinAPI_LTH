@@ -2,6 +2,8 @@
 #include "IsaacCore.h"
 #include <iostream>
 #include <string>
+#include <EngineBase/EngineDirectory.h>
+#include <EngineCore/EngineResourcesManager.h>
 
 AIntroBackground::AIntroBackground()
 {
@@ -17,82 +19,40 @@ void AIntroBackground::BeginPlay()
 
 	FVector HalfScale = GEngine->MainWindow.GetWindowScale().Half2D();
 
-	int count = 0;
-	/*intro0 = CreateImageRenderer(0);
-	intro0->SetImage("intro0_");
-	intro0->SetTransform({ HalfScale, {960, 540} });
-	for (int i = 0; i < 4; i += 2)
-	{
-		std::string AnimationName = "Intro0_" + std::to_string(count);
-		std::vector<int> Index;
-		for (size_t j = 0; j < 10; j++)
-		{
-			Index.push_back(i);
-			Index.push_back(i + 1);
-		}
-		intro0->CreateAnimation(AnimationName, "intro0_", Index, 0.1f, false);
-		count++;
-	}
+	UEngineDirectory FilePath;
+	FilePath.MoveParent();
+	FilePath.Move("Res");
+	FilePath.Move("IntroLevel");
+	AllFileList = FilePath.AllFile({ ".png", ".bmp" }, true);
+	
+	StartIter = AllFileList.begin();
+	EndIter = AllFileList.end();
 
-	fadeout = CreateImageRenderer(0);
-	fadeout->SetImage("fadeout");
-	fadeout->SetTransform({ HalfScale, {960, 540} });
-	fadeout->CreateAnimation("Fade", "fadeout", 0, 15, 0.1f, false);*/
+	intro = CreateImageRenderer(0);
+	intro->SetTransform({ HalfScale, {960, 540} });
 
-	intro1 = CreateImageRenderer(0);
-	intro1->SetImage("intro1_");
-	intro1->SetTransform({ HalfScale, {960, 540} });
-	count = 0;
-	for (int i = 0; i < 5 * 2; i += 2)
-	{
-		std::string AnimationName = "Intro1_" + std::to_string(count);
-		std::vector<int> Index;
-		for (size_t j = 0; j < 10; j++)
-		{
-			Index.push_back(i);
-			Index.push_back(i + 1);
-		}
-		intro1->CreateAnimation(AnimationName, "intro1_", Index, 0.1f, false);
-		count++;
-	}
-
-	intro1->ChangeAnimation("Intro1_" + std::to_string(CurAniCount));
+	UEngineFile& File = (*StartIter);
+	UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
+	intro->SetImage(File.GetFileName());
+	++StartIter;
 }
 
 void AIntroBackground::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
-
-	//if (intro0->IsCurAnimationEnd())
-	//{
-	//	if (CurAniCount == 2)
-	//	{
-	//		GEngine->ChangeLevel("TitleLevel");
-	//	}
-	//	else
-	//	{
-	//		intro0->ChangeAnimation("Intro0_" + std::to_string(CurAniCount));
-	//		CurAniCount++;
-	//	}
-	//}
-
-	//if (fadeout->IsCurAnimationEnd())
-	//{
-	//	fadeout->ChangeAnimation("Intro1_" + std::to_string(CurAniCount));
-	//}
-
-	if (intro1->IsCurAnimationEnd())
+	
+	if (StartIter == EndIter)
 	{
-		if (CurAniCount == Intro1AniCount)
-		{
-			GEngine->ChangeLevel("TitleLevel");
-		}
-		else
-		{
-			intro1->ChangeAnimation("Intro1_" + std::to_string(CurAniCount));
-			CurAniCount++;
-		}
+		GEngine->ChangeLevel("TitleLevel");
 	}
-
-
+	
+	Time += _DeltaTime;
+	if (Time >= 0.1f)
+	{
+		UEngineFile& File = (*StartIter);
+		UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
+		intro->SetImage(File.GetFileName());
+		++StartIter;
+		Time = 0.0f;
+	}
 }

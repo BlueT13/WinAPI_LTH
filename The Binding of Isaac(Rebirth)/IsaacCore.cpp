@@ -16,7 +16,7 @@ UIsaacCore::~UIsaacCore()
 void UIsaacCore::BeginPlay()
 {
 	UEngineCore::BeginPlay();
-	
+
 	MainWindow.SetWindowScale({ 960, 540 });
 	MainWindow.SetWindowPosition({ 0, 0 });
 
@@ -25,7 +25,7 @@ void UIsaacCore::BeginPlay()
 
 	CreateLevel<UIntroLevel>("IntroLevel");
 	CreateLevel<UTitleLevel>("TitleLevel");
-	CreateLevel<UPlayLevel>("PlayLevel");
+	//CreateLevel<UPlayLevel>("PlayLevel");
 
 	ChangeLevel("IntroLevel");
 }

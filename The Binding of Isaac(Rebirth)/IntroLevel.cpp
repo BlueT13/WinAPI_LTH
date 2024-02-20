@@ -17,25 +17,9 @@ void UIntroLevel::BeginPlay()
 {
 	ULevel::BeginPlay();
 
-	UEngineDirectory FilePath;
-	FilePath.MoveParent();
-	FilePath.Move("Res");
-	FilePath.Move("IntroLevel");
-	std::list<UEngineFile> AllFileList = FilePath.AllFile({ ".png", ".bmp" }, true);
-	for (UEngineFile& File : AllFileList)
-	{
-		std::string FullPath = File.GetFullPath();
-		UEngineResourcesManager::GetInst().LoadImg(FullPath);
-	}
-	UEngineResourcesManager::GetInst().LoadFolder(FilePath.AppendPath("intro0_"));
-	UEngineResourcesManager::GetInst().LoadFolder(FilePath.AppendPath("fadeout"));
-	UEngineResourcesManager::GetInst().LoadFolder(FilePath.AppendPath("intro1_"));
-
 	AIntroBackground* Background = SpawnActor<AIntroBackground>();
-
-
-
 }
+
 void UIntroLevel::Tick(float _DeltaTime)
 {
 	ULevel::Tick(_DeltaTime);
@@ -49,14 +33,4 @@ void UIntroLevel::Tick(float _DeltaTime)
 	{
 		GEngine->ChangeLevel("TitleLevel");
 	}
-
-}
-
-void UIntroLevel::LevelStart(ULevel* _Level)
-{
-
-}
-void UIntroLevel::LevelEnd(ULevel* _Level)
-{
-
 }

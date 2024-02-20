@@ -18,8 +18,6 @@ public:
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-	void LevelStart(ULevel* _Level) override;
-	void LevelEnd(ULevel* _Level) override;
 
 private:
 
