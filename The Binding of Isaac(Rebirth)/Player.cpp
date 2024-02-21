@@ -28,12 +28,16 @@ void APlayer::BeginPlay()
 
 	{
 		BodyRenderer = CreateImageRenderer(IsaacRenderOrder::Player);
-		BodyRenderer->SetImage("IsaacBody_Right.png");
-		UWindowImage* Image = BodyRenderer->GetImage();
-		FVector ImageScale = Image->GetScale();
-		BodyRenderer->SetTransform({ { 0,10 }, ImageScale });
-		BodyRenderer->CreateAnimation("Move_Right", "IsaacBody_Right.png", 0, 0, 0.1f, true);
+		BodyRenderer->SetImage("Body.png");
+		BodyRenderer->SetTransform({ { 0,10 }, {64,64} });
+		BodyRenderer->CreateAnimation("Idle", "Body.png", 20, 20, 0.1f, true);
+		BodyRenderer->CreateAnimation("Move_Right", "Body.png", 10, 19, 1.0f, true);
+		BodyRenderer->CreateAnimation("Move_Left", "Body.png", 0, 9, 1.0f, true);
+		BodyRenderer->CreateAnimation("Move_UP", "Body.png", 20, 29, 1.0f, true);
+		BodyRenderer->CreateAnimation("Move_Down", "Body.png", 20, 29, 1.0f, true);
 	}
+
+	StateChange(EPlayState::Idle);
 }
 
 void APlayer::Tick(float _DeltaTime)
@@ -100,7 +104,7 @@ void APlayer::DirCheck()
 	{
 		DirState = Dir;
 		std::string Name = GetAnimationName(CurAnimationName);
-		
+
 		BodyRenderer->ChangeAnimation(Name, true, BodyRenderer->GetCurAnimationFrame(), BodyRenderer->GetCurAnimationTime());
 	}
 }
@@ -116,6 +120,12 @@ std::string APlayer::GetAnimationName(std::string _Name)
 		break;
 	case EActorDir::Right:
 		DirName = "_Right";
+		break;
+	case EActorDir::Up:
+		DirName = "_Up";
+		break;
+	case EActorDir::Down:
+		DirName = "_Down";
 		break;
 	default:
 		break;
@@ -145,6 +155,8 @@ void APlayer::StateChange(EPlayState _State)
 			break;
 		}
 	}
+
+	State = _State;
 }
 
 void APlayer::StateUpdate(float _DeltaTime)
@@ -211,8 +223,10 @@ void APlayer::CalMoveVector(float _DeltaTime)
 		break;
 	case EActorDir::Up:
 		CheckPos.Y -= 30;
+		break;
 	case EActorDir::Down:
 		CheckPos.Y += 30;
+		break;
 	default:
 		break;
 	}
@@ -228,7 +242,7 @@ void APlayer::CalMoveVector(float _DeltaTime)
 	{
 		if (0.001 <= MoveVector.Size2D())
 		{
-			MoveVector += (-MoveVector.Normalize2DReturn()) * _DeltaTime * MoveAcc;
+			MoveVector += (-MoveVector.Normalize2DReturn()) * _DeltaTime * StopAcc;
 		}
 		else
 		{
@@ -274,7 +288,8 @@ void APlayer::Move(float _DeltaTime)
 	}
 	if (UEngineInput::IsPress('W'))
 	{
-		AddMoveVector(FVector::Up * _DeltaTime);
+		FVector A = FVector::Up * _DeltaTime;
+		AddMoveVector(A);
 	}
 	if (UEngineInput::IsPress('S'))
 	{
@@ -314,7 +329,7 @@ void APlayer::Attack(float _DeltaTime)
 
 void APlayer::IdleStart()
 {
-	BodyRenderer->ChangeAnimation(GetAnimationName("Idle"));
+	BodyRenderer->ChangeAnimation("Idle");
 	DirCheck();
 }
 
