@@ -171,6 +171,7 @@
     <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="EngineCore.cpp" />
+    <ClCompile Include="EngineDebug.cpp" />
     <ClCompile Include="EngineResourcesManager.cpp" />
     <ClCompile Include="ImageRenderer.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="EngineCore.h" />
+    <ClInclude Include="EngineDebug.h" />
     <ClInclude Include="EngineResourcesManager.h" />
     <ClInclude Include="ImageRenderer.h" />
     <ClInclude Include="Level.h" />
