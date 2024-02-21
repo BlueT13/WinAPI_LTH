@@ -44,6 +44,7 @@ void AIntroBackground::Tick(float _DeltaTime)
 	if (StartIter == EndIter)
 	{
 		GEngine->ChangeLevel("TitleLevel");
+		return;
 	}
 
 	Time += _DeltaTime;
