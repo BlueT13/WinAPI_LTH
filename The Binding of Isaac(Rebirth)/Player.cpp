@@ -31,10 +31,10 @@ void APlayer::BeginPlay()
 		BodyRenderer->SetImage("Body.png");
 		BodyRenderer->SetTransform({ { 0,10 }, {64,64} });
 		BodyRenderer->CreateAnimation("Idle", "Body.png", 20, 20, 0.1f, true);
-		BodyRenderer->CreateAnimation("Move_Right", "Body.png", 10, 19, 1.0f, true);
-		BodyRenderer->CreateAnimation("Move_Left", "Body.png", 0, 9, 1.0f, true);
-		BodyRenderer->CreateAnimation("Move_UP", "Body.png", 20, 29, 1.0f, true);
-		BodyRenderer->CreateAnimation("Move_Down", "Body.png", 20, 29, 1.0f, true);
+		BodyRenderer->CreateAnimation("Move_Right", "Body.png", 10, 19, 0.1f, true);
+		BodyRenderer->CreateAnimation("Move_Left", "Body.png", 0, 9, 0.1f, true);
+		BodyRenderer->CreateAnimation("Move_UP", "Body.png", 20, 29, 0.1f, true);
+		BodyRenderer->CreateAnimation("Move_Down", "Body.png", 20, 29, 0.1f, true);
 	}
 
 	StateChange(EPlayState::Idle);
