@@ -25,7 +25,7 @@ void UIsaacCore::BeginPlay()
 
 	CreateLevel<UIntroLevel>("IntroLevel");
 	CreateLevel<UTitleLevel>("TitleLevel");
-	//CreateLevel<UPlayLevel>("PlayLevel");
+	CreateLevel<UPlayLevel>("PlayLevel");
 
 	ChangeLevel("IntroLevel");
 }

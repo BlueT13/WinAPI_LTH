@@ -63,9 +63,9 @@ private:
 	void AddMoveVector(const FVector& _DirDelta);
 
 	FVector LastMoveVector = FVector::Zero;
-	void CalLastMoveVector(float _DeltaTime);
+	void MoveUpdate(float _DeltaTime);
 	void CalMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
-	void MoveUpdate(float _DeltaTime);
+	void CalLastMoveVector(float _DeltaTime);
 };
 

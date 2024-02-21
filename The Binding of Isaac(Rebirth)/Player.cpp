@@ -16,7 +16,8 @@ void APlayer::BeginPlay()
 {
 	AActor::BeginPlay();
 
-	SetActorLocation({ 300, 300 });
+	FVector HalfScale = GEngine->MainWindow.GetWindowScale().Half2D();
+	SetActorLocation(HalfScale);
 
 	/*{
 		HeadRenderer = CreateImageRenderer(IsaacRenderOrder::Player);
@@ -27,10 +28,11 @@ void APlayer::BeginPlay()
 
 	{
 		BodyRenderer = CreateImageRenderer(IsaacRenderOrder::Player);
-		BodyRenderer->SetImage("IsaacRight_0.png");
+		BodyRenderer->SetImage("IsaacBody_Right.png");
 		UWindowImage* Image = BodyRenderer->GetImage();
 		FVector ImageScale = Image->GetScale();
 		BodyRenderer->SetTransform({ { 0,10 }, ImageScale });
+		BodyRenderer->CreateAnimation("Move_Right", "IsaacBody_Right.png", 0, 0, 0.1f, true);
 	}
 }
 
@@ -92,6 +94,14 @@ void APlayer::DirCheck()
 	if (UEngineInput::IsPress('S'))
 	{
 		Dir = EActorDir::Down;
+	}
+
+	if (Dir != DirState)
+	{
+		DirState = Dir;
+		std::string Name = GetAnimationName(CurAnimationName);
+		
+		BodyRenderer->ChangeAnimation(Name, true, BodyRenderer->GetCurAnimationFrame(), BodyRenderer->GetCurAnimationTime());
 	}
 }
 
@@ -181,12 +191,74 @@ void APlayer::AddMoveVector(const FVector& _DirDelta)
 	MoveVector += _DirDelta * MoveAcc;
 }
 
+void APlayer::MoveUpdate(float _DeltaTime)
+{
+	CalLastMoveVector(_DeltaTime);
+	CalMoveVector(_DeltaTime);
+	MoveLastMoveVector(_DeltaTime);
+}
+
+void APlayer::CalMoveVector(float _DeltaTime)
+{
+	FVector CheckPos = GetActorLocation();
+	switch (DirState)
+	{
+	case EActorDir::Left:
+		CheckPos.X -= 30;
+		break;
+	case EActorDir::Right:
+		CheckPos.X += 30;
+		break;
+	case EActorDir::Up:
+		CheckPos.Y -= 30;
+	case EActorDir::Down:
+		CheckPos.Y += 30;
+	default:
+		break;
+	}
+	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
+
+	if (Color == Color8Bit(255, 0, 255, 0))
+	{
+		MoveVector = FVector::Zero;
+	}
+
+	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S') &&
+		UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT) && UEngineInput::IsFree(VK_UP) && UEngineInput::IsFree(VK_DOWN))
+	{
+		if (0.001 <= MoveVector.Size2D())
+		{
+			MoveVector += (-MoveVector.Normalize2DReturn()) * _DeltaTime * MoveAcc;
+		}
+		else
+		{
+			MoveVector = float4::Zero;
+		}
+	}
+
+	if (MoveMaxSpeed <= MoveVector.Size2D())
+	{
+		MoveVector = MoveVector.Normalize2DReturn() * MoveMaxSpeed;
+	}
+}
+
+void APlayer::CalLastMoveVector(float _DeltaTime)
+{
+	LastMoveVector = FVector::Zero;
+	LastMoveVector = LastMoveVector + MoveVector;
+}
+
+void APlayer::MoveLastMoveVector(float _DeltaTime)
+{
+	AddActorLocation(LastMoveVector * _DeltaTime);
+}
+
 void APlayer::Move(float _DeltaTime)
 {
 	DirCheck();
 
 	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S') &&
-		UEngineInput::IsPress(VK_LEFT) && UEngineInput::IsPress(VK_RIGHT) && UEngineInput::IsPress(VK_UP) && UEngineInput::IsPress(VK_DOWN))
+		UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT) && UEngineInput::IsFree(VK_UP) && UEngineInput::IsFree(VK_DOWN))
 	{
 		StateChange(EPlayState::Idle);
 		return;
@@ -208,5 +280,53 @@ void APlayer::Move(float _DeltaTime)
 	{
 		AddMoveVector(FVector::Down * _DeltaTime);
 	}
+
+	MoveUpdate(_DeltaTime);
+}
+
+void APlayer::Attack(float _DeltaTime)
+{
+	if (true == UEngineInput::IsDown(VK_LEFT))
+	{
+		ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+		NewBullet->SetActorLocation(GetActorLocation());
+		NewBullet->SetDir(FVector::Left);
+	}
+	if (true == UEngineInput::IsDown(VK_RIGHT))
+	{
+		ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+		NewBullet->SetActorLocation(GetActorLocation());
+		NewBullet->SetDir(FVector::Right);
+	}
+	if (true == UEngineInput::IsDown(VK_UP))
+	{
+		ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+		NewBullet->SetActorLocation(GetActorLocation());
+		NewBullet->SetDir(FVector::Up);
+	}
+	if (true == UEngineInput::IsDown(VK_DOWN))
+	{
+		ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+		NewBullet->SetActorLocation(GetActorLocation());
+		NewBullet->SetDir(FVector::Down);
+	}
+}
+
+void APlayer::IdleStart()
+{
+	BodyRenderer->ChangeAnimation(GetAnimationName("Idle"));
+	DirCheck();
+}
+
+void APlayer::MoveStart()
+{
+	BodyRenderer->ChangeAnimation(GetAnimationName("Move"));
+	DirCheck();
+}
+
+void APlayer::AttackStart()
+{
+	BodyRenderer->ChangeAnimation(GetAnimationName("Attack"));
+	DirCheck();
 }
 
