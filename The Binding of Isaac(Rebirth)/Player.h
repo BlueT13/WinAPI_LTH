@@ -58,7 +58,7 @@ private:
 	bool Dir = false;
 
 	FVector MoveVector = FVector::Zero;
-	FVector MoveAcc = FVector::Right * 1000.0f;
+	FVector MoveAcc = FVector::Right * 900.0f;
 	FVector StopAcc = FVector::Right * 1000.0f;
 	float MoveMaxSpeed = 400.0f;
 	void AddMoveVector(const FVector& _DirDelta);
@@ -69,4 +69,3 @@ private:
 	void MoveLastMoveVector(float _DeltaTime);
 	void CalLastMoveVector(float _DeltaTime);
 };
-

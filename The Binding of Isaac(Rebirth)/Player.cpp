@@ -230,8 +230,8 @@ void APlayer::CalMoveVector(float _DeltaTime)
 	default:
 		break;
 	}
+	
 	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
-
 	if (Color == Color8Bit(255, 0, 255, 0))
 	{
 		MoveVector = FVector::Zero;
@@ -240,7 +240,7 @@ void APlayer::CalMoveVector(float _DeltaTime)
 	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S') &&
 		UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT) && UEngineInput::IsFree(VK_UP) && UEngineInput::IsFree(VK_DOWN))
 	{
-		if (0.001 <= MoveVector.Size2D())
+		if (10 <= MoveVector.Size2D())
 		{
 			MoveVector += (-MoveVector.Normalize2DReturn()) * _DeltaTime * StopAcc;
 		}
