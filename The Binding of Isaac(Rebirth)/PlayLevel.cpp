@@ -36,4 +36,9 @@ void UPlayLevel::BeginPlay()
 void UPlayLevel::Tick(float _DeltaTime)
 {
 	ULevel::Tick(_DeltaTime);
+
+	if (UEngineInput::IsDown(VK_ESCAPE))
+	{
+		GEngine->ChangeLevel("TitleLevel");
+	}
 }

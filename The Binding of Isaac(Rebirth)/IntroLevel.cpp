@@ -26,7 +26,7 @@ void UIntroLevel::Tick(float _DeltaTime)
 
 	if (UEngineInput::IsDown(VK_ESCAPE))
 	{
-		//
+		GEngine->MainWindow.Off();
 	}
 
 	if (UEngineInput::IsDown(VK_SPACE))

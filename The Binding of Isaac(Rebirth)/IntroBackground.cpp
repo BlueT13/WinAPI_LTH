@@ -55,8 +55,4 @@ void AIntroBackground::Tick(float _DeltaTime)
 		++StartIter;
 		Time = _DeltaTime - FrameTime;
 	}
-	else
-	{
-		return;
-	}
 }
