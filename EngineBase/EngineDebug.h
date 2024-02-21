@@ -4,7 +4,7 @@
 #include <string>
 #include <string_view>
 
-namespace EngineDebug
+namespace UEngineDebug
 {
 	#define LeakCheck _CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
 	#define MsgBoxAssert(Value) \
