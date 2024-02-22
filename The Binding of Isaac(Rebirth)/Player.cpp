@@ -288,8 +288,7 @@ void APlayer::Move(float _DeltaTime)
 	}
 	if (UEngineInput::IsPress('W'))
 	{
-		FVector A = FVector::Up * _DeltaTime;
-		AddMoveVector(A);
+		AddMoveVector(FVector::Up * _DeltaTime);
 	}
 	if (UEngineInput::IsPress('S'))
 	{
