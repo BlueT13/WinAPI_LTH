@@ -7,7 +7,9 @@ enum IsaacRenderOrder
 {
 	Map,
 	Monster,
-	Player
+	PlayerBody,
+	PlayerHead,
+	Bullet,
 };
 
 enum class IsaacCollisionOrder

@@ -23,7 +23,8 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	void DirCheck();
+	void BodyDirCheck();
+	void HeadDirCheck();
 
 	std::string GetAnimationName(std::string _Name);
 
@@ -42,11 +43,12 @@ protected:
 	void AttackStart();
 
 	EPlayState State = EPlayState::None;
-	EActorDir DirState = EActorDir::Right;
+	EActorDir BodyDirState = EActorDir::Right;
+	EActorDir HeadDirState = EActorDir::Right;
 	std::string CurAnimationName = "None";
 
 private:
-	float fireRate = 0.0f;
+	float fireRate = 1.0f;
 
 	UImageRenderer* HeadRenderer = nullptr;
 	UImageRenderer* BodyRenderer = nullptr;

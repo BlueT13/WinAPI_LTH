@@ -27,7 +27,7 @@ void UPlayLevel::BeginPlay()
 		std::string FullPath = File.GetFullPath();
 		UEngineResourcesManager::GetInst().LoadImg(FullPath);
 	}
-
+	UEngineResourcesManager::GetInst().CuttingImage("Head.png", 5, 2);
 	UEngineResourcesManager::GetInst().CuttingImage("Body.png", 5, 6);
 
 	SpawnActor<APlayer>();

@@ -19,22 +19,31 @@ void APlayer::BeginPlay()
 	FVector HalfScale = GEngine->MainWindow.GetWindowScale().Half2D();
 	SetActorLocation(HalfScale);
 
-	/*{
-		HeadRenderer = CreateImageRenderer(IsaacRenderOrder::Player);
+	{
+		HeadRenderer = CreateImageRenderer(IsaacRenderOrder::PlayerHead);
 		HeadRenderer->SetImage("Head.png");
-		HeadRenderer->SetTransform({ { 0,0 }, { 50,50 } });
-		HeadRenderer->SetImageCuttingTransform({ {0,0}, {30, 30} });
-	}*/
+		HeadRenderer->SetTransform({ { 0,0 }, { 64,64 } });
+		HeadRenderer->CreateAnimation("HeadIdle", "Head.png", 7, 7, 0.1f, true);
+		HeadRenderer->CreateAnimation("HeadMove_Left", "Head.png", 1, 1, 0.1f, true);
+		HeadRenderer->CreateAnimation("HeadMove_Right", "Head.png", 3, 3, 0.1f, true);
+		HeadRenderer->CreateAnimation("HeadMove_Up", "Head.png", 5, 5, 0.1f, true);
+		HeadRenderer->CreateAnimation("HeadMove_Down", "Head.png", 7, 7, 0.1f, true);
+		
+		HeadRenderer->CreateAnimation("Attack_Left", "Head.png", 0, 1, fireRate, true);
+		HeadRenderer->CreateAnimation("Attack_Right", "Head.png", 2, 3, fireRate, true);
+		HeadRenderer->CreateAnimation("Attack_Up", "Head.png", 4, 5, fireRate, true);
+		HeadRenderer->CreateAnimation("Attack_Down", "Head.png", 6, 7, fireRate, true);
+	}
 
 	{
-		BodyRenderer = CreateImageRenderer(IsaacRenderOrder::Player);
+		BodyRenderer = CreateImageRenderer(IsaacRenderOrder::PlayerBody);
 		BodyRenderer->SetImage("Body.png");
-		BodyRenderer->SetTransform({ { 0,10 }, {64,64} });
-		BodyRenderer->CreateAnimation("Idle", "Body.png", 20, 20, 0.1f, true);
-		BodyRenderer->CreateAnimation("Move_Right", "Body.png", 10, 19, 0.1f, true);
-		BodyRenderer->CreateAnimation("Move_Left", "Body.png", 0, 9, 0.1f, true);
-		BodyRenderer->CreateAnimation("Move_UP", "Body.png", 20, 29, 0.1f, true);
-		BodyRenderer->CreateAnimation("Move_Down", "Body.png", 20, 29, 0.1f, true);
+		BodyRenderer->SetTransform({ { 0,28 }, {64,64} });
+		BodyRenderer->CreateAnimation("BodyIdle", "Body.png", 24, 24, 0.1f, true);
+		BodyRenderer->CreateAnimation("BodyMove_Left", "Body.png", 0, 9, 0.1f, true);
+		BodyRenderer->CreateAnimation("BodyMove_Right", "Body.png", 10, 19, 0.1f, true);
+		BodyRenderer->CreateAnimation("BodyMove_UP", "Body.png", 20, 29, 0.1f, true);
+		BodyRenderer->CreateAnimation("BodyMove_Down", "Body.png", 20, 29, 0.1f, true);
 	}
 
 	StateChange(EPlayState::Idle);
@@ -45,64 +54,60 @@ void APlayer::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 
 	StateUpdate(_DeltaTime);
-
-	//if (true == UEngineInput::IsPress('A'))
-	//{
-	//	AddActorLocation(FVector::Left * 500.0f * _DeltaTime);
-
-	//}
-
-	//if (true == UEngineInput::IsPress('D'))
-	//{
-	//	AddActorLocation(FVector::Right * 500.0f * _DeltaTime);
-	//}
-
-	//if (true == UEngineInput::IsPress('W'))
-	//{
-	//	AddActorLocation(FVector::Up * 500.0f * _DeltaTime);
-	//}
-
-	//if (true == UEngineInput::IsPress('S'))
-	//{
-	//	AddActorLocation(FVector::Down * 500.0f * _DeltaTime);
-	//}
-
-	//if (true == UEngineInput::IsDown('T'))
-	//{
-	//	BodyRenderer->Destroy();
-	//}
-
-	//if (true == UEngineInput::IsDown('Q'))
-	//{
-	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
-	//	NewBullet->SetActorLocation(GetActorLocation());
-	//	NewBullet->SetDir(FVector::Right);
-	//}
 }
 
-void APlayer::DirCheck()
+void APlayer::BodyDirCheck()
 {
-	EActorDir Dir = DirState;
+	EActorDir BodyDir = BodyDirState;
 	if (UEngineInput::IsPress('A'))
 	{
-		Dir = EActorDir::Left;
+		BodyDir = EActorDir::Left;
 	}
 	if (UEngineInput::IsPress('D'))
 	{
-		Dir = EActorDir::Right;
+		BodyDir = EActorDir::Right;
 	}
 	if (UEngineInput::IsPress('W'))
 	{
-		Dir = EActorDir::Up;
+		BodyDir = EActorDir::Up;
 	}
 	if (UEngineInput::IsPress('S'))
 	{
-		Dir = EActorDir::Down;
+		BodyDir = EActorDir::Down;
 	}
 
-	if (Dir != DirState)
+	if (BodyDir != BodyDirState)
 	{
-		DirState = Dir;
+		BodyDirState = BodyDir;
+		std::string Name = GetAnimationName(CurAnimationName);
+
+		BodyRenderer->ChangeAnimation(Name, true, BodyRenderer->GetCurAnimationFrame(), BodyRenderer->GetCurAnimationTime());
+	}
+}
+
+void APlayer::HeadDirCheck()
+{
+	EActorDir HeadDir = HeadDirState;
+	if (UEngineInput::IsPress(VK_LEFT))
+	{
+		HeadDir = EActorDir::Left;
+	}
+	if (UEngineInput::IsPress(VK_RIGHT))
+	{
+		HeadDir = EActorDir::Right;
+	}
+	if (UEngineInput::IsPress(VK_UP))
+	{
+		HeadDir = EActorDir::Up;
+	}
+	if (UEngineInput::IsPress(VK_DOWN))
+	{
+		HeadDir = EActorDir::Down;
+	}
+
+	if (HeadDir != HeadDirState)
+	{
+		HeadDirState = HeadDir;
 		std::string Name = GetAnimationName(CurAnimationName);
 
 		BodyRenderer->ChangeAnimation(Name, true, BodyRenderer->GetCurAnimationFrame(), BodyRenderer->GetCurAnimationTime());
@@ -113,7 +118,7 @@ std::string APlayer::GetAnimationName(std::string _Name)
 {
 	std::string DirName = "";
 
-	switch (DirState)
+	switch (BodyDirState)
 	{
 	case EActorDir::Left:
 		DirName = "_Left";
@@ -213,7 +218,7 @@ void APlayer::MoveUpdate(float _DeltaTime)
 void APlayer::CalMoveVector(float _DeltaTime)
 {
 	FVector CheckPos = GetActorLocation();
-	switch (DirState)
+	switch (BodyDirState)
 	{
 	case EActorDir::Left:
 		CheckPos.X -= 30;
@@ -269,7 +274,7 @@ void APlayer::MoveLastMoveVector(float _DeltaTime)
 
 void APlayer::Move(float _DeltaTime)
 {
-	DirCheck();
+	BodyDirCheck();
 
 	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S') &&
 		UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT) && UEngineInput::IsFree(VK_UP) && UEngineInput::IsFree(VK_DOWN))
@@ -300,47 +305,60 @@ void APlayer::Move(float _DeltaTime)
 
 void APlayer::Attack(float _DeltaTime)
 {
-	if (true == UEngineInput::IsDown(VK_LEFT))
+	BodyDirCheck();
+
+	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S') &&
+		UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT) && UEngineInput::IsFree(VK_UP) && UEngineInput::IsFree(VK_DOWN))
 	{
-		ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
-		NewBullet->SetActorLocation(GetActorLocation());
-		NewBullet->SetDir(FVector::Left);
+		StateChange(EPlayState::Idle);
+		return;
 	}
-	if (true == UEngineInput::IsDown(VK_RIGHT))
-	{
-		ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
-		NewBullet->SetActorLocation(GetActorLocation());
-		NewBullet->SetDir(FVector::Right);
-	}
-	if (true == UEngineInput::IsDown(VK_UP))
-	{
-		ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
-		NewBullet->SetActorLocation(GetActorLocation());
-		NewBullet->SetDir(FVector::Up);
-	}
-	if (true == UEngineInput::IsDown(VK_DOWN))
-	{
-		ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
-		NewBullet->SetActorLocation(GetActorLocation());
-		NewBullet->SetDir(FVector::Down);
-	}
+
+	//if (true == UEngineInput::IsDown(VK_LEFT))
+	//{
+	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+	//	NewBullet->SetActorLocation(GetActorLocation());
+	//	NewBullet->SetDir(FVector::Left);
+	//}
+	//if (true == UEngineInput::IsDown(VK_RIGHT))
+	//{
+	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+	//	NewBullet->SetActorLocation(GetActorLocation());
+	//	NewBullet->SetDir(FVector::Right);
+	//}
+	//if (true == UEngineInput::IsDown(VK_UP))
+	//{
+	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+	//	NewBullet->SetActorLocation(GetActorLocation());
+	//	NewBullet->SetDir(FVector::Up);
+	//}
+	//if (true == UEngineInput::IsDown(VK_DOWN))
+	//{
+	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+	//	NewBullet->SetActorLocation(GetActorLocation());
+	//	NewBullet->SetDir(FVector::Down);
+	//}
+
+	MoveUpdate(_DeltaTime);
 }
 
 void APlayer::IdleStart()
 {
-	BodyRenderer->ChangeAnimation("Idle");
-	DirCheck();
+	BodyDirCheck();
+	HeadRenderer->ChangeAnimation("HeadIdle");
+	BodyRenderer->ChangeAnimation("BodyIdle");
 }
 
 void APlayer::MoveStart()
 {
-	BodyRenderer->ChangeAnimation(GetAnimationName("Move"));
-	DirCheck();
+	BodyDirCheck();
+	HeadRenderer->ChangeAnimation(GetAnimationName("HeadMove"));
+	BodyRenderer->ChangeAnimation(GetAnimationName("BodyMove"));
 }
 
 void APlayer::AttackStart()
 {
-	BodyRenderer->ChangeAnimation(GetAnimationName("Attack"));
-	DirCheck();
+	BodyDirCheck();
+	HeadRenderer->ChangeAnimation(GetAnimationName("Attack"));
 }
 
