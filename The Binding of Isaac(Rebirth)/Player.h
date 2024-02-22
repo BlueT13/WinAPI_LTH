@@ -60,7 +60,7 @@ private:
 	FVector MoveVector = FVector::Zero;
 	FVector MoveAcc = { 3000.0f, 3000.0f };
 	FVector StopAcc = { 2000.0f, 2000.0f };
-	float MoveMaxSpeed = 360.0f;
+	float MoveMaxSpeed = 330.0f;
 	void AddMoveVector(const FVector& _DirDelta);
 
 	FVector LastMoveVector = FVector::Zero;
