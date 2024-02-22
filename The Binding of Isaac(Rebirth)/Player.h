@@ -58,9 +58,9 @@ private:
 	bool Dir = false;
 
 	FVector MoveVector = FVector::Zero;
-	FVector MoveAcc = { 800.0f, 800.0f };
-	FVector StopAcc = { 1000.0f, 1000.0f };
-	float MoveMaxSpeed = 350.0f;
+	FVector MoveAcc = { 3000.0f, 3000.0f };
+	FVector StopAcc = { 2000.0f, 2000.0f };
+	float MoveMaxSpeed = 360.0f;
 	void AddMoveVector(const FVector& _DirDelta);
 
 	FVector LastMoveVector = FVector::Zero;
