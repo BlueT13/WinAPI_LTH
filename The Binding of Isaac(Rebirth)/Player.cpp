@@ -22,7 +22,7 @@ void APlayer::BeginPlay()
 	{
 		HeadRenderer = CreateImageRenderer(IsaacRenderOrder::PlayerHead);
 		HeadRenderer->SetImage("Head.png");
-		HeadRenderer->SetTransform({ HeadRendererPos, { 64,64 } });
+		HeadRenderer->SetTransform({ HeadRendererPos, RendererSize });
 		HeadRenderer->CreateAnimation("HeadIdle", "Head.png", 7, 7, 0.1f, true);
 		HeadRenderer->CreateAnimation("HeadMove_Left", "Head.png", 1, 1, 0.1f, true);
 		HeadRenderer->CreateAnimation("HeadMove_Right", "Head.png", 3, 3, 0.1f, true);
@@ -38,7 +38,7 @@ void APlayer::BeginPlay()
 	{
 		BodyRenderer = CreateImageRenderer(IsaacRenderOrder::PlayerBody);
 		BodyRenderer->SetImage("Body.png");
-		BodyRenderer->SetTransform({ {0,0}, {64,64} });
+		BodyRenderer->SetTransform({ BodyRendererPos, RendererSize });
 		BodyRenderer->CreateAnimation("BodyIdle", "Body.png", 24, 24, 0.1f, true);
 		BodyRenderer->CreateAnimation("BodyMove_Left", "Body.png", 0, 9, 0.1f, true);
 		BodyRenderer->CreateAnimation("BodyMove_Right", "Body.png", 10, 19, 0.1f, true);
@@ -274,31 +274,6 @@ void APlayer::BodyMoveUpdate(float _DeltaTime)
 
 void APlayer::CalMoveVector(float _DeltaTime)
 {
-	FVector CheckPos = GetActorLocation();
-	switch (BodyDirState)
-	{
-	case EActorDir::Left:
-		CheckPos.X -= 30;
-		break;
-	case EActorDir::Right:
-		CheckPos.X += 30;
-		break;
-	case EActorDir::Up:
-		CheckPos.Y -= 30;
-		break;
-	case EActorDir::Down:
-		CheckPos.Y += 30;
-		break;
-	default:
-		break;
-	}
-
-	Color8Bit Color = UContentsHelper::ColMapImage->GetColor(CheckPos.iX(), CheckPos.iY(), Color8Bit::MagentaA);
-	if (Color == Color8Bit(255, 0, 255, 0))
-	{
-		MoveVector = FVector::Zero;
-	}
-
 	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
 	{
 		if (100 <= MoveVector.Size2D())
@@ -325,6 +300,14 @@ void APlayer::CalLastMoveVector(float _DeltaTime)
 
 void APlayer::MoveLastMoveVector(float _DeltaTime)
 {
+	FVector PlayerPos = GetActorLocation();
+	FVector PlayerNextPos = PlayerPos + MoveVector * _DeltaTime;
+	if (PlayerNextPos.X < 100 || PlayerNextPos.Y < 100)
+	{
+		PlayerNextPos.X = 0.0f;
+		return;
+	}
+
 	AddActorLocation(LastMoveVector * _DeltaTime);
 }
 

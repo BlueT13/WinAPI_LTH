@@ -62,6 +62,8 @@ private:
 	UImageRenderer* HeadRenderer = nullptr;
 	UImageRenderer* BodyRenderer = nullptr;
 	FVector HeadRendererPos = { 0,-28 };
+	FVector BodyRendererPos = { 0,0 };
+	FVector RendererSize = { 64,64 };
 
 	UCollision* BodyCollision = nullptr;
 
