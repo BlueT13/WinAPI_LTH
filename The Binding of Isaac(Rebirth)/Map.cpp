@@ -10,6 +10,18 @@ AMap::~AMap()
 {
 }
 
+void AMap::BeginPlay()
+{
+	AActor::BeginPlay();
+
+	Renderer = CreateImageRenderer(IsaacRenderOrder::Map);
+	ColRenderer = CreateImageRenderer(IsaacRenderOrder::Map);
+	ColRenderer->SetActive(false);
+
+	SetMapImage("Map_01.png");
+	SetColMapImage("Map_col.png");
+}
+
 void AMap::SetMapImage(std::string_view _MapImageName)
 {
 	Renderer->SetImage(_MapImageName);
@@ -50,16 +62,4 @@ void AMap::SwitchDebug()
 		ColRenderer->SetActive(false);
 	}
 
-}
-
-void AMap::BeginPlay()
-{
-	AActor::BeginPlay();
-
-	Renderer = CreateImageRenderer(IsaacRenderOrder::Map);
-	ColRenderer = CreateImageRenderer(IsaacRenderOrder::Map);
-	ColRenderer->SetActive(false);
-
-	SetMapImage("01_map.png");
-	SetColMapImage("map_col.png");
 }

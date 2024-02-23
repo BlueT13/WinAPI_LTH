@@ -26,32 +26,43 @@ protected:
 	void BodyDirCheck();
 	void HeadDirCheck();
 
-	std::string GetAnimationName(std::string _Name);
+	std::string GetHeadAnimationName(std::string _HeadAni);
+	std::string GetBodyAnimationName(std::string _BodyAni);
 
 	// 상태 주요 업데이트
-	void StateChange(EPlayState _State);
-	void StateUpdate(float _DeltaTime);
+	void HeadStateChange(EPlayerHeadState _State);
+	void HeadStateUpdate(float _DeltaTime);
+	void BodyStateChange(EPlayerBodyState _State);
+	void BodyStateUpdate(float _DeltaTime);
+
 
 	// 상태 함수들
-	void Idle(float _DeltaTime);
-	void Move(float _DeltaTime);
+	void HeadIdle(float _DeltaTime);
+	void BodyIdle(float _DeltaTime);
+	void BodyMove(float _DeltaTime);
 	void Attack(float _DeltaTime);
 
 	// 상태 시작 함수들
-	void IdleStart();
-	void MoveStart();
-	void AttackStart();
+	void HeadIdleStart();
+	void BodyIdleStart();
+	void HeadMoveStart();
+	void BodyMoveStart();
+	void HeadAttackStart();
 
-	EPlayState State = EPlayState::None;
-	EActorDir BodyDirState = EActorDir::Right;
-	EActorDir HeadDirState = EActorDir::Right;
-	std::string CurAnimationName = "None";
+	EPlayerHeadState HeadState = EPlayerHeadState::None;
+	EPlayerBodyState BodyState = EPlayerBodyState::None;
+	EActorDir BodyDirState = EActorDir::Down;
+	EActorDir HeadDirState = EActorDir::Down;
+	std::string CurHeadAnimationName = "None";
+	std::string CurBodyAnimationName = "None";
 
 private:
 	float fireRate = 1.0f;
 
 	UImageRenderer* HeadRenderer = nullptr;
 	UImageRenderer* BodyRenderer = nullptr;
+	FVector HeadRendererPos = { 0,-28 };
+
 	UCollision* BodyCollision = nullptr;
 
 	float AnimationTime = 0.0f;
@@ -60,13 +71,13 @@ private:
 	bool Dir = false;
 
 	FVector MoveVector = FVector::Zero;
-	FVector MoveAcc = { 3000.0f, 3000.0f };
+	FVector MoveAcc = { 2500.0f, 2500.0f };
 	FVector StopAcc = { 2000.0f, 2000.0f };
 	float MoveMaxSpeed = 330.0f;
 	void AddMoveVector(const FVector& _DirDelta);
 
 	FVector LastMoveVector = FVector::Zero;
-	void MoveUpdate(float _DeltaTime);
+	void BodyMoveUpdate(float _DeltaTime);
 	void CalMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
 	void CalLastMoveVector(float _DeltaTime);

@@ -27,15 +27,19 @@ enum class EActorDir
 	Down,
 };
 
-enum class EPlayState
+enum class EPlayerHeadState
+{
+	None,
+	Idle,
+	Attack,
+};
+
+enum class EPlayerBodyState
 {
 	None,
 	Idle,
 	Move,
-	Attack,
 };
-
-
 
 // Ό³Έν :
 class UContentsHelper
