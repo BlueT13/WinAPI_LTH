@@ -332,7 +332,6 @@ void APlayer::BodyMove(float _DeltaTime)
 {
 	BodyDirCheck();
 
-	//if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
 	if (UEngineInput::IsPress('A'))
 	{
 		AddMoveVector(FVector::Left * _DeltaTime);
@@ -352,7 +351,7 @@ void APlayer::BodyMove(float _DeltaTime)
 
 	BodyMoveUpdate(_DeltaTime);
 
-	if (MoveVector.IsZeroVector2D())
+	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
 	{
 		BodyStateChange(EPlayerBodyState::Idle);
 		return;
