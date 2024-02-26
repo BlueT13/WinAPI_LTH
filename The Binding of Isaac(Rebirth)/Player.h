@@ -39,6 +39,7 @@ protected:
 	// 상태 함수들
 	void HeadIdle(float _DeltaTime);
 	void BodyIdle(float _DeltaTime);
+	void HeadMove(float _DeltaTime);
 	void BodyMove(float _DeltaTime);
 	void Attack(float _DeltaTime);
 

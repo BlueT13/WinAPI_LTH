@@ -28,9 +28,4 @@ void UIntroLevel::Tick(float _DeltaTime)
 	{
 		GEngine->MainWindow.Off();
 	}
-
-	if (UEngineInput::IsDown(VK_SPACE))
-	{
-		GEngine->ChangeLevel("TitleLevel");
-	}
 }

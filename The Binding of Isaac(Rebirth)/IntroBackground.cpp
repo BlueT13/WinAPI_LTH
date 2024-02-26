@@ -41,8 +41,16 @@ void AIntroBackground::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
+	if (UEngineInput::IsDown(VK_SPACE))
+	{
+		AllFileList.clear();
+		GEngine->ChangeLevel("TitleLevel");
+		return;
+	}
+
 	if (StartIter == EndIter)
 	{
+		AllFileList.clear();
 		GEngine->ChangeLevel("TitleLevel");
 		return;
 	}

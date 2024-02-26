@@ -61,6 +61,23 @@ void APlayer::Tick(float _DeltaTime)
 void APlayer::HeadDirCheck()
 {
 	EActorDir HeadDir = HeadDirState;
+	if (UEngineInput::IsPress('A'))
+	{
+		HeadDir = EActorDir::Left;
+	}
+	if (UEngineInput::IsPress('D'))
+	{
+		HeadDir = EActorDir::Right;
+	}
+	if (UEngineInput::IsPress('W'))
+	{
+		HeadDir = EActorDir::Up;
+	}
+	if (UEngineInput::IsPress('S'))
+	{
+		HeadDir = EActorDir::Down;
+	}
+
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
 		HeadDir = EActorDir::Left;
@@ -182,6 +199,9 @@ void APlayer::HeadStateChange(EPlayerHeadState _State)
 		case EPlayerHeadState::Attack:
 			HeadAttackStart();
 			break;
+		case EPlayerHeadState::Move:
+			HeadMoveStart();
+			break;
 		default:
 			break;
 		}
@@ -220,6 +240,9 @@ void APlayer::HeadStateUpdate(float _DeltaTime)
 	case EPlayerHeadState::Attack:
 		Attack(_DeltaTime);
 		break;
+	case EPlayerHeadState::Move:
+		HeadMove(_DeltaTime);
+		break;
 	default:
 		break;
 	}
@@ -247,6 +270,12 @@ void APlayer::HeadIdle(float _DeltaTime)
 		HeadStateChange(EPlayerHeadState::Attack);
 		return;
 	}
+
+	if (UEngineInput::IsPress('A') || UEngineInput::IsPress('D') || UEngineInput::IsPress('W') || UEngineInput::IsPress('S'))
+	{
+		HeadStateChange(EPlayerHeadState::Move);
+		return;
+	}
 }
 
 void APlayer::BodyIdle(float _DeltaTime)
@@ -258,6 +287,17 @@ void APlayer::BodyIdle(float _DeltaTime)
 	}
 
 	BodyMoveUpdate(_DeltaTime);
+}
+
+void APlayer::HeadMove(float _DeltaTime)
+{
+	HeadDirCheck();
+
+	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
+	{
+		HeadStateChange(EPlayerHeadState::Idle);
+		return;
+	}
 }
 
 void APlayer::AddMoveVector(const FVector& _DirDelta)
@@ -393,6 +433,13 @@ void APlayer::BodyIdleStart()
 	BodyDirCheck();
 }
 
+void APlayer::HeadAttackStart()
+{
+	HeadRenderer->ChangeAnimation(GetHeadAnimationName("Attack"));
+
+	HeadDirCheck();
+}
+
 void APlayer::HeadMoveStart()
 {
 	HeadRenderer->ChangeAnimation(GetHeadAnimationName("HeadMove"));
@@ -407,10 +454,4 @@ void APlayer::BodyMoveStart()
 	BodyDirCheck();
 }
 
-void APlayer::HeadAttackStart()
-{
-	HeadRenderer->ChangeAnimation(GetHeadAnimationName("Attack"));
-
-	HeadDirCheck();
-}
 
