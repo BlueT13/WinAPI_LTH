@@ -71,9 +71,8 @@ void UEngineResourcesManager::UnloadImg(std::string_view _Name)
 	}
 
 	UWindowImage* Image = Images[UpperName];
-	delete Image;
-
 	Images.erase(UpperName);
+	delete Image;
 }
 
 UWindowImage* UEngineResourcesManager::FindImg(std::string_view _Name)
