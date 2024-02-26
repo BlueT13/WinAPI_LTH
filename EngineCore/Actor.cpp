@@ -1,11 +1,11 @@
 #include "Actor.h"
 #include "ImageRenderer.h"
 
-AActor::AActor() 
+AActor::AActor()
 {
 }
 
-AActor::~AActor() 
+AActor::~AActor()
 {
 	for (UImageRenderer* ImageRenderer : Renderers)
 	{
@@ -35,6 +35,30 @@ AActor::~AActor()
 
 }
 
+void AActor::SetActive(bool _Active, float _ActiveTime /*= 0.0f*/)
+{
+	UTickObject::SetActive(_Active, _ActiveTime);
+
+	// 자신이 관리하고 있는 랜더러들도 다 죽여야 한다.
+	for (UImageRenderer* Renderer : Renderers)
+	{
+		Renderer->SetActive(_Active, _ActiveTime);
+	}
+
+	for (UCollision* Collision : Collisions)
+	{
+		Collision->SetActive(_Active, _ActiveTime);
+	}
+}
+
+void AActor::ChildTick(float _DeltaTime)
+{
+	for (UImageRenderer* Renderer : Renderers)
+	{
+		Renderer->Tick(_DeltaTime);
+	}
+}
+
 void AActor::Tick(float _DeltaTime)
 {
 	UTickObject::Tick(_DeltaTime);
@@ -61,22 +85,6 @@ UCollision* AActor::CreateCollision(int _Order /*= 0*/)
 	ActorCom->BeginPlay();
 	Collisions.push_back(Component);
 	return Component;
-}
-
-void AActor::SetActive(bool _Active, float _ActiveTime /*= 0.0f*/)
-{
-	UTickObject::SetActive(_Active, _ActiveTime);
-
-	// 자신이 관리하고 있는 랜더러들도 다 죽여야 한다.
-	for (UImageRenderer* Renderer : Renderers)
-	{
-		Renderer->SetActive(_Active, _ActiveTime);
-	}
-
-	for (UCollision* Collision : Collisions)
-	{
-		Collision->SetActive(_Active, _ActiveTime);
-	}
 }
 
 void AActor::Destroy(float _DestroyTime /*= 0.0f*/)
