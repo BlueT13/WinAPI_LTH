@@ -20,8 +20,7 @@ void AIntroBackground::BeginPlay()
 	FVector HalfScale = GEngine->MainWindow.GetWindowScale().Half2D();
 
 	UEngineDirectory FilePath;
-	FilePath.MoveParent();
-	FilePath.Move("Res");
+	FilePath.MoveToSearchChild("Res");
 	FilePath.Move("IntroLevel");
 	AllFileList = FilePath.AllFile({ ".png", ".bmp" }, true);
 
