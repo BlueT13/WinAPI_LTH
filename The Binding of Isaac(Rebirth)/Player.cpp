@@ -68,9 +68,6 @@ void APlayer::HeadStateUpdate(float _DeltaTime)
 	case EPlayerHeadState::Attack:
 		Attack(_DeltaTime);
 		break;
-	case EPlayerHeadState::Move:
-		HeadMove(_DeltaTime);
-		break;
 	default:
 		break;
 	}
@@ -117,17 +114,6 @@ void APlayer::HeadAttackStart()
 	HeadRenderer->ChangeAnimation(GetHeadAnimationName("Attack"));
 
 	HeadDirCheck();
-}
-
-void APlayer::HeadMove(float _DeltaTime)
-{
-	HeadDirCheck();
-
-	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
-	{
-
-		return;
-	}
 }
 
 void APlayer::Attack(float _DeltaTime)
@@ -222,6 +208,9 @@ void APlayer::HeadDirCheck()
 
 
 
+
+
+
 void APlayer::BodyStateUpdate(float _DeltaTime)
 {
 	switch (BodyState)
@@ -305,6 +294,7 @@ void APlayer::MoveLastMoveVector(float _DeltaTime)
 
 void APlayer::BodyMove(float _DeltaTime)
 {
+
 	HeadDirCheck();
 	BodyDirCheck();
 

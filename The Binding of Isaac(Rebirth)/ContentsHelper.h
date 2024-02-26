@@ -31,7 +31,6 @@ enum class EPlayerHeadState
 {
 	None,
 	Idle,
-	Move,
 	Attack,
 };
 
