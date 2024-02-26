@@ -59,6 +59,11 @@ void UEnginePath::MoveParent()
 	Path = Path.parent_path();
 }
 
+bool UEnginePath::IsRoot()
+{
+	return Path.root_path() == Path;
+}
+
 bool UEnginePath::IsFile()
 {
 	return !std::filesystem::is_directory(Path);

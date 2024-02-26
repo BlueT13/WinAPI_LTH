@@ -2,6 +2,7 @@
 #include <EngineBase\PathObject.h>
 #include <EngineBase\EngineMath.h>
 #include <EngineBase\Transform.h>
+#include <EngineBase\EngineDebug.h>
 #include <Windows.h>
 #include <string>
 #include <string_view>
@@ -33,6 +34,7 @@ public:
 	HBITMAP hBitMap;
 	HDC ImageDC = nullptr;
 	FTransform CuttingTrans;
+	UImageInfo* RotationMaskImage = nullptr;
 	EWIndowImageType ImageType = EWIndowImageType::IMG_NONE;
 };
 
@@ -85,11 +87,15 @@ public:
 
 	void TextCopy(const std::string& _Text, const std::string& _Font, float _Size, const FTransform& _Trans, Color8Bit _OutLineColor, Color8Bit _FillColor);
 
+	void TextCopyBold(const std::string& _Text, const std::string& _Font, float _Size, const FTransform& _Trans, Color8Bit _Color /*= Color8Bit::Black*/);
+
 	void TextCopyFormat(const std::string& _Text, const std::string& _Font, const Gdiplus::StringFormat& stringFormat, float _Size, const FTransform& _Trans, Color8Bit _Color /*= Color8Bit::Black*/);
 
 	bool Create(UWindowImage* _Image, const FVector& _Scale);
 
 	void Cutting(int _X, int _Y);
+
+	void SetCuttingTransform(const FTransform& _CuttingTrans, int _Index = 0);
 
 	void DrawRectangle(const FTransform& _Trans);
 	void DrawEllipse(const FTransform& _Trans);
@@ -102,9 +108,24 @@ public:
 	}
 
 	// 이걸 해줘야 회전이 가능합니다.
-	void SetRotationMaskImage(UWindowImage* _RotationMaskImage)
+	void SetRotationMaskImage(int _Index, UWindowImage* _RotationMaskImage, int _MaskIndex)
 	{
-		RotationMaskImage = _RotationMaskImage;
+		UImageInfo& Ref = _RotationMaskImage->Infos[_MaskIndex];
+		Infos[_Index].RotationMaskImage = &Ref;
+	}
+
+	void SetRotationMaskImageFolder(UWindowImage* _RotationMaskImage)
+	{
+		if (Infos.size() != _RotationMaskImage->Infos.size())
+		{
+			MsgBoxAssert("이미지정보의 크기가 다른 이미지 끼리 매칭을 할수가 없습니다.");
+			return;
+		}
+
+		for (int i = 0; i < static_cast<int>(Infos.size()); i++)
+		{
+			SetRotationMaskImage(i, _RotationMaskImage, i);
+		}
 	}
 
 	void TextPrint(std::string_view _Text, FVector _Pos);
@@ -112,7 +133,6 @@ public:
 protected:
 
 private:
-	UWindowImage* RotationMaskImage = nullptr;
 
 	EImageLoadType LoadType = EImageLoadType::IMG_Cutting;
 

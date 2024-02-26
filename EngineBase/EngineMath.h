@@ -171,10 +171,13 @@ public:
 	void Normalize2D()
 	{
 		float Size = Size2D();
-		X /= Size;
-		Y /= Size;
-		Z = 0.0f;
-		W = 0.0f;
+		if (0.0f < Size && false == isnan(Size))
+		{
+			X /= Size;
+			Y /= Size;
+			Z = 0.0f;
+			W = 0.0f;
+		}
 	}
 
 	// 나는 변화하지 않고 길이 1짜리로 변한 나와 방향이 같은 벡터를 리턴하는 함수
@@ -344,6 +347,7 @@ public:
 	static const Color8Bit Red;
 	static const Color8Bit Green;
 	static const Color8Bit Blue;
+	static const Color8Bit Yellow;
 	static const Color8Bit White;
 	static const Color8Bit Magenta;
 	static const Color8Bit Orange;
@@ -352,6 +356,7 @@ public:
 	static const Color8Bit RedA;
 	static const Color8Bit GreenA;
 	static const Color8Bit BlueA;
+	static const Color8Bit YellowA;
 	static const Color8Bit WhiteA;
 	static const Color8Bit MagentaA;
 	static const Color8Bit OrangeA;

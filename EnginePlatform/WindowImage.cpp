@@ -393,6 +393,23 @@ void UWindowImage::TextCopy(const std::string& _Text, const std::string& _Font, 
 	}
 }
 
+void UWindowImage::TextCopyBold(const std::string& _Text, const std::string& _Font, float _Size, const FTransform& _Trans, Color8Bit _Color)
+{
+	Gdiplus::StringFormat stringFormat;
+	stringFormat.SetAlignment(Gdiplus::StringAlignmentCenter);
+	stringFormat.SetLineAlignment(Gdiplus::StringAlignmentCenter);
+
+	Gdiplus::Graphics graphics(ImageDC);
+	std::wstring WFont = UEngineString::AnsiToUniCode(_Font);
+	Gdiplus::Font fnt(WFont.c_str(), _Size, Gdiplus::FontStyleBold, Gdiplus::UnitPixel);
+	Gdiplus::SolidBrush hB(Gdiplus::Color(_Color.R, _Color.G, _Color.B));
+	FVector Pos = _Trans.GetPosition();
+	Gdiplus::RectF  rectF(_Trans.GetPosition().X, _Trans.GetPosition().Y, 0, 0);
+
+	std::wstring WText = UEngineString::AnsiToUniCode(_Text);
+	graphics.DrawString(WText.c_str(), -1, &fnt, rectF, &stringFormat, &hB);  //출력
+}
+
 void UWindowImage::TextCopyFormat(const std::string& _Text, const std::string& _Font, const Gdiplus::StringFormat& stringFormat, float _Size, const FTransform& _Trans, Color8Bit _Color /*= Color8Bit::Black*/)
 {
 	Gdiplus::Graphics graphics(ImageDC);
@@ -473,6 +490,8 @@ void UWindowImage::PlgCopy(UWindowImage* _CopyImage, const FTransform& _Trans, i
 	}
 
 
+	UImageInfo& CurInfo = _CopyImage->Infos[_Index];
+
 	FTransform& ImageTrans = _CopyImage->Infos[_Index].CuttingTrans;
 
 	POINT Arr[3];
@@ -505,7 +524,7 @@ void UWindowImage::PlgCopy(UWindowImage* _CopyImage, const FTransform& _Trans, i
 	//// 각도만큼 회전시킨 값을 만들어 내야 합니다.
 	//// 어떻게 그렇게 만들수 있을까?
 
-	if (nullptr == _CopyImage->RotationMaskImage)
+	if (nullptr == CurInfo.RotationMaskImage)
 	{
 		MsgBoxAssert("이미지를 회전시키려고 했는데 이미지가 없습니다.");
 	}
@@ -522,7 +541,7 @@ void UWindowImage::PlgCopy(UWindowImage* _CopyImage, const FTransform& _Trans, i
 		ImageTop,   							// int x1,  
 		ImageScaleX, 							// int y1, 
 		ImageScaleY, 							// int y1, 
-		_CopyImage->RotationMaskImage->hBitMap, // 투명처리할 부분을 알려달라고 하는데
+		CurInfo.RotationMaskImage->hBitMap, // 투명처리할 부분을 알려달라고 하는데
 		ImageLeft,   							// int y1, 
 		ImageTop   							// int x1,  
 	);
@@ -551,6 +570,11 @@ void UWindowImage::Cutting(int _X, int _Y)
 		CuttingPos.X = 0.0f;
 		CuttingPos.Y += CuttingScale.Y;
 	}
+}
+
+void UWindowImage::SetCuttingTransform(const FTransform& _CuttingTrans, int _Index)
+{
+	Infos[_Index].CuttingTrans = _CuttingTrans;
 }
 
 Color8Bit UWindowImage::GetColor(int _X, int _Y, Color8Bit _DefaultColor)
