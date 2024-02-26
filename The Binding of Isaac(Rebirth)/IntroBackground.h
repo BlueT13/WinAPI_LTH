@@ -23,13 +23,8 @@ protected:
 
 private:
 	float Time = 0.0f;
-	float FrameTime = 0.04f;
+	float AnimationDurationTime = 0.068f;
 	UImageRenderer* intro = nullptr;
 	std::list<UEngineFile> AllFileList;
-	std::list<UEngineFile>::iterator StartIter;
-	std::list<UEngineFile>::iterator EndIter;
-
-	std::string FileName;
-
+	std::list<UEngineFile>::iterator CurIter;
 };
-

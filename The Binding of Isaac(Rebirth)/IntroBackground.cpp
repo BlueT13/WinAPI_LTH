@@ -24,22 +24,19 @@ void AIntroBackground::BeginPlay()
 	FilePath.Move("IntroLevel");
 	AllFileList = FilePath.AllFile({ ".png", ".bmp" }, true);
 
-	StartIter = AllFileList.begin();
-	EndIter = AllFileList.end();
+	CurIter = AllFileList.begin();
 
 	intro = CreateImageRenderer(0);
 	intro->SetTransform({ HalfScale, GEngine->MainWindow.GetWindowScale() });
 
-	UEngineFile& File = (*StartIter);
-	FileName = File.GetFileName();
-	UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
-	intro->SetImage(FileName);
-	++StartIter;
+	UEngineResourcesManager::GetInst().LoadImg((*CurIter).GetFullPath());
+	intro->SetImage((*CurIter).GetFileName());
+	++CurIter;
 }
 
 void AIntroBackground::Tick(float _DeltaTime)
 {
-	AActor::Tick(_DeltaTime);
+	Time += _DeltaTime;
 
 	if (UEngineInput::IsDown(VK_SPACE))
 	{
@@ -48,23 +45,19 @@ void AIntroBackground::Tick(float _DeltaTime)
 		return;
 	}
 
-	if (StartIter == EndIter)
+	if (CurIter == AllFileList.end())
 	{
 		AllFileList.clear();
 		GEngine->ChangeLevel("TitleLevel");
 		return;
 	}
 
-	Time += _DeltaTime;
-	if (Time >= FrameTime)
+	if (Time >= AnimationDurationTime)
 	{
-
-		UEngineFile& File = (*StartIter);
-		UEngineResourcesManager::GetInst().UnloadImg(FileName);
-		UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
-		FileName = File.GetFileName();
-		intro->SetImage(FileName);
-		++StartIter;
-		Time = _DeltaTime - FrameTime;
+		UEngineResourcesManager::GetInst().UnloadImg(intro->GetImage()->GetName());
+		UEngineResourcesManager::GetInst().LoadImg((*CurIter).GetFullPath());
+		intro->SetImage((*CurIter).GetFileName());
+		++CurIter;
+		Time -= AnimationDurationTime;
 	}
 }
