@@ -28,5 +28,8 @@ private:
 	std::list<UEngineFile> AllFileList;
 	std::list<UEngineFile>::iterator StartIter;
 	std::list<UEngineFile>::iterator EndIter;
+
+	std::string FileName;
+
 };
 

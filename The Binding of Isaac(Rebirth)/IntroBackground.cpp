@@ -31,8 +31,9 @@ void AIntroBackground::BeginPlay()
 	intro->SetTransform({ HalfScale, GEngine->MainWindow.GetWindowScale() });
 
 	UEngineFile& File = (*StartIter);
+	FileName = File.GetFileName();
 	UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
-	intro->SetImage(File.GetFileName());
+	intro->SetImage(FileName);
 	++StartIter;
 }
 
@@ -49,9 +50,12 @@ void AIntroBackground::Tick(float _DeltaTime)
 	Time += _DeltaTime;
 	if (Time >= FrameTime)
 	{
+
 		UEngineFile& File = (*StartIter);
+		UEngineResourcesManager::GetInst().UnloadImg(FileName);
 		UEngineResourcesManager::GetInst().LoadImg(File.GetFullPath());
-		intro->SetImage(File.GetFileName());
+		FileName = File.GetFileName();
+		intro->SetImage(FileName);
 		++StartIter;
 		Time = _DeltaTime - FrameTime;
 	}
