@@ -23,32 +23,30 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	void BodyDirCheck();
 	void HeadDirCheck();
+	void BodyDirCheck();
 
 	std::string GetHeadAnimationName(std::string _HeadAni);
 	std::string GetBodyAnimationName(std::string _BodyAni);
 
-	// 상태 주요 업데이트
+	// 상태 업데이트
 	void HeadStateChange(EPlayerHeadState _State);
 	void HeadStateUpdate(float _DeltaTime);
 	void BodyStateChange(EPlayerBodyState _State);
 	void BodyStateUpdate(float _DeltaTime);
 
+	// 상태 시작 함수
+	void HeadIdleStart();
+	void BodyIdleStart();
+	void BodyMoveStart();
+	void HeadAttackStart();
 
-	// 상태 함수들
+	// 상태 함수
 	void HeadIdle(float _DeltaTime);
 	void BodyIdle(float _DeltaTime);
 	void HeadMove(float _DeltaTime);
 	void BodyMove(float _DeltaTime);
 	void Attack(float _DeltaTime);
-
-	// 상태 시작 함수들
-	void HeadIdleStart();
-	void BodyIdleStart();
-	void HeadMoveStart();
-	void BodyMoveStart();
-	void HeadAttackStart();
 
 	EPlayerHeadState HeadState = EPlayerHeadState::None;
 	EPlayerBodyState BodyState = EPlayerBodyState::None;

@@ -58,6 +58,116 @@ void APlayer::Tick(float _DeltaTime)
 	BodyStateUpdate(_DeltaTime);
 }
 
+void APlayer::HeadStateUpdate(float _DeltaTime)
+{
+	switch (HeadState)
+	{
+	case EPlayerHeadState::Idle:
+		HeadIdle(_DeltaTime);
+		break;
+	case EPlayerHeadState::Attack:
+		Attack(_DeltaTime);
+		break;
+	case EPlayerHeadState::Move:
+		HeadMove(_DeltaTime);
+		break;
+	default:
+		break;
+	}
+}
+
+void APlayer::HeadIdle(float _DeltaTime)
+{
+	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT) || UEngineInput::IsPress(VK_UP) || UEngineInput::IsPress(VK_DOWN))
+	{
+		HeadStateChange(EPlayerHeadState::Attack);
+		return;
+	}
+}
+
+void APlayer::HeadStateChange(EPlayerHeadState _State)
+{
+	if (HeadState != _State)
+	{
+		switch (_State)
+		{
+		case EPlayerHeadState::Idle:
+			HeadIdleStart();
+			break;
+		case EPlayerHeadState::Attack:
+			HeadAttackStart();
+			break;
+		default:
+			break;
+		}
+	}
+
+	HeadState = _State;
+}
+
+void APlayer::HeadIdleStart()
+{
+	HeadRenderer->ChangeAnimation("HeadIdle");
+
+	HeadDirCheck();
+}
+
+void APlayer::HeadAttackStart()
+{
+	HeadRenderer->ChangeAnimation(GetHeadAnimationName("Attack"));
+
+	HeadDirCheck();
+}
+
+void APlayer::HeadMove(float _DeltaTime)
+{
+	HeadDirCheck();
+
+	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
+	{
+
+		return;
+	}
+}
+
+void APlayer::Attack(float _DeltaTime)
+{
+	HeadDirCheck();
+
+	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT) && UEngineInput::IsFree(VK_UP) && UEngineInput::IsFree(VK_DOWN))
+	{
+		HeadStateChange(EPlayerHeadState::Idle);
+		return;
+	}
+
+	//if (true == UEngineInput::IsDown(VK_LEFT))
+	//{
+	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+	//	NewBullet->SetActorLocation(GetActorLocation());
+	//	NewBullet->SetDir(FVector::Left);
+	//}
+	//if (true == UEngineInput::IsDown(VK_RIGHT))
+	//{
+	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+	//	NewBullet->SetActorLocation(GetActorLocation());
+	//	NewBullet->SetDir(FVector::Right);
+	//}
+	//if (true == UEngineInput::IsDown(VK_UP))
+	//{
+	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+	//	NewBullet->SetActorLocation(GetActorLocation());
+	//	NewBullet->SetDir(FVector::Up);
+	//}
+	//if (true == UEngineInput::IsDown(VK_DOWN))
+	//{
+	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
+	//	NewBullet->SetActorLocation(GetActorLocation());
+	//	NewBullet->SetDir(FVector::Down);
+	//}
+
+	// MoveUpdate(_DeltaTime);
+}
+
 void APlayer::HeadDirCheck()
 {
 	EActorDir HeadDir = HeadDirState;
@@ -103,6 +213,131 @@ void APlayer::HeadDirCheck()
 		HeadRenderer->ChangeAnimation(Name, true, HeadRenderer->GetCurAnimationFrame(), HeadRenderer->GetCurAnimationTime());
 	}
 }
+
+
+
+
+
+
+
+
+
+void APlayer::BodyStateUpdate(float _DeltaTime)
+{
+	switch (BodyState)
+	{
+	case EPlayerBodyState::Idle:
+		BodyIdle(_DeltaTime);
+		break;
+	case EPlayerBodyState::Move:
+		BodyMove(_DeltaTime);
+		break;
+	default:
+		break;
+	}
+}
+
+
+
+void APlayer::BodyIdle(float _DeltaTime)
+{
+	if (UEngineInput::IsPress('A') || UEngineInput::IsPress('D') || UEngineInput::IsPress('W') || UEngineInput::IsPress('S'))
+	{
+		BodyStateChange(EPlayerBodyState::Move);
+		return;
+	}
+
+	BodyMoveUpdate(_DeltaTime);
+}
+
+
+
+void APlayer::AddMoveVector(const FVector& _DirDelta)
+{
+	MoveVector += _DirDelta * MoveAcc;
+}
+
+void APlayer::BodyMoveUpdate(float _DeltaTime)
+{
+	CalLastMoveVector(_DeltaTime);
+	CalMoveVector(_DeltaTime);
+	MoveLastMoveVector(_DeltaTime);
+}
+
+void APlayer::CalMoveVector(float _DeltaTime)
+{
+	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
+	{
+		if (100 <= MoveVector.Size2D())
+		{
+			MoveVector += (-MoveVector.Normalize2DReturn()) * _DeltaTime * StopAcc;
+		}
+		else
+		{
+			MoveVector = float4::Zero;
+		}
+	}
+
+	if (MoveMaxSpeed <= MoveVector.Size2D())
+	{
+		MoveVector = MoveVector.Normalize2DReturn() * MoveMaxSpeed;
+	}
+}
+
+void APlayer::CalLastMoveVector(float _DeltaTime)
+{
+	LastMoveVector = FVector::Zero;
+	LastMoveVector = LastMoveVector + MoveVector;
+}
+
+void APlayer::MoveLastMoveVector(float _DeltaTime)
+{
+	FVector PlayerPos = GetActorLocation();
+	FVector PlayerNextPos = PlayerPos + MoveVector * _DeltaTime;
+	if (PlayerNextPos.X < 100 || PlayerNextPos.Y < 100)
+	{
+		PlayerNextPos.X = 0.0f;
+		return;
+	}
+
+	AddActorLocation(LastMoveVector * _DeltaTime);
+}
+
+void APlayer::BodyMove(float _DeltaTime)
+{
+	HeadDirCheck();
+	BodyDirCheck();
+
+	if (UEngineInput::IsPress('A'))
+	{
+		AddMoveVector(FVector::Left * _DeltaTime);
+	}
+	if (UEngineInput::IsPress('D'))
+	{
+		AddMoveVector(FVector::Right * _DeltaTime);
+	}
+	if (UEngineInput::IsPress('W'))
+	{
+		AddMoveVector(FVector::Up * _DeltaTime);
+	}
+	if (UEngineInput::IsPress('S'))
+	{
+		AddMoveVector(FVector::Down * _DeltaTime);
+	}
+
+	BodyMoveUpdate(_DeltaTime);
+
+	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
+	{
+		HeadIdleStart();
+		BodyStateChange(EPlayerBodyState::Idle);
+		return;
+	}
+}
+
+
+
+
 
 void APlayer::BodyDirCheck()
 {
@@ -187,28 +422,7 @@ std::string APlayer::GetBodyAnimationName(std::string _BodyAni)
 	return _BodyAni + DirName;
 }
 
-void APlayer::HeadStateChange(EPlayerHeadState _State)
-{
-	if (HeadState != _State)
-	{
-		switch (_State)
-		{
-		case EPlayerHeadState::Idle:
-			HeadIdleStart();
-			break;
-		case EPlayerHeadState::Attack:
-			HeadAttackStart();
-			break;
-		case EPlayerHeadState::Move:
-			HeadMoveStart();
-			break;
-		default:
-			break;
-		}
-	}
 
-	HeadState = _State;
-}
 
 void APlayer::BodyStateChange(EPlayerBodyState _State)
 {
@@ -230,201 +444,7 @@ void APlayer::BodyStateChange(EPlayerBodyState _State)
 	BodyState = _State;
 }
 
-void APlayer::HeadStateUpdate(float _DeltaTime)
-{
-	switch (HeadState)
-	{
-	case EPlayerHeadState::Idle:
-		HeadIdle(_DeltaTime);
-		break;
-	case EPlayerHeadState::Attack:
-		Attack(_DeltaTime);
-		break;
-	case EPlayerHeadState::Move:
-		HeadMove(_DeltaTime);
-		break;
-	default:
-		break;
-	}
-}
 
-void APlayer::BodyStateUpdate(float _DeltaTime)
-{
-	switch (BodyState)
-	{
-	case EPlayerBodyState::Idle:
-		BodyIdle(_DeltaTime);
-		break;
-	case EPlayerBodyState::Move:
-		BodyMove(_DeltaTime);
-		break;
-	default:
-		break;
-	}
-}
-
-void APlayer::HeadIdle(float _DeltaTime)
-{
-	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT) || UEngineInput::IsPress(VK_UP) || UEngineInput::IsPress(VK_DOWN))
-	{
-		HeadStateChange(EPlayerHeadState::Attack);
-		return;
-	}
-
-	if (UEngineInput::IsPress('A') || UEngineInput::IsPress('D') || UEngineInput::IsPress('W') || UEngineInput::IsPress('S'))
-	{
-		HeadStateChange(EPlayerHeadState::Move);
-		return;
-	}
-}
-
-void APlayer::BodyIdle(float _DeltaTime)
-{
-	if (UEngineInput::IsPress('A') || UEngineInput::IsPress('D') || UEngineInput::IsPress('W') || UEngineInput::IsPress('S'))
-	{
-		BodyStateChange(EPlayerBodyState::Move);
-		return;
-	}
-
-	BodyMoveUpdate(_DeltaTime);
-}
-
-void APlayer::HeadMove(float _DeltaTime)
-{
-	HeadDirCheck();
-
-	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
-	{
-		HeadStateChange(EPlayerHeadState::Idle);
-		return;
-	}
-}
-
-void APlayer::AddMoveVector(const FVector& _DirDelta)
-{
-	MoveVector += _DirDelta * MoveAcc;
-}
-
-void APlayer::BodyMoveUpdate(float _DeltaTime)
-{
-	CalLastMoveVector(_DeltaTime);
-	CalMoveVector(_DeltaTime);
-	MoveLastMoveVector(_DeltaTime);
-}
-
-void APlayer::CalMoveVector(float _DeltaTime)
-{
-	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
-	{
-		if (100 <= MoveVector.Size2D())
-		{
-			MoveVector += (-MoveVector.Normalize2DReturn()) * _DeltaTime * StopAcc;
-		}
-		else
-		{
-			MoveVector = float4::Zero;
-		}
-	}
-
-	if (MoveMaxSpeed <= MoveVector.Size2D())
-	{
-		MoveVector = MoveVector.Normalize2DReturn() * MoveMaxSpeed;
-	}
-}
-
-void APlayer::CalLastMoveVector(float _DeltaTime)
-{
-	LastMoveVector = FVector::Zero;
-	LastMoveVector = LastMoveVector + MoveVector;
-}
-
-void APlayer::MoveLastMoveVector(float _DeltaTime)
-{
-	FVector PlayerPos = GetActorLocation();
-	FVector PlayerNextPos = PlayerPos + MoveVector * _DeltaTime;
-	if (PlayerNextPos.X < 100 || PlayerNextPos.Y < 100)
-	{
-		PlayerNextPos.X = 0.0f;
-		return;
-	}
-
-	AddActorLocation(LastMoveVector * _DeltaTime);
-}
-
-void APlayer::BodyMove(float _DeltaTime)
-{
-	BodyDirCheck();
-
-	if (UEngineInput::IsPress('A'))
-	{
-		AddMoveVector(FVector::Left * _DeltaTime);
-	}
-	if (UEngineInput::IsPress('D'))
-	{
-		AddMoveVector(FVector::Right * _DeltaTime);
-	}
-	if (UEngineInput::IsPress('W'))
-	{
-		AddMoveVector(FVector::Up * _DeltaTime);
-	}
-	if (UEngineInput::IsPress('S'))
-	{
-		AddMoveVector(FVector::Down * _DeltaTime);
-	}
-
-	BodyMoveUpdate(_DeltaTime);
-
-	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
-	{
-		BodyStateChange(EPlayerBodyState::Idle);
-		return;
-	}
-}
-
-void APlayer::Attack(float _DeltaTime)
-{
-	HeadDirCheck();
-
-	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT) && UEngineInput::IsFree(VK_UP) && UEngineInput::IsFree(VK_DOWN))
-	{
-		HeadStateChange(EPlayerHeadState::Idle);
-		return;
-	}
-
-	//if (true == UEngineInput::IsDown(VK_LEFT))
-	//{
-	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
-	//	NewBullet->SetActorLocation(GetActorLocation());
-	//	NewBullet->SetDir(FVector::Left);
-	//}
-	//if (true == UEngineInput::IsDown(VK_RIGHT))
-	//{
-	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
-	//	NewBullet->SetActorLocation(GetActorLocation());
-	//	NewBullet->SetDir(FVector::Right);
-	//}
-	//if (true == UEngineInput::IsDown(VK_UP))
-	//{
-	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
-	//	NewBullet->SetActorLocation(GetActorLocation());
-	//	NewBullet->SetDir(FVector::Up);
-	//}
-	//if (true == UEngineInput::IsDown(VK_DOWN))
-	//{
-	//	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
-	//	NewBullet->SetActorLocation(GetActorLocation());
-	//	NewBullet->SetDir(FVector::Down);
-	//}
-
-	// MoveUpdate(_DeltaTime);
-}
-
-void APlayer::HeadIdleStart()
-{
-	HeadRenderer->ChangeAnimation("HeadIdle");
-
-	HeadDirCheck();
-}
 
 void APlayer::BodyIdleStart()
 {
@@ -433,25 +453,21 @@ void APlayer::BodyIdleStart()
 	BodyDirCheck();
 }
 
-void APlayer::HeadAttackStart()
-{
-	HeadRenderer->ChangeAnimation(GetHeadAnimationName("Attack"));
 
-	HeadDirCheck();
-}
-
-void APlayer::HeadMoveStart()
-{
-	HeadRenderer->ChangeAnimation(GetHeadAnimationName("HeadMove"));
-
-	HeadDirCheck();
-}
 
 void APlayer::BodyMoveStart()
 {
+	HeadRenderer->ChangeAnimation(GetHeadAnimationName("HeadMove"));
 	BodyRenderer->ChangeAnimation(GetBodyAnimationName("BodyMove"));
 
+	HeadDirCheck();
 	BodyDirCheck();
 }
+
+
+
+
+
+
 
 
