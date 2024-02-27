@@ -23,34 +23,34 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
+	// Head
+	void HeadStateUpdate(float _DeltaTime);
+	void HeadIdle(float _DeltaTime);
+	void HeadMove(float _DeltaTime);
+	void Attack(float _DeltaTime);
+	void CreateBullet(FVector _Dir);
+	void HeadStateChange(EPlayerHeadState _State);
+	void HeadIdleStart();
+	void HeadMoveStart();
+	void AttackStart();
 	void HeadDirCheck();
+	
+	// Body
+	void BodyStateUpdate(float _DeltaTime);
+	void BodyIdle(float _DeltaTime);
+	void BodyMove(float _DeltaTime);
+	void BodyStateChange(EPlayerBodyState _State);
+	void BodyIdleStart();
+	void BodyMoveStart();
 	void BodyDirCheck();
 
 	std::string GetHeadAnimationName(std::string _HeadAni);
 	std::string GetBodyAnimationName(std::string _BodyAni);
 
-	// 상태 업데이트
-	void HeadStateChange(EPlayerHeadState _State);
-	void HeadStateUpdate(float _DeltaTime);
-	void BodyStateChange(EPlayerBodyState _State);
-	void BodyStateUpdate(float _DeltaTime);
-
-	// 상태 시작 함수
-	void HeadIdleStart();
-	void BodyIdleStart();
-	void BodyMoveStart();
-	void HeadAttackStart();
-
-	// 상태 함수
-	void HeadIdle(float _DeltaTime);
-	void BodyIdle(float _DeltaTime);
-	void BodyMove(float _DeltaTime);
-	void Attack(float _DeltaTime);
-
 	EPlayerHeadState HeadState = EPlayerHeadState::None;
 	EPlayerBodyState BodyState = EPlayerBodyState::None;
-	EActorDir BodyDirState = EActorDir::Down;
 	EActorDir HeadDirState = EActorDir::Down;
+	EActorDir BodyDirState = EActorDir::Down;
 	std::string CurHeadAnimationName = "None";
 	std::string CurBodyAnimationName = "None";
 
