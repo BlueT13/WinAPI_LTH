@@ -4,6 +4,61 @@
 #include <EngineBase/EngineDebug.h>
 #include "ContentsHelper.h"
 
+namespace
+{
+	FVector MakeDirectionToFVector(EDirection _Direction)
+	{
+		FVector DirectionVector;
+
+		switch (_Direction)
+		{
+		case EDirection::Left:
+			DirectionVector = FVector::Left;
+			break;
+		case EDirection::Right:
+			DirectionVector = FVector::Right;
+			break;
+		case EDirection::Up:
+			DirectionVector = FVector::Up;
+			break;
+		case EDirection::Down:
+			DirectionVector = FVector::Down;
+			break;
+		default:
+			DirectionVector = FVector::Zero;
+			break;
+		}
+
+		return DirectionVector;
+	}
+
+	std::string MakeDirectionToString(EDirection _Direction)
+	{
+		std::string DirectionName;
+
+		switch (_Direction)
+		{
+		case EDirection::Left:
+			DirectionName = "Left";
+			break;
+		case EDirection::Right:
+			DirectionName = "Right";
+			break;
+		case EDirection::Up:
+			DirectionName = "Up";
+			break;
+		case EDirection::Down:
+			DirectionName = "Down";
+			break;
+		default:
+			DirectionName = "Null";
+			break;
+		}
+
+		return DirectionName;
+	}
+}
+
 APlayer::APlayer()
 {
 }
@@ -23,23 +78,23 @@ void APlayer::BeginPlay()
 		HeadRenderer = CreateImageRenderer(IsaacRenderOrder::PlayerHead);
 		HeadRenderer->SetImage("Head.png");
 		HeadRenderer->SetTransform({ HeadRendererPos, RendererSize });
-		HeadRenderer->CreateAnimation("HeadIdle", "Head.png", 7, 7, 0.1f, true);
-		HeadRenderer->CreateAnimation("HeadMove_Left", "Head.png", 1, 1, 0.1f, true);
-		HeadRenderer->CreateAnimation("HeadMove_Right", "Head.png", 3, 3, 0.1f, true);
-		HeadRenderer->CreateAnimation("HeadMove_Up", "Head.png", 5, 5, 0.1f, true);
-		HeadRenderer->CreateAnimation("HeadMove_Down", "Head.png", 7, 7, 0.1f, true);
+		HeadRenderer->CreateAnimation("HeadIdle", "Head.png", 7, 7, 0.1f, false);
+		HeadRenderer->CreateAnimation("HeadMove_Left", "Head.png", 1, 1, 0.1f, false);
+		HeadRenderer->CreateAnimation("HeadMove_Right", "Head.png", 3, 3, 0.1f, false);
+		HeadRenderer->CreateAnimation("HeadMove_Up", "Head.png", 5, 5, 0.1f, false);
+		HeadRenderer->CreateAnimation("HeadMove_Down", "Head.png", 7, 7, 0.1f, false);
 
-		HeadRenderer->CreateAnimation("Attack_Left", "Head.png", 0, 1, FireRate, true);
-		HeadRenderer->CreateAnimation("Attack_Right", "Head.png", 2, 3, FireRate, true);
-		HeadRenderer->CreateAnimation("Attack_Up", "Head.png", 4, 5, FireRate, true);
-		HeadRenderer->CreateAnimation("Attack_Down", "Head.png", 6, 7, FireRate, true);
+		HeadRenderer->CreateAnimation("Attack_Left", "Head.png", 0, 1, 0.5f, false);
+		HeadRenderer->CreateAnimation("Attack_Right", "Head.png", 2, 3, 0.5f, false);
+		HeadRenderer->CreateAnimation("Attack_Up", "Head.png", 4, 5, 0.5f, false);
+		HeadRenderer->CreateAnimation("Attack_Down", "Head.png", 6, 7, 0.5f, false);
 	}
 
 	{
 		BodyRenderer = CreateImageRenderer(IsaacRenderOrder::PlayerBody);
 		BodyRenderer->SetImage("Body.png");
 		BodyRenderer->SetTransform({ BodyRendererPos, RendererSize });
-		BodyRenderer->CreateAnimation("BodyIdle", "Body.png", 24, 24, 0.1f, true);
+		BodyRenderer->CreateAnimation("BodyIdle", "Body.png", 24, 24, 0.1f, false);
 		BodyRenderer->CreateAnimation("BodyMove_Left", "Body.png", 0, 9, 0.1f, true);
 		BodyRenderer->CreateAnimation("BodyMove_Right", "Body.png", 10, 19, 0.1f, true);
 		BodyRenderer->CreateAnimation("BodyMove_UP", "Body.png", 20, 29, 0.1f, true);
@@ -52,30 +107,29 @@ void APlayer::BeginPlay()
 		BodyCollision->SetScale({ 30,30 });
 	}
 
-	HeadStateChange(EPlayerHeadState::Idle);
-	BodyStateChange(EPlayerBodyState::Idle);
+	AttackStateChange(EPlayerAttackState::AttackIdle);
+	PlayAttackIdleAnimation();
+	MoveStateChange(EPlayerMoveState::Idle);
+	PlayMoveIdleAnimation();
 }
 
 void APlayer::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-	HeadStateUpdate(_DeltaTime);
-	BodyStateUpdate(_DeltaTime);
+	AttackStateUpdate(_DeltaTime);
+	MoveStateUpdate(_DeltaTime);
 }
 
 // Head
-void APlayer::HeadStateUpdate(float _DeltaTime)
+void APlayer::AttackStateUpdate(float _DeltaTime)
 {
-	switch (HeadState)
+	switch (AttackState)
 	{
-	case EPlayerHeadState::Idle:
-		HeadIdle(_DeltaTime);
+	case EPlayerAttackState::AttackIdle:
+		AttackIdle(_DeltaTime);
 		break;
-	case EPlayerHeadState::Move:
-		HeadMove(_DeltaTime);
-		break;
-	case EPlayerHeadState::Attack:
+	case EPlayerAttackState::Attack:
 		Attack(_DeltaTime);
 		break;
 	default:
@@ -83,233 +137,134 @@ void APlayer::HeadStateUpdate(float _DeltaTime)
 	}
 }
 
-void APlayer::HeadIdle(float _DeltaTime)
+void APlayer::AttackIdle(float _DeltaTime)
 {
+	EDirection AttackDirection = GetAttackDirection();
 
-	if (true == UEngineInput::IsPress(VK_LEFT))
+	if (AttackDirection != EDirection::None)
 	{
-		CreateBullet(FVector::Left, _DeltaTime);
-	}
-	if (true == UEngineInput::IsPress(VK_RIGHT))
-	{
-		CreateBullet(FVector::Right, _DeltaTime);
-	}
-	if (true == UEngineInput::IsPress(VK_UP))
-	{
-		CreateBullet(FVector::Up, _DeltaTime);
-	}
-	if (true == UEngineInput::IsPress(VK_DOWN))
-	{
-		CreateBullet(FVector::Down, _DeltaTime);
-	}
-
-	if (UEngineInput::IsPress('A') || UEngineInput::IsPress('D') || UEngineInput::IsPress('W') || UEngineInput::IsPress('S'))
-	{
-		HeadStateChange(EPlayerHeadState::Move);
-		return;
-	}
-
-	if (UEngineInput::IsDown(VK_LEFT) || UEngineInput::IsDown(VK_RIGHT) || UEngineInput::IsDown(VK_UP) || UEngineInput::IsDown(VK_DOWN))
-	{
-		HeadStateChange(EPlayerHeadState::Attack);
-		return;
+		AttackStateChange(EPlayerAttackState::Attack);
 	}
 }
 
-void APlayer::HeadMove(float _DeltaTime)
+EDirection APlayer::GetAttackDirection()
 {
-	HeadDirCheck();
+	EDirection AttackDirection = EDirection::None;
 
-	if (true == UEngineInput::IsPress(VK_LEFT))
+	if (UEngineInput::IsPress(VK_LEFT))
 	{
-		CreateBullet(FVector::Left, _DeltaTime);
+		AttackDirection = EDirection::Left;
 	}
-	if (true == UEngineInput::IsPress(VK_RIGHT))
+	if (UEngineInput::IsPress(VK_RIGHT))
 	{
-		CreateBullet(FVector::Right, _DeltaTime);
+		AttackDirection = EDirection::Right;
 	}
-	if (true == UEngineInput::IsPress(VK_UP))
+	if (UEngineInput::IsPress(VK_UP))
 	{
-		CreateBullet(FVector::Up, _DeltaTime);
+		AttackDirection = EDirection::Up;
 	}
-	if (true == UEngineInput::IsPress(VK_DOWN))
+	if (UEngineInput::IsPress(VK_DOWN))
 	{
-		CreateBullet(FVector::Down, _DeltaTime);
-	}
-
-	if (UEngineInput::IsDown(VK_LEFT) || UEngineInput::IsDown(VK_RIGHT) || UEngineInput::IsDown(VK_UP) || UEngineInput::IsDown(VK_DOWN))
-	{
-		HeadStateChange(EPlayerHeadState::Attack);
-		return;
+		AttackDirection = EDirection::Down;
 	}
 
-	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
-	{
-		HeadStateChange(EPlayerHeadState::Idle);
-		return;
-	}
+	return AttackDirection;
 }
 
 void APlayer::Attack(float _DeltaTime)
 {
-	HeadDirCheck();
-	if (HeadRenderer->IsCurAnimationEnd())
+	EDirection AttackDirection = GetAttackDirection();
+	FireTime += _DeltaTime;
+
+	if (AttackDirection != EDirection::None)
 	{
-		if (true == UEngineInput::IsPress(VK_LEFT))
+		if (FireTime >= FireRate)
 		{
-			CreateBullet(FVector::Left, _DeltaTime);
+			std::string AttackAnimationName = "Attack_" + MakeDirectionToString(AttackDirection);
+			HeadRenderer->ChangeAnimation(AttackAnimationName);
+			CreateBullet(AttackDirection);
+
+			FireTime -= FireRate;
 		}
-		if (true == UEngineInput::IsPress(VK_RIGHT))
+
+		AttackIdleTime = 0;
+	}
+	else
+	{
+		AttackIdleTime += _DeltaTime;
+		if (AttackIdleTime > AttackFinishTime)
 		{
-			CreateBullet(FVector::Right, _DeltaTime);
-		}
-		if (true == UEngineInput::IsPress(VK_UP))
-		{
-			CreateBullet(FVector::Up, _DeltaTime);
-		}
-		if (true == UEngineInput::IsPress(VK_DOWN))
-		{
-			CreateBullet(FVector::Down, _DeltaTime);
+			AttackStateChange(EPlayerAttackState::AttackIdle);
+			PlayAttackIdleAnimation();
+
+			AttackIdleTime = 0;
 		}
 	}
-
-	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT) && UEngineInput::IsFree(VK_UP) && UEngineInput::IsFree(VK_DOWN) && HeadRenderer->IsCurAnimationEnd())
-	{
-		HeadStateChange(EPlayerHeadState::Move);
-		return;
-	}
-
 }
 
-void APlayer::CreateBullet(FVector _Dir, float _DeltaTime)
+void APlayer::CreateBullet(EDirection Direction)
 {
-
 	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
 	NewBullet->SetActorLocation(GetActorLocation());
-	NewBullet->SetDir(_Dir);
+	NewBullet->SetDir(MakeDirectionToFVector(Direction));
 }
 
-void APlayer::HeadStateChange(EPlayerHeadState _State)
+void APlayer::PlayAttackIdleAnimation()
 {
-	if (HeadState != _State)
-	{
-		switch (_State)
-		{
-		case EPlayerHeadState::Idle:
-			HeadIdleStart();
-			break;
-		case EPlayerHeadState::Move:
-			HeadMoveStart();
-			break;
-		case EPlayerHeadState::Attack:
-			AttackStart();
-			break;
-		default:
-			break;
-		}
-	}
-
-	HeadState = _State;
+	std::string MoveAnimationName = "HeadMove_" + MakeDirectionToString(MoveDirection);
+	HeadRenderer->ChangeAnimation(MoveAnimationName);
 }
 
-void APlayer::HeadIdleStart()
+void APlayer::AttackStateChange(EPlayerAttackState _State)
 {
-	HeadRenderer->ChangeAnimation("HeadIdle");
-
-	HeadDirCheck();
+	AttackState = _State;
 }
 
-void APlayer::HeadMoveStart()
+void APlayer::MoveStateUpdate(float _DeltaTime)
 {
-	HeadRenderer->ChangeAnimation(GetHeadAnimationName("HeadMove"));
-
-	HeadDirCheck();
-}
-
-void APlayer::AttackStart()
-{
-	HeadRenderer->ChangeAnimation(GetHeadAnimationName("Attack"));
-
-	HeadDirCheck();
-}
-
-void APlayer::HeadDirCheck()
-{
-	EActorDir HeadDir = HeadDirState;
-
-	if (UEngineInput::IsPress('A'))
+	switch (MoveState)
 	{
-		HeadDir = EActorDir::Left;
-	}
-	if (UEngineInput::IsPress('D'))
-	{
-		HeadDir = EActorDir::Right;
-	}
-	if (UEngineInput::IsPress('W'))
-	{
-		HeadDir = EActorDir::Up;
-	}
-	if (UEngineInput::IsPress('S'))
-	{
-		HeadDir = EActorDir::Down;
-	}
-
-	if (UEngineInput::IsPress(VK_LEFT))
-	{
-		HeadDir = EActorDir::Left;
-	}
-	if (UEngineInput::IsPress(VK_RIGHT))
-	{
-		HeadDir = EActorDir::Right;
-	}
-	if (UEngineInput::IsPress(VK_UP))
-	{
-		HeadDir = EActorDir::Up;
-	}
-	if (UEngineInput::IsPress(VK_DOWN))
-	{
-		HeadDir = EActorDir::Down;
-	}
-
-	if (HeadDir != HeadDirState)
-	{
-		HeadDirState = HeadDir;
-		std::string Name = GetHeadAnimationName(CurHeadAnimationName);
-
-		HeadRenderer->ChangeAnimation(Name, true, HeadRenderer->GetCurAnimationFrame(), HeadRenderer->GetCurAnimationTime());
-	}
-}
-
-// Body
-void APlayer::BodyStateUpdate(float _DeltaTime)
-{
-	switch (BodyState)
-	{
-	case EPlayerBodyState::Idle:
-		BodyIdle(_DeltaTime);
+	case EPlayerMoveState::Idle:
+		MoveIdle(_DeltaTime);
 		break;
-	case EPlayerBodyState::Move:
-		BodyMove(_DeltaTime);
+	case EPlayerMoveState::Move:
+		Move(_DeltaTime);
 		break;
 	default:
 		break;
 	}
 }
 
-void APlayer::BodyIdle(float _DeltaTime)
+void APlayer::MoveIdle(float _DeltaTime)
 {
-	if (UEngineInput::IsPress('A') || UEngineInput::IsPress('D') || UEngineInput::IsPress('W') || UEngineInput::IsPress('S'))
+	EDirection PushedDirection = GetPushedKeyMoveDirection();
+
+	if (PushedDirection != EDirection::None)
 	{
-		BodyStateChange(EPlayerBodyState::Move);
+		MoveStateChange(EPlayerMoveState::Move);
 		return;
 	}
 
 	BodyMoveUpdate(_DeltaTime);
 }
 
-void APlayer::BodyMove(float _DeltaTime)
+void APlayer::Move(float _DeltaTime)
 {
-	BodyDirCheck();
+	EDirection PushedDirection = GetPushedKeyMoveDirection();
+
+	if (PushedDirection != EDirection::None)
+	{
+		MoveDirection = PushedDirection;
+
+		//if문 임시코드 : 공격중이 아닐때만, 머리 몸방향으로 움직이도록
+		if (AttackState == EPlayerAttackState::AttackIdle)
+		{
+			std::string HeadMoveAnimationName = "HeadMove_" + MakeDirectionToString(MoveDirection);
+			HeadRenderer->ChangeAnimation(HeadMoveAnimationName);
+		}
+		std::string BodyMoveAnimationName = "BodyMove_" + MakeDirectionToString(MoveDirection);
+		BodyRenderer->ChangeAnimation(BodyMoveAnimationName);
+	}
 
 	if (UEngineInput::IsPress('A'))
 	{
@@ -332,128 +287,47 @@ void APlayer::BodyMove(float _DeltaTime)
 
 	if (UEngineInput::IsFree('A') && UEngineInput::IsFree('D') && UEngineInput::IsFree('W') && UEngineInput::IsFree('S'))
 	{
-		BodyStateChange(EPlayerBodyState::Idle);
-		return;
+		MoveStateChange(EPlayerMoveState::Idle);
+		MoveDirection = EDirection::Down;
+		PlayMoveIdleAnimation();
 	}
 }
 
-void APlayer::BodyStateChange(EPlayerBodyState _State)
+void APlayer::PlayMoveIdleAnimation()
 {
-	if (BodyState != _State)
-	{
-		switch (_State)
-		{
-		case EPlayerBodyState::Idle:
-			BodyIdleStart();
-			break;
-		case EPlayerBodyState::Move:
-			BodyMoveStart();
-			break;
-		default:
-			break;
-		}
-	}
-
-	BodyState = _State;
-}
-
-void APlayer::BodyIdleStart()
-{
+	HeadRenderer->ChangeAnimation("HeadIdle");
 	BodyRenderer->ChangeAnimation("BodyIdle");
-
-	BodyDirCheck();
 }
 
-void APlayer::BodyMoveStart()
+void APlayer::MoveStateChange(EPlayerMoveState _State)
 {
-	BodyRenderer->ChangeAnimation(GetBodyAnimationName("BodyMove"));
-
-	BodyDirCheck();
+	MoveState = _State;
 }
 
-void APlayer::BodyDirCheck()
+EDirection APlayer::GetPushedKeyMoveDirection()
 {
-	EActorDir BodyDir = BodyDirState;
+	//TODO: 키가 여러개 같이 눌렸을때는, 먼저 눌린키를 반환값으로 하도록 수정해야함
+
+	EDirection InputDirection = EDirection::None;
 	if (UEngineInput::IsPress('A'))
 	{
-
-		BodyDir = EActorDir::Left;
+		InputDirection = EDirection::Left;
 	}
 	if (UEngineInput::IsPress('D'))
 	{
-
-		BodyDir = EActorDir::Right;
+		InputDirection = EDirection::Right;
 	}
 	if (UEngineInput::IsPress('W'))
 	{
 
-		BodyDir = EActorDir::Up;
+		InputDirection = EDirection::Up;
 	}
 	if (UEngineInput::IsPress('S'))
 	{
-		BodyDir = EActorDir::Down;
+		InputDirection = EDirection::Down;
 	}
 
-	if (BodyDir != BodyDirState)
-	{
-		BodyDirState = BodyDir;
-		std::string Name = GetBodyAnimationName(CurBodyAnimationName);
-		BodyRenderer->ChangeAnimation(Name, true, BodyRenderer->GetCurAnimationFrame(), BodyRenderer->GetCurAnimationTime());
-	}
-}
-
-std::string APlayer::GetHeadAnimationName(std::string _HeadAni)
-{
-	std::string DirName = "";
-
-	switch (HeadDirState)
-	{
-	case EActorDir::Left:
-		DirName = "_Left";
-		break;
-	case EActorDir::Right:
-		DirName = "_Right";
-		break;
-	case EActorDir::Up:
-		DirName = "_Up";
-		break;
-	case EActorDir::Down:
-		DirName = "_Down";
-		break;
-	default:
-		break;
-	}
-
-	CurHeadAnimationName = _HeadAni;
-
-	return _HeadAni + DirName;
-}
-
-std::string APlayer::GetBodyAnimationName(std::string _BodyAni)
-{
-	std::string DirName = "";
-
-	switch (BodyDirState)
-	{
-	case EActorDir::Left:
-		DirName = "_Left";
-		break;
-	case EActorDir::Right:
-		DirName = "_Right";
-		break;
-	case EActorDir::Up:
-		DirName = "_Up";
-		break;
-	case EActorDir::Down:
-		DirName = "_Down";
-		break;
-	default:
-		break;
-	}
-
-	CurBodyAnimationName = _BodyAni;
-
-	return _BodyAni + DirName;
+	return InputDirection;
 }
 
 void APlayer::AddMoveVector(const FVector& _DirDelta)
@@ -498,25 +372,21 @@ void APlayer::MoveLastMoveVector(float _DeltaTime)
 {
 	FVector PlayerPos = GetActorLocation();
 	FVector PlayerNextPos = PlayerPos + MoveVector * _DeltaTime;
-	if (PlayerNextPos.X < 138 )
+	if (PlayerNextPos.X < 138)
 	{
-		PlayerNextPos.X = 0.0f;
-		return;
+		LastMoveVector.X = 0.0f;
 	}
 	if (PlayerNextPos.Y < 80)
 	{
-		PlayerNextPos.Y = 0.0f;
-		return;
+		LastMoveVector.Y = 0.0f;
 	}
 	if (PlayerNextPos.X > 820)
 	{
-		PlayerNextPos.X = 0.0f;
-		return;
+		LastMoveVector.X = 0.0f;
 	}
 	if (PlayerNextPos.Y > 460)
 	{
-		PlayerNextPos.Y = 0.0f;
-		return;
+		LastMoveVector.Y = 0.0f;
 	}
 
 	AddActorLocation(LastMoveVector * _DeltaTime);
