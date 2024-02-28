@@ -7,12 +7,6 @@
     <ClInclude Include="TitleLevel.h">
       <Filter>Object\TitleLevel</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Object\PlayLevel\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Object\PlayLevel\Actor</Filter>
-    </ClInclude>
     <ClInclude Include="IsaacCore.h">
       <Filter>GameCore</Filter>
     </ClInclude>
@@ -26,11 +20,20 @@
     <ClInclude Include="StartImage.h">
       <Filter>Object\TitleLevel\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Object\PlayLevel\Actor</Filter>
+    <ClInclude Include="Bullet.h">
+      <Filter>Object\PlayLevel\Actor\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object\PlayLevel\Actor\Player</Filter>
     </ClInclude>
     <ClInclude Include="Fly.h">
-      <Filter>Object\PlayLevel\Actor</Filter>
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Object\PlayLevel\Actor\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -39,12 +42,6 @@
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Object\TitleLevel</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Object\PlayLevel\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Object\PlayLevel\Actor</Filter>
     </ClCompile>
     <ClCompile Include="IsaacCore.cpp">
       <Filter>GameCore</Filter>
@@ -59,11 +56,20 @@
     <ClCompile Include="StartImage.cpp">
       <Filter>Object\TitleLevel\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Object\PlayLevel\Actor</Filter>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Object\PlayLevel\Actor\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\PlayLevel\Actor\Player</Filter>
     </ClCompile>
     <ClCompile Include="Fly.cpp">
-      <Filter>Object\PlayLevel\Actor</Filter>
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Object\PlayLevel\Actor\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +96,15 @@
     </Filter>
     <Filter Include="Object\IntroLevel\Actor">
       <UniqueIdentifier>{c9ff6eff-b32c-4aad-8637-c8642b7c3d09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Actor\Monster">
+      <UniqueIdentifier>{5a917780-1827-4295-bd83-1711f801b62c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Actor\Player">
+      <UniqueIdentifier>{3fd5cca5-5b6e-4168-9a9c-8f446f6749ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Actor\Map">
+      <UniqueIdentifier>{87e5b7cb-9eab-446f-945d-453f2509583b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

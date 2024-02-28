@@ -20,13 +20,7 @@ void UTitleLevel::BeginPlay()
 	UEngineDirectory FilePath;
 	FilePath.MoveToSearchChild("Res");
 	FilePath.Move("TitleLevel");
-	std::list<UEngineFile> AllFileList = FilePath.AllFile({ ".png",".bmp" }, true);
-	for (UEngineFile& File : AllFileList)
-	{
-		std::string FullPath = File.GetFullPath();
-		UEngineResourcesManager::GetInst().LoadImg(FullPath);
-	}
-	UEngineResourcesManager::GetInst().LoadFolder(FilePath.AppendPath("start"));
+	UEngineResourcesManager::GetInst().LoadFolder(FilePath.AppendPath("Start"));
 
 	AStartImage* StartImg = SpawnActor<AStartImage>();
 }

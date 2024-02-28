@@ -12,6 +12,12 @@ APlayer::~APlayer()
 {
 }
 
+APlayer* APlayer::MainPlayer = nullptr;
+APlayer* APlayer::GetMainPlayer()
+{
+	return MainPlayer;
+}
+
 void APlayer::BeginPlay()
 {
 	AActor::BeginPlay();
@@ -19,6 +25,7 @@ void APlayer::BeginPlay()
 	FVector HalfScale = GEngine->MainWindow.GetWindowScale().Half2D();
 	SetActorLocation(HalfScale);
 
+	// Renderer
 	{
 		HeadRenderer = CreateImageRenderer(IsaacRenderOrder::PlayerHead);
 		HeadRenderer->SetImage("Head.png");
@@ -34,7 +41,6 @@ void APlayer::BeginPlay()
 		HeadRenderer->CreateAnimation("Attack_Up", "Head.png", { 5, 4 }, { 0.1f, FireRate - 0.2f }, true);
 		HeadRenderer->CreateAnimation("Attack_Down", "Head.png", { 7, 6 }, { 0.1f, FireRate - 0.2f }, true);
 	}
-
 	{
 		BodyRenderer = CreateImageRenderer(IsaacRenderOrder::PlayerBody);
 		BodyRenderer->SetImage("Body.png");
@@ -46,10 +52,11 @@ void APlayer::BeginPlay()
 		BodyRenderer->CreateAnimation("BodyMove_Down", "Body.png", 20, 29, 0.1f, true);
 	}
 
+	// Collision
 	{
-		MonsterCollision = CreateCollision(IsaacCollisionOrder::Player);
-		MonsterCollision->SetColType(ECollisionType::CirCle);
-		MonsterCollision->SetScale({ 30,30 });
+		PlayerCollision = CreateCollision(IsaacCollisionOrder::Player);
+		PlayerCollision->SetColType(ECollisionType::CirCle);
+		PlayerCollision->SetScale({ 30,30 });
 	}
 
 	HeadStateChange(EPlayerHeadState::Idle);
@@ -87,7 +94,6 @@ void APlayer::HeadStateUpdate(float _DeltaTime)
 
 void APlayer::HeadIdle(float _DeltaTime)
 {
-
 	if (UEngineInput::IsPress('A') || UEngineInput::IsPress('D') || UEngineInput::IsPress('W') || UEngineInput::IsPress('S'))
 	{
 		HeadStateChange(EPlayerHeadState::Move);
@@ -103,7 +109,7 @@ void APlayer::HeadIdle(float _DeltaTime)
 
 void APlayer::HeadMove(float _DeltaTime)
 {
-	HeadDirCheck();
+	//HeadDirCheck();
 
 	if (UEngineInput::IsDown(VK_LEFT) || UEngineInput::IsDown(VK_RIGHT) || UEngineInput::IsDown(VK_UP) || UEngineInput::IsDown(VK_DOWN))
 	{
@@ -120,7 +126,8 @@ void APlayer::HeadMove(float _DeltaTime)
 
 void APlayer::Attack(float _DeltaTime)
 {
-	HeadDirCheck();
+	//HeadDirCheck();
+
 	if (BulletCoolTime < 0)
 	{
 		if (UEngineInput::IsPress(VK_LEFT))
@@ -184,14 +191,14 @@ void APlayer::HeadIdleStart()
 {
 	HeadRenderer->ChangeAnimation("HeadIdle");
 
-	HeadDirCheck();
+	//HeadDirCheck();
 }
 
 void APlayer::HeadMoveStart()
 {
 	HeadRenderer->ChangeAnimation(GetHeadAnimationName("HeadMove"));
 
-	HeadDirCheck();
+	//HeadDirCheck();
 }
 
 void APlayer::AttackStart()
@@ -199,7 +206,7 @@ void APlayer::AttackStart()
 
 	HeadRenderer->ChangeAnimation(GetHeadAnimationName("Attack"));
 
-	HeadDirCheck();
+	//HeadDirCheck();
 }
 
 void APlayer::HeadDirCheck()

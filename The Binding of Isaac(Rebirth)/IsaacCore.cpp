@@ -17,7 +17,7 @@ void UIsaacCore::BeginPlay()
 {
 	UEngineCore::BeginPlay();
 
-	MainWindow.SetWindowScale({ 960, 540 });
+	MainWindow.SetWindowScale(WindowSize);
 	MainWindow.SetWindowPosition({ 0, 0 });
 
 
@@ -27,7 +27,7 @@ void UIsaacCore::BeginPlay()
 	CreateLevel<UTitleLevel>("TitleLevel");
 	CreateLevel<UPlayLevel>("PlayLevel");
 
-	ChangeLevel("IntroLevel");
+	ChangeLevel("PlayLevel");
 }
 
 void UIsaacCore::Tick(float _DeltaTime)

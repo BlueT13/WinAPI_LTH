@@ -5,9 +5,6 @@
 // Ό³Έν :
 class APlayer : public AActor
 {
-private:
-	static APlayer* MainPlayer;
-
 public:
 	// constrcuter destructer
 	APlayer();
@@ -18,6 +15,8 @@ public:
 	APlayer(APlayer&& _Other) noexcept = delete;
 	APlayer& operator=(const APlayer& _Other) = delete;
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
+
+	static APlayer* GetMainPlayer();
 
 protected:
 	void BeginPlay() override;
@@ -55,6 +54,8 @@ protected:
 	std::string CurBodyAnimationName = "None";
 
 private:
+	static APlayer* MainPlayer;
+
 	float FireRate = 0.5f;
 	float BulletCoolTime = 0.0f;
 
@@ -62,9 +63,9 @@ private:
 	UImageRenderer* BodyRenderer = nullptr;
 	FVector HeadRendererPos = { 0,-28 };
 	FVector BodyRendererPos = { 0,0 };
-	FVector RendererSize = { 64,64 };
+	const FVector RendererSize = { 64,64 };
 
-	UCollision* MonsterCollision = nullptr;
+	UCollision* PlayerCollision = nullptr;
 
 	float AnimationTime = 0.0f;
 	int AnimationFrame = 0;

@@ -28,6 +28,6 @@ private:
 	FVector Dir = FVector::Zero;
 	float Speed = 500.0f;
 	UCollision* BulletCollision;
-	FVector RendererSize = { 64,64 };
+	const FVector RendererSize = { 64,64 };
 };
 

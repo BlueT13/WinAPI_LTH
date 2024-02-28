@@ -21,6 +21,7 @@ enum class IsaacCollisionOrder
 
 enum class EActorDir
 {
+	None,
 	Left,
 	Right,
 	Up,
@@ -40,6 +41,14 @@ enum class EPlayerBodyState
 	None,
 	Idle,
 	Move,
+};
+
+enum class EMonsterState
+{
+	None,
+	Idle,
+	Move,
+	Attack,
 };
 
 // Ό³Έν :

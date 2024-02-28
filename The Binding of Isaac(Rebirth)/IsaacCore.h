@@ -20,6 +20,6 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 private:
-
+	FVector WindowSize = { 960, 540 };
 };
 

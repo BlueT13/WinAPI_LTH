@@ -21,6 +21,7 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 private:
-	UCollision* FlyCollision;
+	const FVector RendererSize = { 256,256 };
+	UCollision* FlyCollision = nullptr;
 };
 
