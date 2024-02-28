@@ -136,7 +136,6 @@ void UImageRenderer::CreateAnimation(
 
 }
 
-
 void UImageRenderer::CreateAnimation(
 	std::string_view _AnimationName,
 	std::string_view _ImageName,

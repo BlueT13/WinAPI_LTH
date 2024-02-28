@@ -6,6 +6,7 @@
 #include <EnginePlatform\EngineWindow.h>
 #include <EnginePlatform\EngineInput.h>
 #include <map>
+#include <vector>
 
 
 class ULevel;
@@ -51,6 +52,8 @@ public:
 		AllLevel.insert(std::pair<std::string, ULevel*>(UpperName, NewLevel));
 	}
 
+	void DestroyLevel(std::string_view _Name);
+
 	void ChangeLevel(std::string_view _Name);
 
 	void SetFrame(int _Frame)
@@ -81,6 +84,7 @@ private:
 	std::map<std::string, ULevel*> AllLevel;
 	ULevel* CurLevel = nullptr;
 	ULevel* NextLevel = nullptr;
+	std::vector<std::string> DestroyLevelName;
 
 	static void EngineTick();
 	void CoreTick();

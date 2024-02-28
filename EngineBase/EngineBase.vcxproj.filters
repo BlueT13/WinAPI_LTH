@@ -51,6 +51,9 @@
     <ClCompile Include="PathObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="EngineSerializer.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDebug.h">
@@ -82,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="PathObject.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSerializer.h">
+      <Filter>IO</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

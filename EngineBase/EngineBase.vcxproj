@@ -24,6 +24,7 @@
     <ClCompile Include="EngineFile.cpp" />
     <ClCompile Include="EngineMath.cpp" />
     <ClCompile Include="EnginePath.cpp" />
+    <ClCompile Include="EngineSerializer.cpp" />
     <ClCompile Include="EngineString.cpp" />
     <ClCompile Include="EngineTime.cpp" />
     <ClCompile Include="NameObject.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="EngineFile.h" />
     <ClInclude Include="EngineMath.h" />
     <ClInclude Include="EnginePath.h" />
+    <ClInclude Include="EngineSerializer.h" />
     <ClInclude Include="EngineString.h" />
     <ClInclude Include="EngineTime.h" />
     <ClInclude Include="NameObject.h" />

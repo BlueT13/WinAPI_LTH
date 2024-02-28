@@ -112,14 +112,16 @@ bool UWindowImage::Load(UWindowImage* _Image)
 		// 그냥 모든 문자열에 대비할 방법을 찾아야 합니다.
 		Gdiplus::Image* pImage = Gdiplus::Image::FromFile(wPath.c_str());
 		Gdiplus::Bitmap* pBitMap = reinterpret_cast<Gdiplus::Bitmap*>(pImage->Clone());
+
 		Gdiplus::Status stat = pBitMap->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &hBitMap);
-		delete pImage;
-		delete pBitMap;
 
 		if (Gdiplus::Status::Ok != stat)
 		{
 			MsgBoxAssert("Png 형식 리소스 로드에 실패했습니다.");
 		}
+
+		delete pBitMap;
+		delete pImage;
 
 		ImageType = EWIndowImageType::IMG_PNG;
 	}
@@ -195,13 +197,13 @@ bool UWindowImage::LoadFolder(UWindowImage* _Image)
 			Gdiplus::Image* pImage = Gdiplus::Image::FromFile(wPath.c_str());
 			Gdiplus::Bitmap* pBitMap = reinterpret_cast<Gdiplus::Bitmap*>(pImage->Clone());
 			Gdiplus::Status stat = pBitMap->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &hBitMap);
-			delete pImage;
-			delete pBitMap;
-			
 			if (Gdiplus::Status::Ok != stat)
 			{
 				MsgBoxAssert("Png 형식 리소스 로드에 실패했습니다.");
 			}
+
+			delete pBitMap;
+			delete pImage;
 
 			ImageType = EWIndowImageType::IMG_PNG;
 		}
