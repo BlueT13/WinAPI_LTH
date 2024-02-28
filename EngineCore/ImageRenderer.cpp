@@ -269,6 +269,18 @@ void UImageRenderer::ImageRender(float _DeltaTime)
 
 	EWIndowImageType ImageType = Image->GetImageType();
 
+	switch (SortType)
+	{
+	case EImageSortType::Left:
+	{
+		const UImageInfo& Info = Image->ImageInfo(InfoIndex);
+		RendererTrans.AddPosition({ Info.CuttingTrans.GetScale().hX() , 0.0f});
+		break;
+	}
+	default:
+		break;
+	}
+
 	switch (ImageType)
 	{
 	case EWIndowImageType::IMG_BMP:
