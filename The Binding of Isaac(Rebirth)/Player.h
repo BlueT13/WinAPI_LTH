@@ -23,41 +23,39 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	// AttackState
-	void AttackStateUpdate(float _DeltaTime);
-	void AttackIdle(float _DeltaTime);
+	// Head
+	void HeadStateUpdate(float _DeltaTime);
+	void HeadIdle(float _DeltaTime);
 	void HeadMove(float _DeltaTime);
 	void Attack(float _DeltaTime);
-	void CreateBullet(EDirection Direction);
-	void AttackStateChange(EPlayerAttackState _State);
-
-	void PlayAttackIdleAnimation();
-	void PlayAttackingAnimation();
+	void CreateBullet(FVector _Dir, float _DeltaTime);
+	void HeadStateChange(EPlayerHeadState _State);
+	void HeadIdleStart();
+	void HeadMoveStart();
 	void AttackStart();
+	void HeadDirCheck();
 
-	EDirection GetAttackDirection();
-
-	// MoveState
-	void MoveStateUpdate(float _DeltaTime);
-	void MoveIdle(float _DeltaTime);
-	void Move(float _DeltaTime);
-	void MoveStateChange(EPlayerMoveState _State);
-
-	void PlayMoveIdleAnimation();
+	// Body
+	void BodyStateUpdate(float _DeltaTime);
+	void BodyIdle(float _DeltaTime);
+	void BodyMove(float _DeltaTime);
+	void BodyStateChange(EPlayerBodyState _State);
+	void BodyIdleStart();
 	void BodyMoveStart();
-	EDirection GetPushedKeyMoveDirection();
+	void BodyDirCheck();
 
 	std::string GetHeadAnimationName(std::string _HeadAni);
 	std::string GetBodyAnimationName(std::string _BodyAni);
 
-	EPlayerAttackState AttackState = EPlayerAttackState::None;
-	EPlayerMoveState MoveState = EPlayerMoveState::None;
-
-	EDirection MoveDirection = EDirection::Down;
+	EPlayerHeadState HeadState = EPlayerHeadState::None;
+	EPlayerBodyState BodyState = EPlayerBodyState::None;
+	EActorDir HeadDirState = EActorDir::Down;
+	EActorDir BodyDirState = EActorDir::Down;
+	std::string CurHeadAnimationName = "None";
+	std::string CurBodyAnimationName = "None";
 
 private:
 	float FireRate = 0.2f;
-	float FireTime = FireRate;
 
 	UImageRenderer* HeadRenderer = nullptr;
 	UImageRenderer* BodyRenderer = nullptr;
@@ -66,9 +64,6 @@ private:
 	FVector RendererSize = { 64,64 };
 
 	UCollision* BodyCollision = nullptr;
-
-	float AttackIdleTime = 0.0f;
-	const float AttackFinishTime = 0.25f;
 
 	float AnimationTime = 0.0f;
 	int AnimationFrame = 0;
@@ -86,6 +81,4 @@ private:
 	void CalMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
 	void CalLastMoveVector(float _DeltaTime);
-
-	void PlayInitialAnimation();
 };

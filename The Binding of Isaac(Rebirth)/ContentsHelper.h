@@ -19,23 +19,23 @@ enum class IsaacCollisionOrder
 	Player
 };
 
-enum class EDirection
+enum class EActorDir
 {
-	None,
 	Left,
 	Right,
 	Up,
 	Down,
 };
 
-enum class EPlayerAttackState
+enum class EPlayerHeadState
 {
 	None,
-	AttackIdle,
+	Idle,
+	Move,
 	Attack,
 };
 
-enum class EPlayerMoveState
+enum class EPlayerBodyState
 {
 	None,
 	Idle,
@@ -54,3 +54,4 @@ private:
 	UContentsHelper();
 	~UContentsHelper();
 };
+
