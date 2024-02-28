@@ -28,6 +28,8 @@ void UPlayLevel::BeginPlay()
 	}
 	UEngineResourcesManager::GetInst().CuttingImage("Head.png", 5, 2);
 	UEngineResourcesManager::GetInst().CuttingImage("Body.png", 5, 6);
+	UEngineResourcesManager::GetInst().CuttingImage("Tears.png", 5, 6);
+	UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
 
 	SpawnActor<APlayer>();
 	SpawnActor<AMap>();

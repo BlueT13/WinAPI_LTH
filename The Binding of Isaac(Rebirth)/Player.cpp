@@ -47,9 +47,9 @@ void APlayer::BeginPlay()
 	}
 
 	{
-		BodyCollision = CreateCollision(IsaacCollisionOrder::Player);
-		BodyCollision->SetColType(ECollisionType::CirCle);
-		BodyCollision->SetScale({ 30,30 });
+		MonsterCollision = CreateCollision(IsaacCollisionOrder::Player);
+		MonsterCollision->SetColType(ECollisionType::CirCle);
+		MonsterCollision->SetScale({ 30,30 });
 	}
 
 	HeadStateChange(EPlayerHeadState::Idle);

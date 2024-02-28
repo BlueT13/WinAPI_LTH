@@ -14,11 +14,18 @@ ABullet::~ABullet()
 
 void ABullet::BeginPlay()
 {
-	UImageRenderer* Renderer = CreateImageRenderer(IsaacRenderOrder::Bullet);
-	Renderer->SetImage("Tears.png");
-	Renderer->SetTransform({ {0,-28}, {30, 30} });
-	Renderer->SetImageCuttingTransform({ {0,0}, {26, 25} });
-	Destroy(2.0f);
+	{
+		UImageRenderer* BulletRenderer = CreateImageRenderer(IsaacRenderOrder::Bullet);
+		BulletRenderer->SetImage("Tears.png",6);
+		BulletRenderer->SetTransform({ {0,-28}, RendererSize });
+		Destroy(1.0f);
+	}
+
+	{
+		BulletCollision = CreateCollision(IsaacCollisionOrder::Bullet);
+		BulletCollision->SetScale({ 30,30 });
+		BulletCollision->SetColType(ECollisionType::CirCle);
+	}
 }
 
 void ABullet::Tick(float _DeltaTime)

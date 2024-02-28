@@ -64,7 +64,7 @@ private:
 	FVector BodyRendererPos = { 0,0 };
 	FVector RendererSize = { 64,64 };
 
-	UCollision* BodyCollision = nullptr;
+	UCollision* MonsterCollision = nullptr;
 
 	float AnimationTime = 0.0f;
 	int AnimationFrame = 0;

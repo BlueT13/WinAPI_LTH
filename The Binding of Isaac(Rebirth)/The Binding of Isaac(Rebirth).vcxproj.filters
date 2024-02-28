@@ -29,6 +29,9 @@
     <ClInclude Include="Map.h">
       <Filter>Object\PlayLevel\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="Fly.h">
+      <Filter>Object\PlayLevel\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -57,6 +60,9 @@
       <Filter>Object\TitleLevel\Actor</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
+      <Filter>Object\PlayLevel\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Fly.cpp">
       <Filter>Object\PlayLevel\Actor</Filter>
     </ClCompile>
   </ItemGroup>
