@@ -18,7 +18,7 @@ void ABullet::BeginPlay()
 		UImageRenderer* BulletRenderer = CreateImageRenderer(IsaacRenderOrder::Bullet);
 		BulletRenderer->SetImage("Tears.png",6);
 		BulletRenderer->SetTransform({ {0,-28}, RendererSize });
-		Destroy(1.0f);
+		Destroy(0.8f);
 	}
 
 	{
