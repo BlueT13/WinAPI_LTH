@@ -23,16 +23,16 @@ void APlayer::BeginPlay()
 		HeadRenderer = CreateImageRenderer(IsaacRenderOrder::PlayerHead);
 		HeadRenderer->SetImage("Head.png");
 		HeadRenderer->SetTransform({ HeadRendererPos, RendererSize });
-		HeadRenderer->CreateAnimation("HeadIdle", "Head.png", 7, 7, 0.1f, true);
-		HeadRenderer->CreateAnimation("HeadMove_Left", "Head.png", 1, 1, 0.1f, true);
-		HeadRenderer->CreateAnimation("HeadMove_Right", "Head.png", 3, 3, 0.1f, true);
-		HeadRenderer->CreateAnimation("HeadMove_Up", "Head.png", 5, 5, 0.1f, true);
-		HeadRenderer->CreateAnimation("HeadMove_Down", "Head.png", 7, 7, 0.1f, true);
+		HeadRenderer->CreateAnimation("HeadIdle", "Head.png", 7, 7, 0.1f, false);
+		HeadRenderer->CreateAnimation("HeadMove_Left", "Head.png", 1, 1, 0.1f, false);
+		HeadRenderer->CreateAnimation("HeadMove_Right", "Head.png", 3, 3, 0.1f, false);
+		HeadRenderer->CreateAnimation("HeadMove_Up", "Head.png", 5, 5, 0.1f, false);
+		HeadRenderer->CreateAnimation("HeadMove_Down", "Head.png", 7, 7, 0.1f, false);
 
-		HeadRenderer->CreateAnimation("Attack_Left", "Head.png", 0, 1, FireRate, true);
-		HeadRenderer->CreateAnimation("Attack_Right", "Head.png", 2, 3, FireRate, true);
-		HeadRenderer->CreateAnimation("Attack_Up", "Head.png", 4, 5, FireRate, true);
-		HeadRenderer->CreateAnimation("Attack_Down", "Head.png", 6, 7, FireRate, true);
+		HeadRenderer->CreateAnimation("Attack_Left", "Head.png", { 1, 0 }, { 0.1f, FireRate - 0.2f }, true);
+		HeadRenderer->CreateAnimation("Attack_Right", "Head.png", { 3, 2 }, { 0.1f, FireRate - 0.2f }, true);
+		HeadRenderer->CreateAnimation("Attack_Up", "Head.png", { 5, 4 }, { 0.1f, FireRate - 0.2f }, true);
+		HeadRenderer->CreateAnimation("Attack_Down", "Head.png", { 7, 6 }, { 0.1f, FireRate - 0.2f }, true);
 	}
 
 	{
@@ -62,6 +62,8 @@ void APlayer::Tick(float _DeltaTime)
 
 	HeadStateUpdate(_DeltaTime);
 	BodyStateUpdate(_DeltaTime);
+
+	BulletCoolTime -= _DeltaTime;
 }
 
 // Head
@@ -86,23 +88,6 @@ void APlayer::HeadStateUpdate(float _DeltaTime)
 void APlayer::HeadIdle(float _DeltaTime)
 {
 
-	if (true == UEngineInput::IsPress(VK_LEFT))
-	{
-		CreateBullet(FVector::Left, _DeltaTime);
-	}
-	if (true == UEngineInput::IsPress(VK_RIGHT))
-	{
-		CreateBullet(FVector::Right, _DeltaTime);
-	}
-	if (true == UEngineInput::IsPress(VK_UP))
-	{
-		CreateBullet(FVector::Up, _DeltaTime);
-	}
-	if (true == UEngineInput::IsPress(VK_DOWN))
-	{
-		CreateBullet(FVector::Down, _DeltaTime);
-	}
-
 	if (UEngineInput::IsPress('A') || UEngineInput::IsPress('D') || UEngineInput::IsPress('W') || UEngineInput::IsPress('S'))
 	{
 		HeadStateChange(EPlayerHeadState::Move);
@@ -120,23 +105,6 @@ void APlayer::HeadMove(float _DeltaTime)
 {
 	HeadDirCheck();
 
-	if (true == UEngineInput::IsPress(VK_LEFT))
-	{
-		CreateBullet(FVector::Left, _DeltaTime);
-	}
-	if (true == UEngineInput::IsPress(VK_RIGHT))
-	{
-		CreateBullet(FVector::Right, _DeltaTime);
-	}
-	if (true == UEngineInput::IsPress(VK_UP))
-	{
-		CreateBullet(FVector::Up, _DeltaTime);
-	}
-	if (true == UEngineInput::IsPress(VK_DOWN))
-	{
-		CreateBullet(FVector::Down, _DeltaTime);
-	}
-
 	if (UEngineInput::IsDown(VK_LEFT) || UEngineInput::IsDown(VK_RIGHT) || UEngineInput::IsDown(VK_UP) || UEngineInput::IsDown(VK_DOWN))
 	{
 		HeadStateChange(EPlayerHeadState::Attack);
@@ -153,27 +121,28 @@ void APlayer::HeadMove(float _DeltaTime)
 void APlayer::Attack(float _DeltaTime)
 {
 	HeadDirCheck();
-	if (HeadRenderer->IsCurAnimationEnd())
+	if (BulletCoolTime < 0)
 	{
-		if (true == UEngineInput::IsPress(VK_LEFT))
+		if (UEngineInput::IsPress(VK_LEFT))
 		{
-			CreateBullet(FVector::Left, _DeltaTime);
+			CreateBullet(FVector::Left);
 		}
-		if (true == UEngineInput::IsPress(VK_RIGHT))
+		else if (UEngineInput::IsPress(VK_RIGHT))
 		{
-			CreateBullet(FVector::Right, _DeltaTime);
+			CreateBullet(FVector::Right);
 		}
-		if (true == UEngineInput::IsPress(VK_UP))
+		else if (UEngineInput::IsPress(VK_UP))
 		{
-			CreateBullet(FVector::Up, _DeltaTime);
+			CreateBullet(FVector::Up);
 		}
-		if (true == UEngineInput::IsPress(VK_DOWN))
+		else if (UEngineInput::IsPress(VK_DOWN))
 		{
-			CreateBullet(FVector::Down, _DeltaTime);
+			CreateBullet(FVector::Down);
 		}
+		BulletCoolTime = FireRate;
 	}
 
-	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT) && UEngineInput::IsFree(VK_UP) && UEngineInput::IsFree(VK_DOWN) && HeadRenderer->IsCurAnimationEnd())
+	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT) && UEngineInput::IsFree(VK_UP) && UEngineInput::IsFree(VK_DOWN))
 	{
 		HeadStateChange(EPlayerHeadState::Move);
 		return;
@@ -181,12 +150,11 @@ void APlayer::Attack(float _DeltaTime)
 
 }
 
-void APlayer::CreateBullet(FVector _Dir, float _DeltaTime)
+void APlayer::CreateBullet(FVector _Dir)
 {
-
-	ABullet* NewBullet = GetWorld()->SpawnActor<ABullet>();
-	NewBullet->SetActorLocation(GetActorLocation());
-	NewBullet->SetDir(_Dir);
+	ABullet* Tear = GetWorld()->SpawnActor<ABullet>();
+	Tear->SetActorLocation(GetActorLocation());
+	Tear->SetDir(_Dir);
 }
 
 void APlayer::HeadStateChange(EPlayerHeadState _State)
@@ -228,6 +196,7 @@ void APlayer::HeadMoveStart()
 
 void APlayer::AttackStart()
 {
+
 	HeadRenderer->ChangeAnimation(GetHeadAnimationName("Attack"));
 
 	HeadDirCheck();
@@ -276,7 +245,7 @@ void APlayer::HeadDirCheck()
 		HeadDirState = HeadDir;
 		std::string Name = GetHeadAnimationName(CurHeadAnimationName);
 
-		HeadRenderer->ChangeAnimation(Name, true, HeadRenderer->GetCurAnimationFrame(), HeadRenderer->GetCurAnimationTime());
+		HeadRenderer->ChangeAnimation(Name);
 	}
 }
 
@@ -398,7 +367,7 @@ void APlayer::BodyDirCheck()
 	{
 		BodyDirState = BodyDir;
 		std::string Name = GetBodyAnimationName(CurBodyAnimationName);
-		BodyRenderer->ChangeAnimation(Name, true, BodyRenderer->GetCurAnimationFrame(), BodyRenderer->GetCurAnimationTime());
+		BodyRenderer->ChangeAnimation(Name);
 	}
 }
 
@@ -498,25 +467,21 @@ void APlayer::MoveLastMoveVector(float _DeltaTime)
 {
 	FVector PlayerPos = GetActorLocation();
 	FVector PlayerNextPos = PlayerPos + MoveVector * _DeltaTime;
-	if (PlayerNextPos.X < 138 )
+	if (PlayerNextPos.X < 138)
 	{
-		PlayerNextPos.X = 0.0f;
-		return;
+		LastMoveVector.X = 0.0f;
 	}
 	if (PlayerNextPos.Y < 80)
 	{
-		PlayerNextPos.Y = 0.0f;
-		return;
+		LastMoveVector.Y = 0.0f;
 	}
 	if (PlayerNextPos.X > 820)
 	{
-		PlayerNextPos.X = 0.0f;
-		return;
+		LastMoveVector.X = 0.0f;
 	}
 	if (PlayerNextPos.Y > 460)
 	{
-		PlayerNextPos.Y = 0.0f;
-		return;
+		LastMoveVector.Y = 0.0f;
 	}
 
 	AddActorLocation(LastMoveVector * _DeltaTime);

@@ -28,7 +28,7 @@ protected:
 	void HeadIdle(float _DeltaTime);
 	void HeadMove(float _DeltaTime);
 	void Attack(float _DeltaTime);
-	void CreateBullet(FVector _Dir, float _DeltaTime);
+	void CreateBullet(FVector _Dir);
 	void HeadStateChange(EPlayerHeadState _State);
 	void HeadIdleStart();
 	void HeadMoveStart();
@@ -55,7 +55,8 @@ protected:
 	std::string CurBodyAnimationName = "None";
 
 private:
-	float FireRate = 0.2f;
+	float FireRate = 0.5f;
+	float BulletCoolTime = 0.0f;
 
 	UImageRenderer* HeadRenderer = nullptr;
 	UImageRenderer* BodyRenderer = nullptr;
