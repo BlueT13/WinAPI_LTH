@@ -61,24 +61,24 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 	int DirIndex = static_cast<int>(_Dir);
 
 	DoorRenderer[DirIndex] = CreateImageRenderer(IsaacRenderOrder::Door);
-	DoorRenderer[DirIndex]->SetImage("Head.png");
+	DoorRenderer[DirIndex]->SetImage("Door.png",0);
 
 	switch (_Dir)
 	{
 	case ERoomDir::Left:
-		DoorRenderer[DirIndex]->SetScale({ 100, 100 });
+		DoorRenderer[DirIndex]->AutoImageScale();
 		DoorRenderer[DirIndex]->SetPosition({ -400, 0 });
 		break;
 	case ERoomDir::Right:
-		DoorRenderer[DirIndex]->SetScale({ 100, 100 });
+		DoorRenderer[DirIndex]->AutoImageScale();
 		DoorRenderer[DirIndex]->SetPosition({ 400, 0 });
 		break;
 	case ERoomDir::Up:
-		DoorRenderer[DirIndex]->SetScale({ 100, 100 });
+		DoorRenderer[DirIndex]->AutoImageScale();
 		DoorRenderer[DirIndex]->SetPosition({ 0, -300 });
 		break;
 	case ERoomDir::Down:
-		DoorRenderer[DirIndex]->SetScale({ 100, 100 });
+		DoorRenderer[DirIndex]->AutoImageScale();
 		DoorRenderer[DirIndex]->SetPosition({ 0, 300 });
 		break;
 	case ERoomDir::Max:
