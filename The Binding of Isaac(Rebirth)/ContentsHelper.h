@@ -56,7 +56,6 @@ class UContentsHelper
 {
 public:
 	static class APlayer* MainPlayer;
-	static UWindowImage* ColMapImage;
 
 private:
 	// constrcuter destructer

@@ -21,6 +21,7 @@ APlayer* APlayer::GetMainPlayer()
 void APlayer::BeginPlay()
 {
 	AActor::BeginPlay();
+	MainPlayer = this;
 
 	FVector HalfScale = GEngine->MainWindow.GetWindowScale().Half2D();
 	SetActorLocation(HalfScale);

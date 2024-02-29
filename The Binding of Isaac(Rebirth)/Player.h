@@ -50,8 +50,6 @@ protected:
 	EPlayerBodyState BodyState = EPlayerBodyState::None;
 	EActorDir HeadDirState = EActorDir::Down;
 	EActorDir BodyDirState = EActorDir::Down;
-	std::string CurHeadAnimationName = "None";
-	std::string CurBodyAnimationName = "None";
 
 private:
 	static APlayer* MainPlayer;
@@ -67,6 +65,9 @@ private:
 	const FVector RendererSize = { 64,64 };
 
 	UCollision* PlayerCollision = nullptr;
+
+	std::string CurHeadAnimationName = "None";
+	std::string CurBodyAnimationName = "None";
 
 	float AnimationTime = 0.0f;
 	int AnimationFrame = 0;

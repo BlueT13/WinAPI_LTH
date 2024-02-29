@@ -1,9 +1,10 @@
 #pragma once
+#include "Monster.h"
 #include <EngineCore/Actor.h>
 #include "ContentsHelper.h"
 
 // Ό³Έν :
-class AFly : public AActor
+class AFly : public AMonster
 {
 public:
 	// constrcuter destructer
@@ -22,6 +23,5 @@ protected:
 
 private:
 	const FVector RendererSize = { 256,256 };
-	UCollision* FlyCollision = nullptr;
 };
 

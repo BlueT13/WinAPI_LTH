@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore\Actor.h>
 #include "ContentsHelper.h"
+#include "Player.h"
 
 // Ό³Έν :
 class AMonster : public AActor
@@ -20,21 +21,31 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	//void MonsterDirCheck();
-	//std::string GetAnimationName(std::string _Name);
+	virtual void MonsterStateUpdate(float _DeltaTime);
+	virtual void MonsterIdle(float _DeltaTime);
+	virtual void MonsterMove(float _DeltaTime);
+	virtual void MonsterAttack(float _DeltaTime);
+	virtual void MonsterStateChange(EMonsterState _State);
+	virtual void MonsterIdleStart();
+	virtual void MonsterMoveStart();
+	virtual void MonsterAttackStart();
+	virtual void MonsterDirCheck();
 
-	//void StateChange(EMonsterState _State);
-	//void StateUpdate(float _DeltaTime);
+	std::string GetMonsterAnimationName(std::string _Name);
 
-	//void Idle(float _DeltaTime);
-	//void Move(float _DeltaTime);
-	//void Attack(float _DeltaTime);
 
-	EMonsterState State = EMonsterState::None;
-	EActorDir DirState = EActorDir::None;
-	
+	EMonsterState MonsterState = EMonsterState::None;
+	EActorDir MonsterDirState = EActorDir::None;
+
 	UImageRenderer* MonsterRenderer = nullptr;
 	UCollision* MonsterCollision = nullptr;
+
+	FVector MoveVector = FVector::Zero;
+	FVector MoveAcc = { 0.0f, 0.0f };
+	FVector StopAcc = { 0.0f, 0.0f };
+
+	APlayer* Player;
+	FVector PlayerLocation;
 private:
 };
 

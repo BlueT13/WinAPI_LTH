@@ -21,10 +21,9 @@ void AFly::BeginPlay()
 	FlyRenderer->CreateAnimation("Dead", "Fly.png", 4, 14, 0.05f, true);
 
 
-
-	FlyCollision = CreateCollision(IsaacCollisionOrder::Monster);
-	FlyCollision->SetScale({ 50, 50 });
-	FlyCollision->SetColType(ECollisionType::CirCle);
+	MonsterCollision = CreateCollision(IsaacCollisionOrder::Monster);
+	MonsterCollision->SetScale({ 50, 50 });
+	MonsterCollision->SetColType(ECollisionType::CirCle);
 
 
 	FlyRenderer->ChangeAnimation("Move");
