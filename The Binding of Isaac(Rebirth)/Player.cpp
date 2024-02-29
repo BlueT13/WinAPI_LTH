@@ -68,6 +68,7 @@ void APlayer::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
+	UContentsHelper::MainPlayerLocation = this->GetActorLocation();
 	HeadStateUpdate(_DeltaTime);
 	BodyStateUpdate(_DeltaTime);
 

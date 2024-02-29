@@ -56,7 +56,7 @@ class UContentsHelper
 {
 public:
 	static class APlayer* MainPlayer;
-
+	static FVector MainPlayerLocation;
 private:
 	// constrcuter destructer
 	UContentsHelper();
