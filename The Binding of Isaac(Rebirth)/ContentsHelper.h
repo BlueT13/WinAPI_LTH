@@ -5,7 +5,8 @@
 
 enum IsaacRenderOrder
 {
-	Map,
+	Room,
+	Door,
 	Monster,
 	PlayerBody,
 	Bullet,
@@ -14,6 +15,7 @@ enum IsaacRenderOrder
 
 enum class IsaacCollisionOrder
 {
+	Door,
 	Bullet,
 	Monster,
 	Player
@@ -57,6 +59,7 @@ class UContentsHelper
 public:
 	static class APlayer* MainPlayer;
 	static FVector MainPlayerLocation;
+
 private:
 	// constrcuter destructer
 	UContentsHelper();

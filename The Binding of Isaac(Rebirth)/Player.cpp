@@ -4,6 +4,8 @@
 #include <EngineBase/EngineDebug.h>
 #include "ContentsHelper.h"
 
+bool APlayer::IsFreeCamera = false;
+
 APlayer::APlayer()
 {
 }
@@ -22,9 +24,6 @@ void APlayer::BeginPlay()
 {
 	AActor::BeginPlay();
 	MainPlayer = this;
-
-	FVector HalfScale = GEngine->MainWindow.GetWindowScale().Half2D();
-	SetActorLocation(HalfScale);
 
 	// Renderer
 	{
@@ -69,6 +68,44 @@ void APlayer::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 
 	UContentsHelper::MainPlayerLocation = this->GetActorLocation();
+
+	if (UEngineInput::IsDown(VK_F11))
+	{
+		IsFreeCamera = true;
+	}
+
+	if (true == IsFreeCamera)
+	{
+		if (UEngineInput::IsPress(VK_LEFT))
+		{
+			GetWorld()->AddCameraPos(FVector::Left);
+			IsFreeCamera = true;
+		}
+
+		if (UEngineInput::IsPress(VK_RIGHT))
+		{
+			GetWorld()->AddCameraPos(FVector::Right);
+			IsFreeCamera = true;
+		}
+
+		if (UEngineInput::IsPress(VK_UP))
+		{
+			GetWorld()->AddCameraPos(FVector::Up);
+			IsFreeCamera = true;
+		}
+
+		if (UEngineInput::IsPress(VK_DOWN))
+		{
+			GetWorld()->AddCameraPos(FVector::Down);
+			IsFreeCamera = true;
+		}
+
+
+
+		return;
+	}
+
+
 	HeadStateUpdate(_DeltaTime);
 	BodyStateUpdate(_DeltaTime);
 
@@ -471,22 +508,22 @@ void APlayer::MoveLastMoveVector(float _DeltaTime)
 {
 	FVector PlayerPos = GetActorLocation();
 	FVector PlayerNextPos = PlayerPos + MoveVector * _DeltaTime;
-	if (PlayerNextPos.X < 138)
-	{
-		LastMoveVector.X = 0.0f;
-	}
-	if (PlayerNextPos.Y < 80)
-	{
-		LastMoveVector.Y = 0.0f;
-	}
-	if (PlayerNextPos.X > 820)
-	{
-		LastMoveVector.X = 0.0f;
-	}
-	if (PlayerNextPos.Y > 460)
-	{
-		LastMoveVector.Y = 0.0f;
-	}
+	//if (PlayerNextPos.X < 138)
+	//{
+	//	LastMoveVector.X = 0.0f;
+	//}
+	//if (PlayerNextPos.Y < 80)
+	//{
+	//	LastMoveVector.Y = 0.0f;
+	//}
+	//if (PlayerNextPos.X > 820)
+	//{
+	//	LastMoveVector.X = 0.0f;
+	//}
+	//if (PlayerNextPos.Y > 460)
+	//{
+	//	LastMoveVector.Y = 0.0f;
+	//}
 
 	AddActorLocation(LastMoveVector * _DeltaTime);
 }

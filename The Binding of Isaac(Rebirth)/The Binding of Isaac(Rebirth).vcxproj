@@ -177,10 +177,6 @@
     <ClInclude Include="ContentsHelper.h" />
     <ClInclude Include="IntroBackground.h" />
     <ClInclude Include="IntroLevel.h" />
-    <ClInclude Include="Map.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Fly.h">
       <SubType>
       </SubType>
@@ -201,6 +197,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Room.h" />
     <ClInclude Include="StartImage.h">
       <SubType>
       </SubType>
@@ -218,10 +215,6 @@
     <ClCompile Include="ContentsHelper.cpp" />
     <ClCompile Include="IntroBackground.cpp" />
     <ClCompile Include="IntroLevel.cpp" />
-    <ClCompile Include="Map.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Fly.cpp">
       <SubType>
       </SubType>
@@ -242,6 +235,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="StartImage.cpp">
       <SubType>
       </SubType>

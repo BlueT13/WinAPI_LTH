@@ -29,11 +29,11 @@
     <ClInclude Include="Fly.h">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Object\PlayLevel\Actor\Map</Filter>
-    </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Object\PlayLevel\Actor\Room</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -65,11 +65,11 @@
     <ClCompile Include="Fly.cpp">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Object\PlayLevel\Actor\Map</Filter>
-    </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Object\PlayLevel\Actor\Room</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,8 +103,8 @@
     <Filter Include="Object\PlayLevel\Actor\Player">
       <UniqueIdentifier>{3fd5cca5-5b6e-4168-9a9c-8f446f6749ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\PlayLevel\Actor\Map">
-      <UniqueIdentifier>{87e5b7cb-9eab-446f-945d-453f2509583b}</UniqueIdentifier>
+    <Filter Include="Object\PlayLevel\Actor\Room">
+      <UniqueIdentifier>{181d8ba9-27ff-4adc-b758-fb0be251ffea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

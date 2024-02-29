@@ -6,6 +6,7 @@
 class APlayer : public AActor
 {
 public:
+	static bool IsFreeCamera;
 	// constrcuter destructer
 	APlayer();
 	~APlayer();
@@ -85,4 +86,5 @@ private:
 	void CalMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
 	void CalLastMoveVector(float _DeltaTime);
+
 };

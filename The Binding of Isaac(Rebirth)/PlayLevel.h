@@ -1,5 +1,7 @@
 #pragma once
 #include <EngineCore/Level.h>
+#include "Room.h"
+
 // 설명 :
 class UPlayLevel : public ULevel
 {
@@ -14,11 +16,17 @@ public:
 	UPlayLevel& operator=(const UPlayLevel& _Other) = delete;
 	UPlayLevel& operator=(UPlayLevel&& _Other) noexcept = delete;
 
+	void CreateRoom(int _X, int _Y, std::string_view _Img);
+	void SetCurRoom(int _X, int _Y);
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
 private:
+	// 방을 관리하는 건 레벨마다 해야하니까
+	std::map<__int64, ARoom*> Rooms;
+	ARoom* CurRoom = nullptr;
 
 };
 
