@@ -20,9 +20,6 @@ void UIsaacCore::BeginPlay()
 	MainWindow.SetWindowScale(WindowSize);
 	MainWindow.SetWindowPosition({ 0, 0 });
 
-
-	SetFrame(60);
-
 	CreateLevel<UIntroLevel>("IntroLevel");
 	CreateLevel<UTitleLevel>("TitleLevel");
 	CreateLevel<UPlayLevel>("PlayLevel");

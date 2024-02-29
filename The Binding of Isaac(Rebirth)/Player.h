@@ -57,6 +57,7 @@ private:
 	static APlayer* MainPlayer;
 
 	float FireRate = 0.5f;
+	float BlinkTime = 0.1f;
 	float BulletCoolTime = 0.0f;
 
 	UImageRenderer* HeadRenderer = nullptr;

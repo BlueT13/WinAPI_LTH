@@ -36,10 +36,10 @@ void APlayer::BeginPlay()
 		HeadRenderer->CreateAnimation("HeadMove_Up", "Head.png", 5, 5, 0.1f, false);
 		HeadRenderer->CreateAnimation("HeadMove_Down", "Head.png", 7, 7, 0.1f, false);
 
-		HeadRenderer->CreateAnimation("Attack_Left", "Head.png", { 1, 0 }, { 0.1f, FireRate - 0.2f }, true);
-		HeadRenderer->CreateAnimation("Attack_Right", "Head.png", { 3, 2 }, { 0.1f, FireRate - 0.2f }, true);
-		HeadRenderer->CreateAnimation("Attack_Up", "Head.png", { 5, 4 }, { 0.1f, FireRate - 0.2f }, true);
-		HeadRenderer->CreateAnimation("Attack_Down", "Head.png", { 7, 6 }, { 0.1f, FireRate - 0.2f }, true);
+		HeadRenderer->CreateAnimation("Attack_Left", "Head.png", { 0, 0, 1 }, { BlinkTime, FireRate - BlinkTime * 2, BlinkTime }, true);
+		HeadRenderer->CreateAnimation("Attack_Right", "Head.png", { 2, 3, 3 }, { BlinkTime, FireRate - BlinkTime * 2, BlinkTime }, true);
+		HeadRenderer->CreateAnimation("Attack_Up", "Head.png", { 4, 5, 5 }, { BlinkTime, FireRate - BlinkTime * 2, BlinkTime }, true);
+		HeadRenderer->CreateAnimation("Attack_Down", "Head.png", { 6, 7, 7 }, { BlinkTime, FireRate - BlinkTime * 2, BlinkTime }, true);
 	}
 	{
 		BodyRenderer = CreateImageRenderer(IsaacRenderOrder::PlayerBody);
@@ -109,7 +109,7 @@ void APlayer::HeadIdle(float _DeltaTime)
 
 void APlayer::HeadMove(float _DeltaTime)
 {
-	//HeadDirCheck();
+	HeadDirCheck();
 
 	if (UEngineInput::IsDown(VK_LEFT) || UEngineInput::IsDown(VK_RIGHT) || UEngineInput::IsDown(VK_UP) || UEngineInput::IsDown(VK_DOWN))
 	{
@@ -126,7 +126,7 @@ void APlayer::HeadMove(float _DeltaTime)
 
 void APlayer::Attack(float _DeltaTime)
 {
-	//HeadDirCheck();
+	HeadDirCheck();
 
 	if (BulletCoolTime < 0)
 	{
@@ -190,23 +190,20 @@ void APlayer::HeadStateChange(EPlayerHeadState _State)
 void APlayer::HeadIdleStart()
 {
 	HeadRenderer->ChangeAnimation("HeadIdle");
-
-	//HeadDirCheck();
 }
 
 void APlayer::HeadMoveStart()
 {
 	HeadRenderer->ChangeAnimation(GetHeadAnimationName("HeadMove"));
 
-	//HeadDirCheck();
+	HeadDirCheck();
 }
 
 void APlayer::AttackStart()
 {
-
 	HeadRenderer->ChangeAnimation(GetHeadAnimationName("Attack"));
 
-	//HeadDirCheck();
+	HeadDirCheck();
 }
 
 void APlayer::HeadDirCheck()
@@ -336,8 +333,6 @@ void APlayer::BodyStateChange(EPlayerBodyState _State)
 void APlayer::BodyIdleStart()
 {
 	BodyRenderer->ChangeAnimation("BodyIdle");
-
-	BodyDirCheck();
 }
 
 void APlayer::BodyMoveStart()
