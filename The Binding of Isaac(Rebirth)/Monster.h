@@ -20,7 +20,7 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	//void DirCheck();
+	//void MonsterDirCheck();
 	//std::string GetAnimationName(std::string _Name);
 
 	//void StateChange(EMonsterState _State);
