@@ -32,6 +32,7 @@ public:
 	};
 };
 
+class UPlayLevel;
 class ARoom : public AActor
 {
 public:
@@ -60,6 +61,11 @@ public:
 
 	void RoomCameraFocus();
 
+	void SetPlayLevel(UPlayLevel* _Level)
+	{
+		PlayLevel = _Level;
+	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -67,6 +73,8 @@ protected:
 	void CreateDoor(ERoomDir _Dir);
 	
 private:
+	UPlayLevel* PlayLevel = nullptr;
+
 	UImageRenderer* RoomRenderer = nullptr;
 
 	FRoomIndex RoomIndex = { 0, 0 };

@@ -79,6 +79,7 @@ void UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img)
 	FVector WindowScale = GEngine->MainWindow.GetWindowScale();
 
 	ARoom* NewRoom = SpawnActor<ARoom>();
+	NewRoom->SetPlayLevel(this);
 	NewRoom->SetRoomImg(_Img);
 	NewRoom->SetRoomIndex(Index);
 	NewRoom->SetActorLocation({ WindowScale.X * _X, WindowScale.Y * _Y });

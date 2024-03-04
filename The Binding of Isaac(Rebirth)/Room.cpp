@@ -2,6 +2,7 @@
 #include "ContentsHelper.h"
 #include "Player.h"
 #include "PlayLevel.h"
+#include <EngineBase/EngineMath.h>
 //#include <EngineCore\EngineResourcesManager.h>
 
 FRoomIndex FRoomIndex::Left = { -1, 0 };
@@ -147,21 +148,28 @@ void ARoom::Tick(float _DeltaTime)
 		if (true == DoorCollision[i]->CollisionCheck(IsaacCollisionOrder::Player, Result))
 		{
 			FVector CurPos = GetTransform().GetPosition();
-			float a = CurPos.Y;
 
 			switch (Dir)
 			{
 			case ERoomDir::Left:
-				Player->SetActorLocation({ CurPos.X - WindowScale.X, CurPos.Y });
+				Player->SetActorLocation({ CurPos.X - (WindowScale.X - 310), CurPos.Y });
+				//GetWorld()->AddCameraPos({ CurPos.X - WindowScale.X, CurPos.Y });
+				PlayLevel->SetCurRoom(RoomIndex.X - 1, RoomIndex.Y);
 				break;
 			case ERoomDir::Right:
-				Player->SetActorLocation({ CurPos.X + WindowScale.X, CurPos.Y });
+				Player->SetActorLocation({ CurPos.X + (WindowScale.X - 310), CurPos.Y });
+				//GetWorld()->AddCameraPos({ CurPos.X + WindowScale.X, CurPos.Y });
+				PlayLevel->SetCurRoom(RoomIndex.X + 1, RoomIndex.Y);
 				break;
 			case ERoomDir::Up:
-				Player->SetActorLocation({ CurPos.X, CurPos.Y - WindowScale.Y });
+				Player->SetActorLocation({ CurPos.X, CurPos.Y - (WindowScale.Y - 160) });
+				//GetWorld()->AddCameraPos({ CurPos.X, CurPos.Y - WindowScale.Y });
+				PlayLevel->SetCurRoom(RoomIndex.X, RoomIndex.Y - 1);
 				break;
 			case ERoomDir::Down:
-				Player->SetActorLocation({ CurPos.X, CurPos.Y + WindowScale.Y });
+				Player->SetActorLocation({ CurPos.X, CurPos.Y + (WindowScale.Y - 150) });
+				//GetWorld()->AddCameraPos({ CurPos.X, CurPos.Y + WindowScale.Y });
+				PlayLevel->SetCurRoom(RoomIndex.X, RoomIndex.Y + 1);
 				break;
 			case ERoomDir::Max:
 				break;
