@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include <EngineCore/EngineCore.h>
 
 enum class ERoomDir
 {
@@ -64,7 +65,7 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 	void CreateDoor(ERoomDir _Dir);
-
+	
 private:
 	UImageRenderer* RoomRenderer = nullptr;
 
@@ -75,5 +76,9 @@ private:
 
 	UImageRenderer* DoorRenderer[4] = { nullptr, };
 	UCollision* DoorCollision[4] = { nullptr, };
+
+	static ARoom* CurRoom;
+
+	FVector WindowScale = GEngine->MainWindow.GetWindowScale();
 };
 

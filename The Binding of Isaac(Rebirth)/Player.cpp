@@ -71,7 +71,7 @@ void APlayer::Tick(float _DeltaTime)
 
 	if (UEngineInput::IsDown('F'))
 	{
-		IsFreeCamera = true;
+		IsFreeCamera = !IsFreeCamera;
 	}
 
 	if (true == IsFreeCamera)

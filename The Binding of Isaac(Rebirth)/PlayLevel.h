@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/Level.h>
+#include <EngineCore/EngineCore.h>
 #include "Room.h"
 
 // 설명 :
@@ -27,6 +28,6 @@ private:
 	// 방을 관리하는 건 레벨마다 해야하니까
 	std::map<__int64, ARoom*> Rooms;
 	ARoom* CurRoom = nullptr;
-
+	bool IsFreeCamera = false;
 };
 

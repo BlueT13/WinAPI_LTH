@@ -56,8 +56,15 @@ void UPlayLevel::SetCurRoom(int _X, int _Y)
 		return;
 	}
 
+	for (std::pair<const __int64, ARoom*>& _Pair : Rooms)
+	{
+		ARoom* Room = _Pair.second;
+		//Room->SetActive(false);
+	}
+
 	CurRoom = Rooms[Index.Key];
 	CurRoom->RoomCameraFocus();
+	//CurRoom->SetActive(true);
 }
 
 void UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img)

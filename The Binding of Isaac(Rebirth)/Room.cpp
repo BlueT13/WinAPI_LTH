@@ -1,6 +1,7 @@
 #include "Room.h"
 #include "ContentsHelper.h"
 #include "Player.h"
+#include "PlayLevel.h"
 //#include <EngineCore\EngineResourcesManager.h>
 
 FRoomIndex FRoomIndex::Left = { -1, 0 };
@@ -121,8 +122,7 @@ void ARoom::RoomCameraFocus()
 {
 	if (false == APlayer::IsFreeCamera)
 	{
-		FVector Scale = GEngine->MainWindow.GetWindowScale();
-		GetWorld()->SetCameraPos(GetActorLocation() - Scale.Half2D());
+		GetWorld()->SetCameraPos(GetActorLocation() - WindowScale.Half2D());
 	}
 }
 
@@ -130,19 +130,51 @@ void ARoom::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
+
+
 	APlayer* Player = APlayer::GetMainPlayer();
 
-	for (UCollision* DCollision : DoorCollision)
+	for (int i = 0; i < 4; i++)
 	{
-		if (DCollision == nullptr)
+		if (DoorCollision[i] == nullptr)
 		{
 			continue;
 		}
 
+		ERoomDir Dir = static_cast<ERoomDir>(i);
+
 		std::vector<UCollision*> Result;
-		if (true == DCollision->CollisionCheck(IsaacCollisionOrder::Player, Result))
+		if (true == DoorCollision[i]->CollisionCheck(IsaacCollisionOrder::Player, Result))
 		{
-			Player->SetActorLocation({ 0,0 });
+			FVector CurPos = GetTransform().GetPosition();
+			float a = CurPos.Y;
+
+			switch (Dir)
+			{
+			case ERoomDir::Left:
+				Player->SetActorLocation({ CurPos.X - WindowScale.X, CurPos.Y });
+				break;
+			case ERoomDir::Right:
+				Player->SetActorLocation({ CurPos.X + WindowScale.X, CurPos.Y });
+				break;
+			case ERoomDir::Up:
+				Player->SetActorLocation({ CurPos.X, CurPos.Y - WindowScale.Y });
+				break;
+			case ERoomDir::Down:
+				Player->SetActorLocation({ CurPos.X, CurPos.Y + WindowScale.Y });
+				break;
+			case ERoomDir::Max:
+				break;
+			default:
+				break;
+			}
+
+			// 내 왼쪽에 있는 방을 켜야죠.
+
+			//GetTransform().GetPosition() + 
+
+			// Player->SetActorLocation({ 1000,0 });
+
 		}
 	}
 
