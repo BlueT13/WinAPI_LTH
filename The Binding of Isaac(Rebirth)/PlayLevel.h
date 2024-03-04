@@ -19,6 +19,7 @@ public:
 
 	void CreateRoom(int _X, int _Y, std::string_view _Img);
 	void SetCurRoom(int _X, int _Y);
+	ARoom* GetCurRoom();
 
 protected:
 	void BeginPlay() override;

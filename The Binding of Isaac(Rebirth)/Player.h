@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include "ContentsHelper.h"
+#include "PlayLevel.h"
 
 // Ό³Έν :
 class APlayer : public AActor

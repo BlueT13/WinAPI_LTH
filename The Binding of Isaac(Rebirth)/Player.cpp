@@ -3,6 +3,7 @@
 #include <EnginePlatform/EngineInput.h>
 #include <EngineBase/EngineDebug.h>
 #include "ContentsHelper.h"
+#include "PlayLevel.h"
 
 bool APlayer::IsFreeCamera = false;
 
@@ -506,6 +507,10 @@ void APlayer::CalLastMoveVector(float _DeltaTime)
 
 void APlayer::MoveLastMoveVector(float _DeltaTime)
 {
+	UPlayLevel* Level = dynamic_cast<UPlayLevel*>(GetWorld());
+
+	Level->GetCurRoom();
+
 	FVector PlayerPos = GetActorLocation();
 	FVector PlayerNextPos = PlayerPos + MoveVector * _DeltaTime;
 	//if (PlayerNextPos.X < 138)

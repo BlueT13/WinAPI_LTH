@@ -67,6 +67,11 @@ void UPlayLevel::SetCurRoom(int _X, int _Y)
 	//CurRoom->SetActive(true);
 }
 
+ARoom* UPlayLevel::GetCurRoom()
+{
+	return CurRoom;
+}
+
 void UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img)
 {
 	FRoomIndex Index = { _X , _Y };
