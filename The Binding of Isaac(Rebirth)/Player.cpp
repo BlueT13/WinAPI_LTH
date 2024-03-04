@@ -69,7 +69,7 @@ void APlayer::Tick(float _DeltaTime)
 
 	UContentsHelper::MainPlayerLocation = this->GetActorLocation();
 
-	if (UEngineInput::IsDown(VK_F11))
+	if (UEngineInput::IsDown('F'))
 	{
 		IsFreeCamera = true;
 	}

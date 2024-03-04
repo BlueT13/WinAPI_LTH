@@ -31,20 +31,16 @@ void UPlayLevel::BeginPlay()
 	UEngineResourcesManager::GetInst().CuttingImage("Body.png", 5, 6);
 	UEngineResourcesManager::GetInst().CuttingImage("Tears.png", 5, 6);
 	UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
-	UEngineResourcesManager::GetInst().CuttingImage("Door.png", 4, 3);
+	UEngineResourcesManager::GetInst().CuttingImage("Door.png", 4, 5);
 
 	SpawnActor<APlayer>();
-
-	//SpawnActor<ARoom>();
 	SpawnActor<AFly>();
 
 	CreateRoom(0, 0, "Room_01.png");
-	CreateRoom(0, 1, "Room_02.png");
-	CreateRoom(0, 2, "Room_02.png");
-	CreateRoom(1, 2, "Room_01.png");
+	CreateRoom(-1, 0, "Room_02.png");
 	CreateRoom(1, 0, "Room_02.png");
-	CreateRoom(-1, 0, "Room_01.png");
-
+	CreateRoom(0, -1, "Room_02.png");
+	CreateRoom(0, 1, "Room_02.png");
 
 	SetCurRoom(0, 0);
 }
@@ -56,7 +52,7 @@ void UPlayLevel::SetCurRoom(int _X, int _Y)
 
 	if (false == Rooms.contains(Index.Key))
 	{
-		MsgBoxAssert("존재하지 않는 룸을 포커스 룸으로 설정할수 없습니다.");
+		MsgBoxAssert("존재하지 않는 룸을 포커스 룸으로 설정할 수 없습니다.");
 		return;
 	}
 
@@ -66,7 +62,6 @@ void UPlayLevel::SetCurRoom(int _X, int _Y)
 
 void UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img)
 {
-
 	FRoomIndex Index = { _X , _Y };
 
 	if (true == Rooms.contains(Index.Key))
@@ -75,7 +70,6 @@ void UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img)
 	}
 
 	FVector WindowScale = GEngine->MainWindow.GetWindowScale();
-
 
 	ARoom* NewRoom = SpawnActor<ARoom>();
 	NewRoom->SetRoomImg(_Img);
@@ -88,7 +82,7 @@ void UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img)
 		LinkCheckDir.X = _X + FRoomIndex::ArrDir[i].X;
 		LinkCheckDir.Y = _Y + FRoomIndex::ArrDir[i].Y;
 
-		// 내 주변에 방이 있다면
+		// 연결할 룸이 없다면 continue
 		if (false == Rooms.contains(LinkCheckDir.Key))
 		{
 			continue;

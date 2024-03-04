@@ -26,28 +26,21 @@ void ARoom::Link(ARoom* _Room)
 
 ERoomDir ARoom::GetOtherRoomDir(ARoom* _Room)
 {
-	//       0               0
 	int OtherX = _Room->RoomIndex.X - RoomIndex.X;
-	//       0               1
 	int OtherY = _Room->RoomIndex.Y - RoomIndex.Y;
 
-	// 왼쪽
 	if (-1 == OtherX && 0 == OtherY)
 	{
-
 		return ERoomDir::Left;
 	}
-	// 오른쪽
 	else if (1 == OtherX && 0 == OtherY)
 	{
 		return ERoomDir::Right;
 	}
-	// 위
 	else if (0 == OtherX && -1 == OtherY)
 	{
 		return ERoomDir::Up;
 	}
-	// 아래
 	else if (0 == OtherX && 1 == OtherY)
 	{
 		return ERoomDir::Down;
@@ -61,25 +54,48 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 	int DirIndex = static_cast<int>(_Dir);
 
 	DoorRenderer[DirIndex] = CreateImageRenderer(IsaacRenderOrder::Door);
-	DoorRenderer[DirIndex]->SetImage("Door.png",0);
 
 	switch (_Dir)
 	{
 	case ERoomDir::Left:
+		DoorRenderer[DirIndex]->SetImage("Door.png", 0);
 		DoorRenderer[DirIndex]->AutoImageScale();
-		DoorRenderer[DirIndex]->SetPosition({ -400, 0 });
+		DoorRenderer[DirIndex]->SetPosition({ -370, 0 });
+
+		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
+		DoorCollision[DirIndex]->SetScale({ 50, 50 });
+		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
+		DoorCollision[DirIndex]->SetPosition({ -370, 0 });
 		break;
 	case ERoomDir::Right:
+		DoorRenderer[DirIndex]->SetImage("Door.png", 1);
 		DoorRenderer[DirIndex]->AutoImageScale();
-		DoorRenderer[DirIndex]->SetPosition({ 400, 0 });
+		DoorRenderer[DirIndex]->SetPosition({ 370, 0 });
+
+		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
+		DoorCollision[DirIndex]->SetScale({ 50, 50 });
+		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
+		DoorCollision[DirIndex]->SetPosition({ 370, 0 });
 		break;
 	case ERoomDir::Up:
+		DoorRenderer[DirIndex]->SetImage("Door.png", 2);
 		DoorRenderer[DirIndex]->AutoImageScale();
-		DoorRenderer[DirIndex]->SetPosition({ 0, -300 });
+		DoorRenderer[DirIndex]->SetPosition({ 0, -215 });
+
+		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
+		DoorCollision[DirIndex]->SetScale({ 50, 50 });
+		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
+		DoorCollision[DirIndex]->SetPosition({ 0, -215 });
 		break;
 	case ERoomDir::Down:
+		DoorRenderer[DirIndex]->SetImage("Door.png", 3);
 		DoorRenderer[DirIndex]->AutoImageScale();
-		DoorRenderer[DirIndex]->SetPosition({ 0, 300 });
+		DoorRenderer[DirIndex]->SetPosition({ 0, 215 });
+
+		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
+		DoorCollision[DirIndex]->SetScale({ 50, 50 });
+		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
+		DoorCollision[DirIndex]->SetPosition({ 0, 215 });
 		break;
 	case ERoomDir::Max:
 		break;
@@ -93,7 +109,6 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 void ARoom::BeginPlay()
 {
 	AActor::BeginPlay();
-
 
 	RoomRenderer = CreateImageRenderer(IsaacRenderOrder::Room);
 	RoomRenderer->SetImage("Room_01.png");
@@ -114,4 +129,21 @@ void ARoom::RoomCameraFocus()
 void ARoom::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
+
+	APlayer* Player = APlayer::GetMainPlayer();
+
+	for (UCollision* DCollision : DoorCollision)
+	{
+		if (DCollision == nullptr)
+		{
+			continue;
+		}
+
+		std::vector<UCollision*> Result;
+		if (true == DCollision->CollisionCheck(IsaacCollisionOrder::Player, Result))
+		{
+			Player->SetActorLocation({ 0,0 });
+		}
+	}
+
 }

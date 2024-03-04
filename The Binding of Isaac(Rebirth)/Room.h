@@ -31,9 +31,6 @@ public:
 	};
 };
 
-
-// 방은 다른 방과 연결된다.
-// -> 다른 방과 문이 맞닿아있다.
 class ARoom : public AActor
 {
 public:
