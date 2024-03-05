@@ -29,5 +29,7 @@ private:
 	float Speed = 500.0f;
 	UCollision* BulletCollision = nullptr;
 	const FVector RendererSize = { 64,64 };
+	float BulletLiveTime = 0.0f;
+	float BulletDestroyTime = 0.8f;
 };
 

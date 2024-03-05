@@ -113,10 +113,7 @@ void ARoom::BeginPlay()
 	AActor::BeginPlay();
 
 	RoomRenderer = CreateImageRenderer(IsaacRenderOrder::Room);
-	RoomRenderer->SetImage("Room_01.png");
-	UWindowImage* Image = RoomRenderer->GetImage();
-	FVector ImageScale = Image->GetScale();
-	RoomRenderer->SetScale(ImageScale);
+	RoomRenderer->AutoImageScale();
 }
 
 void ARoom::RoomCameraFocus()

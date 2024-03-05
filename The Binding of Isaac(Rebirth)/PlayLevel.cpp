@@ -64,12 +64,13 @@ void UPlayLevel::SetCurRoom(int _X, int _Y)
 	for (std::pair<const __int64, ARoom*>& _Pair : Rooms)
 	{
 		ARoom* Room = _Pair.second;
-		//Room->SetActive(false);
+		Room->SetActive(false);
 	}
 
 	CurRoom = Rooms[Index.Key];
 	CurRoom->RoomCameraFocus();
-	//CurRoom->SetActive(true);
+	CurRoom->SetActive(true);
+	PrevRoom->SetActive(true);
 }
 
 void UPlayLevel::SetPrevRoom(int _X, int _Y)

@@ -14,19 +14,14 @@ ABullet::~ABullet()
 
 void ABullet::BeginPlay()
 {
-	{
-		UImageRenderer* BulletRenderer = CreateImageRenderer(IsaacRenderOrder::Bullet);
-		BulletRenderer->SetImage("Tears.png", 6);
-		BulletRenderer->SetTransform({ {0,-28}, RendererSize });
-		Destroy(0.8f);
-	}
+	UImageRenderer* BulletRenderer = CreateImageRenderer(IsaacRenderOrder::Bullet);
+	BulletRenderer->SetImage("Tears.png", 6);
+	BulletRenderer->SetTransform({ {0,-28}, RendererSize });
 
-	{
-		BulletCollision = CreateCollision(IsaacCollisionOrder::Bullet);
-		BulletCollision->SetPosition({ 0, -28 });
-		BulletCollision->SetScale({ 30,30 });
-		BulletCollision->SetColType(ECollisionType::CirCle);
-	}
+	BulletCollision = CreateCollision(IsaacCollisionOrder::Bullet);
+	BulletCollision->SetPosition({ 0, -28 });
+	BulletCollision->SetScale({ 30,30 });
+	BulletCollision->SetColType(ECollisionType::CirCle);
 }
 
 void ABullet::Tick(float _DeltaTime)
@@ -34,5 +29,13 @@ void ABullet::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 
 	AddActorLocation(Dir * Speed * _DeltaTime);
+
+	BulletLiveTime += _DeltaTime;
+	if (BulletDestroyTime < BulletLiveTime)
+	{
+		Destroy();
+	}
+
+
 }
 
