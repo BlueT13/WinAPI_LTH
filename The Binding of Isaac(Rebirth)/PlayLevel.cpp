@@ -39,12 +39,12 @@ void UPlayLevel::BeginPlay()
 
 	CreateRoom(0, 0, "Room_01.png");
 	CreateRoom(-1, 0, "Room_02.png");
-	CreateRoom(1, 0, "Room_02.png");
+	CreateRoom(1, 0, "Room_03.png");
 	CreateRoom(0, -1, "Room_02.png");
-	CreateRoom(0, 1, "Room_02.png");
+	CreateRoom(0, 1, "Room_03.png");
 	CreateRoom(0, 2, "Room_01.png");
-	CreateRoom(1, 2, "Room_01.png");
-	CreateRoom(0, -2, "Room_02.png");
+	CreateRoom(1, 2, "Room_02.png");
+	CreateRoom(0, -2, "Room_03.png");
 	CreateRoom(-1, -2, "Room_02.png");
 
 	SetPrevRoom(0, 0);

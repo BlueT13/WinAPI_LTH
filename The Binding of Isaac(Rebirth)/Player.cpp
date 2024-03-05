@@ -510,19 +510,19 @@ void APlayer::MoveLastMoveVector(float _DeltaTime)
 
 	FVector PlayerPos = GetActorLocation();
 	FVector PlayerNextPos = PlayerPos + MoveVector * _DeltaTime;
-	if (PlayerNextPos.X < CurRoomPos.X - 330)
+	if (PlayerNextPos.X < CurRoomPos.X - 320)
 	{
 		LastMoveVector.X = 0.0f;
 	}
-	if (PlayerNextPos.Y < CurRoomPos.Y - 190)
+	if (PlayerNextPos.Y < CurRoomPos.Y - 170)
 	{
 		LastMoveVector.Y = 0.0f;
 	}
-	if (PlayerNextPos.X > CurRoomPos.X + 330)
+	if (PlayerNextPos.X > CurRoomPos.X + 320)
 	{
 		LastMoveVector.X = 0.0f;
 	}
-	if (PlayerNextPos.Y > CurRoomPos.Y + 180)
+	if (PlayerNextPos.Y > CurRoomPos.Y + 170)
 	{
 		LastMoveVector.Y = 0.0f;
 	}

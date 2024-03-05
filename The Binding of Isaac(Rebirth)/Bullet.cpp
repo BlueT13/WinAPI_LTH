@@ -18,7 +18,7 @@ void ABullet::BeginPlay()
 	BulletRenderer = CreateImageRenderer(IsaacRenderOrder::Bullet);
 	BulletRenderer->SetImage("Tears.png", 6);
 	BulletRenderer->SetTransform({ {0,-28}, RendererSize });
-	BulletRenderer->CreateAnimation("DestroyBullet", "DestroyTear.png", 0, 13, 0.05f, true);
+	BulletRenderer->CreateAnimation("DestroyBullet", "DestroyTear.png", 0, 13, 0.03f, true);
 
 	BulletCollision = CreateCollision(IsaacCollisionOrder::Bullet);
 	BulletCollision->SetPosition({ 0, -28 });
@@ -54,7 +54,7 @@ bool ABullet::IsCrashed()
 	{
 		return true;
 	}
-	if (BulletPos.Y < CurRoomPos.Y - 190)
+	if (BulletPos.Y < CurRoomPos.Y - 180)
 	{
 		return true;
 	}

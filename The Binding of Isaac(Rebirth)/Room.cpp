@@ -67,7 +67,7 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
 		DoorCollision[DirIndex]->SetScale({ 30, 30 });
 		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
-		DoorCollision[DirIndex]->SetPosition({ -355, 0 });
+		DoorCollision[DirIndex]->SetPosition({ -340, 0 });
 		break;
 	case ERoomDir::Right:
 		DoorRenderer[DirIndex]->SetImage("Door.png", 1);
@@ -77,7 +77,7 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
 		DoorCollision[DirIndex]->SetScale({ 30, 30 });
 		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
-		DoorCollision[DirIndex]->SetPosition({ 355, 0 });
+		DoorCollision[DirIndex]->SetPosition({ 340, 0 });
 		break;
 	case ERoomDir::Up:
 		DoorRenderer[DirIndex]->SetImage("Door.png", 2);
@@ -87,7 +87,7 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
 		DoorCollision[DirIndex]->SetScale({ 30, 30 });
 		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
-		DoorCollision[DirIndex]->SetPosition({ 0, -215 });
+		DoorCollision[DirIndex]->SetPosition({ 0, -190 });
 		break;
 	case ERoomDir::Down:
 		DoorRenderer[DirIndex]->SetImage("Door.png", 3);
@@ -97,7 +97,7 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
 		DoorCollision[DirIndex]->SetScale({ 30, 30 });
 		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
-		DoorCollision[DirIndex]->SetPosition({ 0, 215 });
+		DoorCollision[DirIndex]->SetPosition({ 0, 190 });
 		break;
 	case ERoomDir::Max:
 		break;
@@ -148,17 +148,17 @@ void ARoom::Tick(float _DeltaTime)
 			switch (Dir)
 			{
 			case ERoomDir::Left:
-				Player->SetActorLocation({ CurPos.X - (WindowScale.X - 310), CurPos.Y });
+				Player->SetActorLocation({ CurPos.X - (WindowScale.X - 300), CurPos.Y });
 				//GetWorld()->AddCameraPos({ CurPos.X - WindowScale.X, CurPos.Y });
 				PlayLevel->SetCurRoom(RoomIndex.X - 1, RoomIndex.Y);
 				break;
 			case ERoomDir::Right:
-				Player->SetActorLocation({ CurPos.X + (WindowScale.X - 310), CurPos.Y });
+				Player->SetActorLocation({ CurPos.X + (WindowScale.X - 300), CurPos.Y });
 				//GetWorld()->AddCameraPos({ CurPos.X + WindowScale.X, CurPos.Y });
 				PlayLevel->SetCurRoom(RoomIndex.X + 1, RoomIndex.Y);
 				break;
 			case ERoomDir::Up:
-				Player->SetActorLocation({ CurPos.X, CurPos.Y - (WindowScale.Y - 160) });
+				Player->SetActorLocation({ CurPos.X, CurPos.Y - (WindowScale.Y - 150) });
 				//GetWorld()->AddCameraPos({ CurPos.X, CurPos.Y - WindowScale.Y });
 				PlayLevel->SetCurRoom(RoomIndex.X, RoomIndex.Y - 1);
 				break;
