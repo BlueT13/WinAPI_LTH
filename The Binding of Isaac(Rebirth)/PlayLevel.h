@@ -33,5 +33,6 @@ private:
 	ARoom* CurRoom = nullptr;
 	ARoom* PrevRoom = nullptr;
 	bool IsFreeCamera = false;
+	float RoomMoveCameraTime = 0.0f;
 };
 

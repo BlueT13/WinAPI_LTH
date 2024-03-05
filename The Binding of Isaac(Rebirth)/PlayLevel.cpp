@@ -138,6 +138,32 @@ void UPlayLevel::Tick(float _DeltaTime)
 {
 	ULevel::Tick(_DeltaTime);
 
+	if (CurRoom != PrevRoom)
+	{
+		RoomMoveCameraTime += _DeltaTime;
+
+		// 
+		// PrevRoom => 시작위치
+		// CurRoom => 도착 위치
+		// 카메라가 PrevRoom을 바라보고 있다가
+		// CurRoom룸을 바라볼때까지 이동한다.
+
+		FVector WindowScale = GEngine->MainWindow.GetWindowScale();
+
+		FVector StartCameraPos = PrevRoom->GetActorLocation() - WindowScale.Half2D();
+		FVector TargetCameraPos = CurRoom->GetActorLocation() - WindowScale.Half2D();
+
+		FVector CurCameraPos = FVector::LerpClamp(StartCameraPos, TargetCameraPos, RoomMoveCameraTime);
+
+		SetCameraPos(CurCameraPos);
+
+		if (1.0f <= RoomMoveCameraTime)
+		{
+			PrevRoom = CurRoom;
+			CurRoom->RoomCameraFocus();
+		}
+	}
+
 	if (UEngineInput::IsDown(VK_ESCAPE))
 	{
 		GEngine->ChangeLevel("TitleLevel");

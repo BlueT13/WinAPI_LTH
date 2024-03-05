@@ -123,10 +123,6 @@ void ARoom::RoomCameraFocus()
 {
 	if (false == APlayer::IsFreeCamera)
 	{
-		//FVector PrevRoomVector = PlayLevel->GetPrevRoom()->GetActorLocation();
-		//FVector NextRoomVector = PlayLevel->GetCurRoom()->GetActorLocation();
-		//FVector CameraMoveVector = { 0,0 };
-		//GetWorld()->SetCameraPos(CameraMoveVector.Lerp(PrevRoomVector, NextRoomVector, 0.2f));
 		GetWorld()->SetCameraPos(GetActorLocation() - WindowScale.Half2D());
 	}
 }
