@@ -93,6 +93,7 @@ void ABullet::BulletCrashed(float _DeltaTime)
 {
 	Speed = 0.0f;
 	BulletRenderer->ChangeAnimation("DestroyBullet");
+	BulletCollision->SetActive(false);
 	if (BulletRenderer->IsCurAnimationEnd())
 	{
 		Destroy();

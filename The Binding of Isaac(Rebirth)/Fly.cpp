@@ -13,8 +13,6 @@ void AFly::BeginPlay()
 {
 	AActor::BeginPlay();
 
-	SetActorLocation({ 300,0 });
-
 	UImageRenderer* FlyRenderer = CreateImageRenderer(IsaacRenderOrder::Monster);
 	FlyRenderer->SetImage("Fly.png");
 	FlyRenderer->SetTransform({ FVector::Zero, RendererSize });

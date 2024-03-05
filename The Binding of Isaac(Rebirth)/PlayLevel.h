@@ -17,7 +17,7 @@ public:
 	UPlayLevel& operator=(const UPlayLevel& _Other) = delete;
 	UPlayLevel& operator=(UPlayLevel&& _Other) noexcept = delete;
 
-	void CreateRoom(int _X, int _Y, std::string_view _Img);
+	ARoom* CreateRoom(int _X, int _Y, std::string_view _Img);
 	void SetCurRoom(int _X, int _Y);
 	void SetPrevRoom(int _X, int _Y);
 	ARoom* GetCurRoom();
