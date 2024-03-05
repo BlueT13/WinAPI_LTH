@@ -23,7 +23,7 @@ void AFly::BeginPlay()
 
 
 	MonsterCollision = CreateCollision(IsaacCollisionOrder::Monster);
-	MonsterCollision->SetScale({ 50, 50 });
+	MonsterCollision->SetScale({ 30, 30 });
 	MonsterCollision->SetColType(ECollisionType::CirCle);
 
 
@@ -43,7 +43,19 @@ void AFly::Tick(float _DeltaTime)
 
 		Bullet->Destroy();
 		Destroy();
-		//MonsterCollision->Destroy();
-		//MonsterCollision = nullptr;
 	}
+
+	APlayer* Player = APlayer::GetMainPlayer();
+	if (nullptr == Player)
+	{
+		MsgBoxAssert("플레이어가 존재하지 않습니다.");
+	}
+
+	FVector PlayerPos = Player->GetActorLocation();
+	FVector MonsterPos = GetActorLocation();
+
+	FVector MonsterDir = PlayerPos - MonsterPos;
+	FVector MonsterDirNormal = MonsterDir.Normalize2DReturn();
+
+	AddActorLocation(MonsterDirNormal * _DeltaTime * MoveSpeed);
 }

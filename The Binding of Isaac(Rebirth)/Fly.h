@@ -23,5 +23,6 @@ protected:
 
 private:
 	const FVector RendererSize = { 256,256 };
+	float MoveSpeed = 100.f;
 };
 

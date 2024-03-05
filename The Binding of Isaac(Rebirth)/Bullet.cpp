@@ -16,13 +16,14 @@ void ABullet::BeginPlay()
 {
 	{
 		UImageRenderer* BulletRenderer = CreateImageRenderer(IsaacRenderOrder::Bullet);
-		BulletRenderer->SetImage("Tears.png",6);
+		BulletRenderer->SetImage("Tears.png", 6);
 		BulletRenderer->SetTransform({ {0,-28}, RendererSize });
 		Destroy(0.8f);
 	}
 
 	{
 		BulletCollision = CreateCollision(IsaacCollisionOrder::Bullet);
+		BulletCollision->SetPosition({ 0, -28 });
 		BulletCollision->SetScale({ 30,30 });
 		BulletCollision->SetColType(ECollisionType::CirCle);
 	}
