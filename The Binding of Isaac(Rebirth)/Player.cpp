@@ -101,11 +101,8 @@ void APlayer::Tick(float _DeltaTime)
 			IsFreeCamera = true;
 		}
 
-
-
 		return;
 	}
-
 
 	HeadStateUpdate(_DeltaTime);
 	BodyStateUpdate(_DeltaTime);
@@ -525,7 +522,7 @@ void APlayer::MoveLastMoveVector(float _DeltaTime)
 	{
 		LastMoveVector.X = 0.0f;
 	}
-	if (PlayerNextPos.Y > CurRoomPos.Y + 190)
+	if (PlayerNextPos.Y > CurRoomPos.Y + 180)
 	{
 		LastMoveVector.Y = 0.0f;
 	}

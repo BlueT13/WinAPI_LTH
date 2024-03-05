@@ -23,11 +23,13 @@ public:
 protected:
 	void Tick(float _DeltaTime) override;
 	void BeginPlay() override;
+	bool IsCrashed();
 
 private:
+	UImageRenderer* BulletRenderer = nullptr;
+	UCollision* BulletCollision = nullptr;
 	FVector Dir = FVector::Zero;
 	float Speed = 500.0f;
-	UCollision* BulletCollision = nullptr;
 	const FVector RendererSize = { 64,64 };
 	float BulletLiveTime = 0.0f;
 	float BulletDestroyTime = 0.8f;
