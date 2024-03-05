@@ -53,6 +53,13 @@ enum class EMonsterState
 	Attack,
 };
 
+enum class EBulletState
+{
+	None,
+	Move,
+	Crashed,
+};
+
 // Ό³Έν :
 class UContentsHelper
 {

@@ -22,55 +22,84 @@ void ABullet::BeginPlay()
 
 	BulletCollision = CreateCollision(IsaacCollisionOrder::Bullet);
 	BulletCollision->SetPosition({ 0, -28 });
-	BulletCollision->SetScale({ 30,30 });
+	BulletCollision->SetScale({ 20, 20 });
 	BulletCollision->SetColType(ECollisionType::CirCle);
+
+	BulletStateChange(EBulletState::Move);
 }
 
 void ABullet::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-	AddActorLocation(Dir * Speed * _DeltaTime);
+	BulletStateUpdate(_DeltaTime);
 
 	BulletLiveTime += _DeltaTime;
-
-	if (IsCrashed())
-	{
-		BulletRenderer->ChangeAnimation("DestroyBullet");
-		Speed = 0.0f;
-		if (BulletRenderer->IsCurAnimationEnd())
-		{
-			Destroy();
-		}
-	}
 }
 
-bool ABullet::IsCrashed()
+void ABullet::IsCrashed()
 {
 	UPlayLevel* Level = dynamic_cast<UPlayLevel*>(GetWorld());
 	FVector CurRoomPos = Level->GetCurRoom()->GetActorLocation();
 	FVector BulletPos = GetActorLocation();
 	if (BulletPos.X < CurRoomPos.X - 330)
 	{
-		return true;
+		IsDestroy = true;
 	}
 	if (BulletPos.Y < CurRoomPos.Y - 180)
 	{
-		return true;
+		IsDestroy = true;
 	}
 	if (BulletPos.X > CurRoomPos.X + 330)
 	{
-		return true;
+		IsDestroy = true;
 	}
 	if (BulletPos.Y > CurRoomPos.Y + 230)
 	{
-		return true;
+		IsDestroy = true;
 	}
 
 	if (BulletDestroyTime < BulletLiveTime)
 	{
-		return true;
+		IsDestroy = true;
+	}
+}
+
+void ABullet::BulletStateUpdate(float _DeltaTime)
+{
+	switch (BulletState)
+	{
+	case EBulletState::Move:
+		BulletMove(_DeltaTime);
+		break;
+	case EBulletState::Crashed:
+		BulletCrashed(_DeltaTime);
+		break;
+	}
+}
+
+void ABullet::BulletMove(float _DeltaTime)
+{
+	IsCrashed();
+	if (IsDestroy)
+	{
+		BulletStateChange(EBulletState::Crashed);
 	}
 
-	return false;
+	AddActorLocation(Dir * Speed * _DeltaTime);
+}
+
+void ABullet::BulletCrashed(float _DeltaTime)
+{
+	Speed = 0.0f;
+	BulletRenderer->ChangeAnimation("DestroyBullet");
+	if (BulletRenderer->IsCurAnimationEnd())
+	{
+		Destroy();
+	}
+}
+
+void ABullet::BulletStateChange(EBulletState _State)
+{
+	BulletState = _State;
 }

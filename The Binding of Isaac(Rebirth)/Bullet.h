@@ -1,9 +1,11 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include "ContentsHelper.h"
 
 // Ό³Έν :
 class ABullet : public AActor
 {
+friend class AFly;
 public:
 	// constrcuter destructer
 	ABullet();
@@ -23,17 +25,24 @@ public:
 protected:
 	void Tick(float _DeltaTime) override;
 	void BeginPlay() override;
-	bool IsCrashed();
+	void IsCrashed();
+
+	void BulletStateUpdate(float _DeltaTime);
+	void BulletMove(float _DeltaTime);
+	void BulletCrashed(float _DeltaTime);
+	void BulletStateChange(EBulletState _State);
+
 
 private:
 	UImageRenderer* BulletRenderer = nullptr;
 	UCollision* BulletCollision = nullptr;
 	FVector Dir = FVector::Zero;
-	float Speed = 400.0f;
+	float Speed = 500.0f;
 	const FVector RendererSize = { 64,64 };
 	float BulletLiveTime = 0.0f;
 	float BulletDestroyTime = 0.8f;
 
+	EBulletState BulletState = EBulletState::None;
 	bool IsDestroy = false;
 };
 

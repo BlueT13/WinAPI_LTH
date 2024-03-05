@@ -41,7 +41,7 @@ void AFly::Tick(float _DeltaTime)
 		AActor* Ptr = Collision->GetOwner();
 		ABullet* Bullet = dynamic_cast<ABullet*>(Ptr);
 
-		Bullet->Destroy();
+		Bullet->BulletStateChange(EBulletState::Crashed);
 		Destroy();
 	}
 
