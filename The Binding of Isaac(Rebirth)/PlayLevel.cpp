@@ -140,7 +140,7 @@ void UPlayLevel::Tick(float _DeltaTime)
 
 	if (CurRoom != PrevRoom)
 	{
-		RoomMoveCameraTime += _DeltaTime;
+		RoomMoveCameraTime += _DeltaTime * 5;
 
 		// 
 		// PrevRoom => 시작위치
@@ -159,6 +159,7 @@ void UPlayLevel::Tick(float _DeltaTime)
 
 		if (1.0f <= RoomMoveCameraTime)
 		{
+			RoomMoveCameraTime = 0.0f;
 			PrevRoom = CurRoom;
 			CurRoom->RoomCameraFocus();
 		}

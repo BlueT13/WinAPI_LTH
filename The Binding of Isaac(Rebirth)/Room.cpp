@@ -65,9 +65,9 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorRenderer[DirIndex]->SetPosition({ -370, 0 });
 
 		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
-		DoorCollision[DirIndex]->SetScale({ 50, 50 });
+		DoorCollision[DirIndex]->SetScale({ 30, 30 });
 		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
-		DoorCollision[DirIndex]->SetPosition({ -375, 0 });
+		DoorCollision[DirIndex]->SetPosition({ -355, 0 });
 		break;
 	case ERoomDir::Right:
 		DoorRenderer[DirIndex]->SetImage("Door.png", 1);
@@ -75,9 +75,9 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorRenderer[DirIndex]->SetPosition({ 370, 0 });
 
 		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
-		DoorCollision[DirIndex]->SetScale({ 50, 50 });
+		DoorCollision[DirIndex]->SetScale({ 30, 30 });
 		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
-		DoorCollision[DirIndex]->SetPosition({ 375, 0 });
+		DoorCollision[DirIndex]->SetPosition({ 355, 0 });
 		break;
 	case ERoomDir::Up:
 		DoorRenderer[DirIndex]->SetImage("Door.png", 2);
@@ -85,9 +85,9 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorRenderer[DirIndex]->SetPosition({ 0, -215 });
 
 		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
-		DoorCollision[DirIndex]->SetScale({ 50, 50 });
+		DoorCollision[DirIndex]->SetScale({ 30, 30 });
 		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
-		DoorCollision[DirIndex]->SetPosition({ 0, -220 });
+		DoorCollision[DirIndex]->SetPosition({ 0, -215 });
 		break;
 	case ERoomDir::Down:
 		DoorRenderer[DirIndex]->SetImage("Door.png", 3);
@@ -95,9 +95,9 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorRenderer[DirIndex]->SetPosition({ 0, 215 });
 
 		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
-		DoorCollision[DirIndex]->SetScale({ 50, 50 });
+		DoorCollision[DirIndex]->SetScale({ 30, 30 });
 		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
-		DoorCollision[DirIndex]->SetPosition({ 0, 220 });
+		DoorCollision[DirIndex]->SetPosition({ 0, 215 });
 		break;
 	case ERoomDir::Max:
 		break;
