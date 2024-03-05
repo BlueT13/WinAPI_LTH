@@ -509,26 +509,26 @@ void APlayer::MoveLastMoveVector(float _DeltaTime)
 {
 	UPlayLevel* Level = dynamic_cast<UPlayLevel*>(GetWorld());
 
-	Level->GetCurRoom();
+	FVector CurRoomPos = Level->GetCurRoom()->GetActorLocation();
 
 	FVector PlayerPos = GetActorLocation();
 	FVector PlayerNextPos = PlayerPos + MoveVector * _DeltaTime;
-	//if (PlayerNextPos.X < 138)
-	//{
-	//	LastMoveVector.X = 0.0f;
-	//}
-	//if (PlayerNextPos.Y < 80)
-	//{
-	//	LastMoveVector.Y = 0.0f;
-	//}
-	//if (PlayerNextPos.X > 820)
-	//{
-	//	LastMoveVector.X = 0.0f;
-	//}
-	//if (PlayerNextPos.Y > 460)
-	//{
-	//	LastMoveVector.Y = 0.0f;
-	//}
+	if (PlayerNextPos.X < CurRoomPos.X - 340)
+	{
+		LastMoveVector.X = 0.0f;
+	}
+	if (PlayerNextPos.Y < CurRoomPos.Y - 190)
+	{
+		LastMoveVector.Y = 0.0f;
+	}
+	if (PlayerNextPos.X > CurRoomPos.X + 340)
+	{
+		LastMoveVector.X = 0.0f;
+	}
+	if (PlayerNextPos.Y > CurRoomPos.Y + 190)
+	{
+		LastMoveVector.Y = 0.0f;
+	}
 
 	AddActorLocation(LastMoveVector * _DeltaTime);
 }

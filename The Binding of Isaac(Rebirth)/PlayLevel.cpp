@@ -46,7 +46,6 @@ void UPlayLevel::BeginPlay()
 	CreateRoom(0, -2, "Room_02.png");
 	CreateRoom(-1, -2, "Room_02.png");
 
-
 	SetPrevRoom(0, 0);
 	SetCurRoom(0, 0);
 }
