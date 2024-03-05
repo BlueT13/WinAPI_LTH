@@ -19,7 +19,9 @@ public:
 
 	void CreateRoom(int _X, int _Y, std::string_view _Img);
 	void SetCurRoom(int _X, int _Y);
+	void SetPrevRoom(int _X, int _Y);
 	ARoom* GetCurRoom();
+	ARoom* GetPrevRoom();
 
 protected:
 	void BeginPlay() override;
@@ -29,6 +31,7 @@ private:
 	// 방을 관리하는 건 레벨마다 해야하니까
 	std::map<__int64, ARoom*> Rooms;
 	ARoom* CurRoom = nullptr;
+	ARoom* PrevRoom = nullptr;
 	bool IsFreeCamera = false;
 };
 

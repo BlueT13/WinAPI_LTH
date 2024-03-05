@@ -123,6 +123,10 @@ void ARoom::RoomCameraFocus()
 {
 	if (false == APlayer::IsFreeCamera)
 	{
+		//FVector PrevRoomVector = PlayLevel->GetPrevRoom()->GetActorLocation();
+		//FVector NextRoomVector = PlayLevel->GetCurRoom()->GetActorLocation();
+		//FVector CameraMoveVector = { 0,0 };
+		//GetWorld()->SetCameraPos(CameraMoveVector.Lerp(PrevRoomVector, NextRoomVector, 0.2f));
 		GetWorld()->SetCameraPos(GetActorLocation() - WindowScale.Half2D());
 	}
 }
@@ -148,6 +152,7 @@ void ARoom::Tick(float _DeltaTime)
 		if (true == DoorCollision[i]->CollisionCheck(IsaacCollisionOrder::Player, Result))
 		{
 			FVector CurPos = GetTransform().GetPosition();
+			PlayLevel->SetPrevRoom(RoomIndex.X, RoomIndex.Y);
 
 			switch (Dir)
 			{
@@ -176,13 +181,6 @@ void ARoom::Tick(float _DeltaTime)
 			default:
 				break;
 			}
-
-			// 내 왼쪽에 있는 방을 켜야죠.
-
-			//GetTransform().GetPosition() + 
-
-			// Player->SetActorLocation({ 1000,0 });
-
 		}
 	}
 

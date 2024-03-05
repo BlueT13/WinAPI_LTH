@@ -30,6 +30,8 @@ void ABullet::BeginPlay()
 
 void ABullet::Tick(float _DeltaTime)
 {
+	AActor::Tick(_DeltaTime);
+
 	AddActorLocation(Dir * Speed * _DeltaTime);
 }
 

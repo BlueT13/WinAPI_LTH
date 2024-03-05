@@ -85,8 +85,6 @@ private:
 	UImageRenderer* DoorRenderer[4] = { nullptr, };
 	UCollision* DoorCollision[4] = { nullptr, };
 
-	static ARoom* CurRoom;
-
 	FVector WindowScale = GEngine->MainWindow.GetWindowScale();
 };
 

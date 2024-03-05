@@ -41,7 +41,13 @@ void UPlayLevel::BeginPlay()
 	CreateRoom(1, 0, "Room_02.png");
 	CreateRoom(0, -1, "Room_02.png");
 	CreateRoom(0, 1, "Room_02.png");
+	CreateRoom(0, 2, "Room_01.png");
+	CreateRoom(1, 2, "Room_01.png");
+	CreateRoom(0, -2, "Room_02.png");
+	CreateRoom(-1, -2, "Room_02.png");
 
+
+	SetPrevRoom(0, 0);
 	SetCurRoom(0, 0);
 }
 
@@ -52,7 +58,7 @@ void UPlayLevel::SetCurRoom(int _X, int _Y)
 
 	if (false == Rooms.contains(Index.Key))
 	{
-		MsgBoxAssert("존재하지 않는 룸을 포커스 룸으로 설정할 수 없습니다.");
+		MsgBoxAssert("존재하지 않는 룸을 CurRoom으로 설정할 수 없습니다.");
 		return;
 	}
 
@@ -67,9 +73,27 @@ void UPlayLevel::SetCurRoom(int _X, int _Y)
 	//CurRoom->SetActive(true);
 }
 
+void UPlayLevel::SetPrevRoom(int _X, int _Y)
+{
+	FRoomIndex Index = { _X , _Y };
+
+	if (false == Rooms.contains(Index.Key))
+	{
+		MsgBoxAssert("존재하지 않는 룸을 PrevRoom으로 설정할 수 없습니다.");
+		return;
+	}
+
+	PrevRoom = Rooms[Index.Key];
+}
+
 ARoom* UPlayLevel::GetCurRoom()
 {
 	return CurRoom;
+}
+
+ARoom* UPlayLevel::GetPrevRoom()
+{
+	return PrevRoom;
 }
 
 void UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img)

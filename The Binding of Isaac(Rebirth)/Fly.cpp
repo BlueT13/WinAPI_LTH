@@ -1,4 +1,5 @@
 #include "Fly.h"
+#include "Bullet.h"
 
 AFly::AFly()
 {
@@ -12,7 +13,7 @@ void AFly::BeginPlay()
 {
 	AActor::BeginPlay();
 
-	SetActorLocation({ 800,270 });
+	SetActorLocation({ 300,0 });
 
 	UImageRenderer* FlyRenderer = CreateImageRenderer(IsaacRenderOrder::Monster);
 	FlyRenderer->SetImage("Fly.png");
@@ -31,4 +32,18 @@ void AFly::BeginPlay()
 
 void AFly::Tick(float _DeltaTime)
 {
+	AActor::Tick(_DeltaTime);
+
+	std::vector<UCollision*> Result;
+	if (true == MonsterCollision->CollisionCheck(IsaacCollisionOrder::Bullet, Result))
+	{
+		UCollision* Collision = Result[0];
+		AActor* Ptr = Collision->GetOwner();
+		ABullet* Bullet = dynamic_cast<ABullet*>(Ptr);
+
+		Bullet->Destroy();
+		Destroy();
+		//MonsterCollision->Destroy();
+		//MonsterCollision = nullptr;
+	}
 }
