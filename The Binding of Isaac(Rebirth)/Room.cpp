@@ -1,7 +1,6 @@
 #include "Room.h"
 #include "ContentsHelper.h"
 #include "Player.h"
-#include "Fly.h"
 #include "PlayLevel.h"
 #include <EngineBase/EngineMath.h>
 
@@ -114,11 +113,6 @@ void ARoom::BeginPlay()
 
 	RoomRenderer = CreateImageRenderer(IsaacRenderOrder::Room);
 	RoomRenderer->AutoImageScale();
-
-	AFly* Fly_01 = GetWorld()->SpawnActor<AFly>();
-	Fly_01->SetActorLocation({ 300,0 });
-	AFly* Fly_02 = GetWorld()->SpawnActor<AFly>();
-	Fly_02->SetActorLocation({ 300,100 });
 }
 
 void ARoom::RoomCameraFocus()

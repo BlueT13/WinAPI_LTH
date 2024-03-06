@@ -2,8 +2,10 @@
 #include <EngineCore/Level.h>
 #include <EngineCore/EngineCore.h>
 #include "Room.h"
+#include "Monster.h"
 
 // 설명 :
+class AMonster;
 class UPlayLevel : public ULevel
 {
 public:
@@ -17,7 +19,6 @@ public:
 	UPlayLevel& operator=(const UPlayLevel& _Other) = delete;
 	UPlayLevel& operator=(UPlayLevel&& _Other) noexcept = delete;
 
-	ARoom* CreateRoom(int _X, int _Y, std::string_view _Img);
 	void SetCurRoom(int _X, int _Y);
 	void SetPrevRoom(int _X, int _Y);
 	ARoom* GetCurRoom();
@@ -29,10 +30,13 @@ protected:
 
 private:
 	// 방을 관리하는 건 레벨마다 해야하니까
+	ARoom* CreateRoom(int _X, int _Y, std::string_view _Img);
 	std::map<__int64, ARoom*> Rooms;
 	ARoom* CurRoom = nullptr;
 	ARoom* PrevRoom = nullptr;
 	bool IsFreeCamera = false;
 	float RoomMoveCameraTime = 0.0f;
+
+	void CreateMonsters(EMonsterType _Type, FVector _Pos);
 };
 

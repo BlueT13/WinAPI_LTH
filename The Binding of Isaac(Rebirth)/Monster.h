@@ -25,6 +25,7 @@ protected:
 	virtual void MonsterIdle(float _DeltaTime);
 	virtual void MonsterMove(float _DeltaTime);
 	virtual void MonsterAttack(float _DeltaTime);
+	virtual void MonsterDie(float _DeltaTime);
 	virtual void MonsterStateChange(EMonsterState _State);
 	virtual void MonsterIdleStart();
 	virtual void MonsterMoveStart();

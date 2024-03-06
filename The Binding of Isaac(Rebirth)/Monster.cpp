@@ -10,6 +10,9 @@ AMonster::~AMonster()
 
 void AMonster::BeginPlay()
 {
+	AActor::BeginPlay();
+
+	MonsterStateChange(EMonsterState::Idle);
 }
 
 void AMonster::Tick(float _DeltaTime)
@@ -35,6 +38,10 @@ void AMonster::MonsterMove(float _DeltaTime)
 }
 
 void AMonster::MonsterAttack(float _DeltaTime)
+{
+}
+
+void AMonster::MonsterDie(float _DeltaTime)
 {
 }
 

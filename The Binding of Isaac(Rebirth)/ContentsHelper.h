@@ -51,6 +51,8 @@ enum class EMonsterState
 	Idle,
 	Move,
 	Attack,
+	GetHit,
+	Die,
 };
 
 enum class EBulletState
@@ -58,6 +60,13 @@ enum class EBulletState
 	None,
 	Move,
 	Crashed,
+};
+
+enum class EMonsterType
+{
+	None,
+	Fly,
+
 };
 
 // Ό³Έν :

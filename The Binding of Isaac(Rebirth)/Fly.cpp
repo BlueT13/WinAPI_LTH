@@ -11,7 +11,7 @@ AFly::~AFly()
 
 void AFly::BeginPlay()
 {
-	AActor::BeginPlay();
+	AMonster::BeginPlay();
 
 	UImageRenderer* FlyRenderer = CreateImageRenderer(IsaacRenderOrder::Monster);
 	FlyRenderer->SetImage("Fly.png");
@@ -30,7 +30,7 @@ void AFly::BeginPlay()
 
 void AFly::Tick(float _DeltaTime)
 {
-	AActor::Tick(_DeltaTime);
+	AMonster::Tick(_DeltaTime);
 
 	std::vector<UCollision*> Result;
 	if (true == MonsterCollision->CollisionCheck(IsaacCollisionOrder::Bullet, Result))

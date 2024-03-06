@@ -71,7 +71,7 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 	void CreateDoor(ERoomDir _Dir);
-	
+
 private:
 	UPlayLevel* PlayLevel = nullptr;
 

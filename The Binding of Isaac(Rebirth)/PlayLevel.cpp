@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Room.h"
 #include "Fly.h"
+#include "ContentsHelper.h"
 #include <EngineCore/EngineResourcesManager.h>
 #include <EngineBase/EngineDirectory.h>
 #include <EngineBase/EngineFile.h>
@@ -45,6 +46,10 @@ void UPlayLevel::BeginPlay()
 	ARoom* Room_6 = CreateRoom(1, 2, "Room_02.png");
 	ARoom* Room_7 = CreateRoom(0, -2, "Room_03.png");
 	ARoom* Room_8 = CreateRoom(-1, -2, "Room_02.png");
+
+	CreateMonsters(EMonsterType::Fly, { 200, 0 });
+	CreateMonsters(EMonsterType::Fly, { 200, 100 });
+	CreateMonsters(EMonsterType::Fly, { 200, -100 });
 
 	SetPrevRoom(0, 0);
 	SetCurRoom(0, 0);
@@ -134,6 +139,21 @@ ARoom* UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img)
 	Rooms[Index.Key] = NewRoom;
 
 	return NewRoom;
+}
+
+void UPlayLevel::CreateMonsters(EMonsterType _Type, FVector _Pos)
+{
+	AMonster* Monster = nullptr;
+	switch (_Type)
+	{
+	case EMonsterType::Fly:
+		Monster = SpawnActor<AFly>();
+		break;
+	default:
+		break;
+	}
+
+	Monster->SetActorLocation(_Pos);
 }
 
 void UPlayLevel::Tick(float _DeltaTime)
