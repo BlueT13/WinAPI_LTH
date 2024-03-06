@@ -130,22 +130,18 @@ void ARoom::Tick(float _DeltaTime)
 
 	APlayer* Player = APlayer::GetMainPlayer();
 
-	std::list<AMonster*>::iterator StartIter = Monsters.begin();
-	std::list<AMonster*>::iterator EndIter = Monsters.end();
-
-	for (; StartIter != EndIter; )
+	// 몬스터 배열 확인
+	for (int i = 0; i < Monsters.size(); i++)
 	{
-		AMonster* Monster = *StartIter;
+		AMonster* Monster = Monsters[i];
 
-		if (true == Monster->IsDestroy())
+		if (Monster->IsDestroy())
 		{
-			StartIter = Monsters.erase(StartIter);
-		}
-		else {
-			++StartIter;
+			Monsters.erase(Monsters.begin() + i);
 		}
 	}
 
+	
 	if (0 == Monsters.size())
 	{
 		for (int i = 0; i < 4; i++)

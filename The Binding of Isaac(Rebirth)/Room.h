@@ -92,6 +92,6 @@ private:
 
 	FVector WindowScale = GEngine->MainWindow.GetWindowScale();
 
-	std::list<AMonster*> Monsters;
+	std::vector<AMonster*> Monsters;
 };
 

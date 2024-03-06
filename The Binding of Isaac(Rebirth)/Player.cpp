@@ -57,7 +57,7 @@ void APlayer::BeginPlay()
 	{
 		PlayerCollision = CreateCollision(IsaacCollisionOrder::Player);
 		PlayerCollision->SetColType(ECollisionType::CirCle);
-		PlayerCollision->SetScale({ 30,30 });
+		PlayerCollision->SetScale({ 35,35 });
 	}
 
 	HeadStateChange(EPlayerHeadState::Idle);
@@ -197,7 +197,7 @@ void APlayer::Attack(float _DeltaTime)
 void APlayer::CreateBullet(FVector _Dir)
 {
 	ABullet* Tear = GetWorld()->SpawnActor<ABullet>();
-	Tear->SetActorLocation(GetActorLocation());
+	Tear->SetActorLocation(GetActorLocation() + BodyRendererPos);
 	Tear->SetDir(_Dir);
 }
 
