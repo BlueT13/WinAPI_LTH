@@ -4,8 +4,10 @@
 #include "PlayLevel.h"
 
 // Ό³Έν :
+class ERoom;
 class APlayer : public AActor
 {
+	friend ERoom;
 public:
 	static bool IsFreeCamera;
 	// constrcuter destructer
@@ -30,6 +32,7 @@ protected:
 	void HeadMove(float _DeltaTime);
 	void Attack(float _DeltaTime);
 	void CreateBullet(FVector _Dir);
+	void HeadWait(float _DeltaTime);
 	void HeadStateChange(EPlayerHeadState _State);
 	void HeadIdleStart();
 	void HeadMoveStart();
@@ -40,6 +43,7 @@ protected:
 	void BodyStateUpdate(float _DeltaTime);
 	void BodyIdle(float _DeltaTime);
 	void BodyMove(float _DeltaTime);
+	void BodyWait(float _DeltaTime);
 	void BodyStateChange(EPlayerBodyState _State);
 	void BodyIdleStart();
 	void BodyMoveStart();
@@ -88,4 +92,5 @@ private:
 	void MoveLastMoveVector(float _DeltaTime);
 	void CalLastMoveVector(float _DeltaTime);
 
+	float ChangeRoomTime = 0.0f;
 };

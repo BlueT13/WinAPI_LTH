@@ -108,6 +108,7 @@ void APlayer::Tick(float _DeltaTime)
 	BodyStateUpdate(_DeltaTime);
 
 	BulletCoolTime -= _DeltaTime;
+	ChangeRoomTime -= _DeltaTime;
 }
 
 // Head
@@ -124,6 +125,8 @@ void APlayer::HeadStateUpdate(float _DeltaTime)
 	case EPlayerHeadState::Attack:
 		Attack(_DeltaTime);
 		break;
+	case EPlayerHeadState::Wait:
+		HeadWait(_DeltaTime);
 	default:
 		break;
 	}
@@ -199,6 +202,15 @@ void APlayer::CreateBullet(FVector _Dir)
 	ABullet* Tear = GetWorld()->SpawnActor<ABullet>(IsaacUpdateOrder::Bullet);
 	Tear->SetActorLocation(GetActorLocation());
 	Tear->SetDir(_Dir);
+}
+
+void APlayer::HeadWait(float _DeltaTime)
+{
+	ChangeRoomTime = 1.0f;
+	if (ChangeRoomTime < 0.0f)
+	{
+		HeadStateChange(EPlayerHeadState::Idle);
+	}
 }
 
 void APlayer::HeadStateChange(EPlayerHeadState _State)
@@ -301,6 +313,8 @@ void APlayer::BodyStateUpdate(float _DeltaTime)
 	case EPlayerBodyState::Move:
 		BodyMove(_DeltaTime);
 		break;
+	case EPlayerBodyState::Wait:
+		BodyWait(_DeltaTime);
 	default:
 		break;
 	}
@@ -344,6 +358,15 @@ void APlayer::BodyMove(float _DeltaTime)
 	{
 		BodyStateChange(EPlayerBodyState::Idle);
 		return;
+	}
+}
+
+void APlayer::BodyWait(float _DeltaTime)
+{
+	ChangeRoomTime = 1.0f;
+	if (ChangeRoomTime < 0.0f)
+	{
+		BodyStateChange(EPlayerBodyState::Idle);
 	}
 }
 

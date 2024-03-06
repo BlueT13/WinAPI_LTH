@@ -130,8 +130,6 @@ void ARoom::Tick(float _DeltaTime)
 
 	APlayer* Player = APlayer::GetMainPlayer();
 
-	ChangeRoomTime -= _DeltaTime;
-
 	// 몬스터 배열 확인
 	for (int i = 0; i < Monsters.size(); i++)
 	{
@@ -180,15 +178,7 @@ void ARoom::Tick(float _DeltaTime)
 		std::vector<UCollision*> Result;
 		if (true == DoorCollision[i]->CollisionCheck(IsaacCollisionOrder::Player, Result))
 		{
-			GetWorld()->SetOtherTimeScale(IsaacUpdateOrder::Player, 0.0f);
-			if (ChangeRoomTime < 0.0f)
-			{
-				GetWorld()->SetOtherTimeScale(IsaacUpdateOrder::Player, 1.0f);
-			}
-			else
-			{
-				ChangeRoomTime = 1.0f;
-			}
+			Player->HeadStateChange()
 
 			FVector CurPos = GetTransform().GetPosition();
 			PlayLevel->SetPrevRoom(RoomIndex.X, RoomIndex.Y);
