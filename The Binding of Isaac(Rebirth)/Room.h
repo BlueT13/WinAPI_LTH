@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include <EngineCore/EngineCore.h>
+#include "ContentsHelper.h"
 
 enum class ERoomDir
 {
@@ -11,6 +12,7 @@ enum class ERoomDir
 	Max,
 };
 
+class AMonster;
 class FRoomIndex
 {
 public:
@@ -66,6 +68,9 @@ public:
 		PlayLevel = _Level;
 	}
 
+	void CreateMonsters(EMonsterType _Type, FVector _Pos);
+
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -86,5 +91,7 @@ private:
 	UCollision* DoorCollision[4] = { nullptr, };
 
 	FVector WindowScale = GEngine->MainWindow.GetWindowScale();
+
+	std::list<AMonster*> Monsters;
 };
 

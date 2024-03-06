@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "PlayLevel.h"
 #include <EngineBase/EngineMath.h>
+#include "Fly.h"
 
 FRoomIndex FRoomIndex::Left = { -1, 0 };
 FRoomIndex FRoomIndex::Right = { 1, 0 };
@@ -59,7 +60,7 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 	switch (_Dir)
 	{
 	case ERoomDir::Left:
-		DoorRenderer[DirIndex]->SetImage("Door.png", 0);
+		DoorRenderer[DirIndex]->SetImage("Door.png", 4);
 		DoorRenderer[DirIndex]->AutoImageScale();
 		DoorRenderer[DirIndex]->SetPosition({ -370, 0 });
 
@@ -69,7 +70,7 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorCollision[DirIndex]->SetPosition({ -340, 0 });
 		break;
 	case ERoomDir::Right:
-		DoorRenderer[DirIndex]->SetImage("Door.png", 1);
+		DoorRenderer[DirIndex]->SetImage("Door.png", 5);
 		DoorRenderer[DirIndex]->AutoImageScale();
 		DoorRenderer[DirIndex]->SetPosition({ 370, 0 });
 
@@ -79,7 +80,7 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorCollision[DirIndex]->SetPosition({ 340, 0 });
 		break;
 	case ERoomDir::Up:
-		DoorRenderer[DirIndex]->SetImage("Door.png", 2);
+		DoorRenderer[DirIndex]->SetImage("Door.png", 6);
 		DoorRenderer[DirIndex]->AutoImageScale();
 		DoorRenderer[DirIndex]->SetPosition({ 0, -215 });
 
@@ -89,7 +90,7 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorCollision[DirIndex]->SetPosition({ 0, -190 });
 		break;
 	case ERoomDir::Down:
-		DoorRenderer[DirIndex]->SetImage("Door.png", 3);
+		DoorRenderer[DirIndex]->SetImage("Door.png", 7);
 		DoorRenderer[DirIndex]->AutoImageScale();
 		DoorRenderer[DirIndex]->SetPosition({ 0, 215 });
 
@@ -129,49 +130,96 @@ void ARoom::Tick(float _DeltaTime)
 
 	APlayer* Player = APlayer::GetMainPlayer();
 
-	for (int i = 0; i < 4; i++)
+	std::list<AMonster*>::iterator StartIter = Monsters.begin();
+	std::list<AMonster*>::iterator EndIter = Monsters.end();
+
+	for (; StartIter != EndIter; )
 	{
-		if (DoorCollision[i] == nullptr)
+		AMonster* Monster = *StartIter;
+
+		if (true == Monster->IsDestroy())
 		{
-			continue;
+			StartIter = Monsters.erase(StartIter);
+		}
+		else {
+			++StartIter;
+		}
+	}
+
+	if (0 == Monsters.size())
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			if (DoorRenderer[i] == nullptr)
+			{
+				continue;
+			}
+
+			DoorRenderer[i]->SetImage("Door.png", i);
+
 		}
 
-		ERoomDir Dir = static_cast<ERoomDir>(i);
-
-		std::vector<UCollision*> Result;
-		if (true == DoorCollision[i]->CollisionCheck(IsaacCollisionOrder::Player, Result))
+		for (int i = 0; i < 4; i++)
 		{
-			FVector CurPos = GetTransform().GetPosition();
-			PlayLevel->SetPrevRoom(RoomIndex.X, RoomIndex.Y);
-
-			switch (Dir)
+			if (DoorCollision[i] == nullptr)
 			{
-			case ERoomDir::Left:
-				Player->SetActorLocation({ CurPos.X - (WindowScale.X - 300), CurPos.Y });
-				//GetWorld()->AddCameraPos({ CurPos.X - WindowScale.X, CurPos.Y });
-				PlayLevel->SetCurRoom(RoomIndex.X - 1, RoomIndex.Y);
-				break;
-			case ERoomDir::Right:
-				Player->SetActorLocation({ CurPos.X + (WindowScale.X - 300), CurPos.Y });
-				//GetWorld()->AddCameraPos({ CurPos.X + WindowScale.X, CurPos.Y });
-				PlayLevel->SetCurRoom(RoomIndex.X + 1, RoomIndex.Y);
-				break;
-			case ERoomDir::Up:
-				Player->SetActorLocation({ CurPos.X, CurPos.Y - (WindowScale.Y - 150) });
-				//GetWorld()->AddCameraPos({ CurPos.X, CurPos.Y - WindowScale.Y });
-				PlayLevel->SetCurRoom(RoomIndex.X, RoomIndex.Y - 1);
-				break;
-			case ERoomDir::Down:
-				Player->SetActorLocation({ CurPos.X, CurPos.Y + (WindowScale.Y - 150) });
-				//GetWorld()->AddCameraPos({ CurPos.X, CurPos.Y + WindowScale.Y });
-				PlayLevel->SetCurRoom(RoomIndex.X, RoomIndex.Y + 1);
-				break;
-			case ERoomDir::Max:
-				break;
-			default:
-				break;
+				continue;
+			}
+
+			ERoomDir Dir = static_cast<ERoomDir>(i);
+
+			std::vector<UCollision*> Result;
+			if (true == DoorCollision[i]->CollisionCheck(IsaacCollisionOrder::Player, Result))
+			{
+				FVector CurPos = GetTransform().GetPosition();
+				PlayLevel->SetPrevRoom(RoomIndex.X, RoomIndex.Y);
+
+				switch (Dir)
+				{
+				case ERoomDir::Left:
+					Player->SetActorLocation({ CurPos.X - (WindowScale.X - 300), CurPos.Y });
+					//GetWorld()->AddCameraPos({ CurPos.X - WindowScale.X, CurPos.Y });
+					PlayLevel->SetCurRoom(RoomIndex.X - 1, RoomIndex.Y);
+					break;
+				case ERoomDir::Right:
+					Player->SetActorLocation({ CurPos.X + (WindowScale.X - 300), CurPos.Y });
+					//GetWorld()->AddCameraPos({ CurPos.X + WindowScale.X, CurPos.Y });
+					PlayLevel->SetCurRoom(RoomIndex.X + 1, RoomIndex.Y);
+					break;
+				case ERoomDir::Up:
+					Player->SetActorLocation({ CurPos.X, CurPos.Y - (WindowScale.Y - 150) });
+					//GetWorld()->AddCameraPos({ CurPos.X, CurPos.Y - WindowScale.Y });
+					PlayLevel->SetCurRoom(RoomIndex.X, RoomIndex.Y - 1);
+					break;
+				case ERoomDir::Down:
+					Player->SetActorLocation({ CurPos.X, CurPos.Y + (WindowScale.Y - 150) });
+					//GetWorld()->AddCameraPos({ CurPos.X, CurPos.Y + WindowScale.Y });
+					PlayLevel->SetCurRoom(RoomIndex.X, RoomIndex.Y + 1);
+					break;
+				case ERoomDir::Max:
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
 
+
+}
+
+void ARoom::CreateMonsters(EMonsterType _Type, FVector _Pos)
+{
+	AMonster* Monster = nullptr;
+	switch (_Type)
+	{
+	case EMonsterType::Fly:
+		Monster = GetWorld()->SpawnActor<AFly>();
+		break;
+	default:
+		break;
+	}
+
+	Monster->SetActorLocation(_Pos);
+	Monsters.push_back(Monster);
 }

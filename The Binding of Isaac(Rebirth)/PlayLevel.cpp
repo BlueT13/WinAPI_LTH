@@ -47,9 +47,12 @@ void UPlayLevel::BeginPlay()
 	ARoom* Room_7 = CreateRoom(0, -2, "Room_03.png");
 	ARoom* Room_8 = CreateRoom(-1, -2, "Room_02.png");
 
-	CreateMonsters(EMonsterType::Fly, { 200, 0 });
-	CreateMonsters(EMonsterType::Fly, { 200, 100 });
-	CreateMonsters(EMonsterType::Fly, { 200, -100 });
+	Room_0->CreateMonsters(EMonsterType::Fly, { 200, 0 });
+	Room_0->CreateMonsters(EMonsterType::Fly, { 200, 100 });
+	Room_0->CreateMonsters(EMonsterType::Fly, { 200, -100 });
+
+	// 몬스터 배치 해결 필요
+	//Room_1->CreateMonsters(EMonsterType::Fly, { 200, 0 });
 
 	SetPrevRoom(0, 0);
 	SetCurRoom(0, 0);
@@ -112,7 +115,7 @@ ARoom* UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img)
 
 	FVector WindowScale = GEngine->MainWindow.GetWindowScale();
 
-	ARoom* NewRoom = SpawnActor<ARoom>();
+	ARoom* NewRoom = SpawnActor<ARoom>(IsaacUpdateOrder::Room);
 	NewRoom->SetPlayLevel(this);
 	NewRoom->SetRoomImg(_Img);
 	NewRoom->SetRoomIndex(Index);
@@ -141,20 +144,6 @@ ARoom* UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img)
 	return NewRoom;
 }
 
-void UPlayLevel::CreateMonsters(EMonsterType _Type, FVector _Pos)
-{
-	AMonster* Monster = nullptr;
-	switch (_Type)
-	{
-	case EMonsterType::Fly:
-		Monster = SpawnActor<AFly>();
-		break;
-	default:
-		break;
-	}
-
-	Monster->SetActorLocation(_Pos);
-}
 
 void UPlayLevel::Tick(float _DeltaTime)
 {

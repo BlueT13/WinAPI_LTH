@@ -3,7 +3,17 @@
 #include <EngineCore\EngineCore.h>
 #include <EngineCore\ImageRenderer.h>
 
-enum IsaacRenderOrder
+enum class IsaacUpdateOrder
+{
+	Bullet,
+	Monster,
+	PlayerBody,
+	PlayerHead,
+	Door,
+	Room,
+};
+
+enum class IsaacRenderOrder
 {
 	Room,
 	Door,
