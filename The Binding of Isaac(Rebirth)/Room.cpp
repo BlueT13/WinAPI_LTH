@@ -141,7 +141,7 @@ void ARoom::Tick(float _DeltaTime)
 		}
 	}
 
-	
+
 	if (0 == Monsters.size())
 	{
 		for (int i = 0; i < 4; i++)
@@ -216,6 +216,8 @@ void ARoom::CreateMonsters(EMonsterType _Type, FVector _Pos)
 		break;
 	}
 
-	Monster->SetActorLocation(_Pos);
+	FVector CurRoomPos = GetActorLocation();
+	FVector SetMonsterLocation = _Pos;
+	Monster->SetActorLocation(CurRoomPos + SetMonsterLocation);
 	Monsters.push_back(Monster);
 }

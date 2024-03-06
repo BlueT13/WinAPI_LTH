@@ -51,8 +51,7 @@ void UPlayLevel::BeginPlay()
 	Room_0->CreateMonsters(EMonsterType::Fly, { 200, 100 });
 	Room_0->CreateMonsters(EMonsterType::Fly, { 200, -100 });
 
-	// 몬스터 배치 해결 필요
-	//Room_1->CreateMonsters(EMonsterType::Fly, { 200, 0 });
+	Room_1->CreateMonsters(EMonsterType::Fly, { 200, 0 });
 
 	SetPrevRoom(0, 0);
 	SetCurRoom(0, 0);
