@@ -35,7 +35,7 @@ void UPlayLevel::BeginPlay()
 	UEngineResourcesManager::GetInst().CuttingImage("Door.png", 4, 5);
 	UEngineResourcesManager::GetInst().CuttingImage("DestroyTear.png", 5, 3);
 
-	SpawnActor<APlayer>();
+	SpawnActor<APlayer>(IsaacUpdateOrder::Player);
 
 	ARoom* Room_0 = CreateRoom(0, 0, "Room_01.png");
 	ARoom* Room_1 = CreateRoom(-1, 0, "Room_02.png");
@@ -72,12 +72,15 @@ void UPlayLevel::SetCurRoom(int _X, int _Y)
 	{
 		ARoom* Room = _Pair.second;
 		Room->SetActive(false);
+		Room->ActiveMonsters(false);
 	}
 
 	CurRoom = Rooms[Index.Key];
 	CurRoom->RoomCameraFocus();
 	CurRoom->SetActive(true);
 	PrevRoom->SetActive(true);
+
+	CurRoom->ActiveMonsters(true);
 }
 
 void UPlayLevel::SetPrevRoom(int _X, int _Y)

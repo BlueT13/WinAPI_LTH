@@ -70,6 +70,7 @@ public:
 
 	void CreateMonsters(EMonsterType _Type, FVector _Pos);
 
+	void ActiveMonsters(bool _Active);
 
 protected:
 	void BeginPlay() override;
@@ -93,5 +94,7 @@ private:
 	FVector WindowScale = GEngine->MainWindow.GetWindowScale();
 
 	std::vector<AMonster*> Monsters;
+
+	float ChangeRoomTime = 0.0f;
 };
 

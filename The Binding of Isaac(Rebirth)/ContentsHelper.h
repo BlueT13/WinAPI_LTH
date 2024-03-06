@@ -5,10 +5,9 @@
 
 enum class IsaacUpdateOrder
 {
-	Bullet,
+	Player,
 	Monster,
-	PlayerBody,
-	PlayerHead,
+	Bullet,
 	Door,
 	Room,
 };

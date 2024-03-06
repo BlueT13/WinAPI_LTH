@@ -196,7 +196,7 @@ void APlayer::Attack(float _DeltaTime)
 
 void APlayer::CreateBullet(FVector _Dir)
 {
-	ABullet* Tear = GetWorld()->SpawnActor<ABullet>();
+	ABullet* Tear = GetWorld()->SpawnActor<ABullet>(IsaacUpdateOrder::Bullet);
 	Tear->SetActorLocation(GetActorLocation());
 	Tear->SetDir(_Dir);
 }
