@@ -32,6 +32,5 @@ protected:
 
 	float MonsterHp = 0.0f;
 private:
-	float MoveSpeed = 50.0f;
 };
 

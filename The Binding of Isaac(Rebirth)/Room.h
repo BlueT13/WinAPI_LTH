@@ -72,6 +72,11 @@ public:
 
 	void ActiveMonsters(bool _Active);
 
+	std::vector<AMonster*> GetAllMonsters()
+	{
+		return Monsters;
+	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

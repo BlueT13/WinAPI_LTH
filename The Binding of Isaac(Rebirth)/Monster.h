@@ -18,6 +18,8 @@ public:
 	AMonster& operator=(const AMonster& _Other) = delete;
 	AMonster& operator=(AMonster&& _Other) noexcept = delete;
 
+	void SetMonsterRoom(ARoom* _Room);
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -26,14 +28,20 @@ protected:
 
 	APlayer* Player = nullptr;
 	FVector PlayerLocation;
+	UCollision* PlayerCollision;
+	float PlayerMoveMaxSpeed;
 
 	UImageRenderer* MonsterRenderer = nullptr;
 	UCollision* MonsterCollision = nullptr;
 	EMonsterState MonsterState = EMonsterState::None;
 
 	FVector MonsterPos = FVector::Zero;
-	FVector MonsterDir = FVector::Zero;
-	FVector MonsterDirNormal = FVector::Zero;
+	FVector MonsterToPlayerDir = FVector::Zero;
+	FVector MonsterToPlayerDirNormal = FVector::Zero;
+
+	ARoom* CurRoom = nullptr;
+
+	float MonsterMoveSpeed = 0.0f;
 
 private:
 };

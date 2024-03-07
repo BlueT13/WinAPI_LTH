@@ -14,6 +14,7 @@ void AFly::BeginPlay()
 	AMonster::BeginPlay();
 
 	MonsterHp = 2.0f;
+	MonsterMoveSpeed = 50.f;
 
 	MonsterRenderer = CreateImageRenderer(IsaacRenderOrder::Monster);
 	MonsterRenderer->SetImage("Fly.png");
@@ -56,7 +57,7 @@ void AFly::MonsterStateUpdate(float _DeltaTime)
 
 void AFly::Move(float _DeltaTime)
 {
-	AddActorLocation(MonsterDirNormal * _DeltaTime * MoveSpeed);
+	AddActorLocation(MonsterToPlayerDirNormal * _DeltaTime * MonsterMoveSpeed);
 }
 
 void AFly::GetHit(float _DeltaTime)

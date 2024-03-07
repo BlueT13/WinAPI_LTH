@@ -210,9 +210,9 @@ void ARoom::Tick(float _DeltaTime)
 			default:
 				break;
 			}
-
 		}
 	}
+
 }
 
 void ARoom::CreateMonsters(EMonsterType _Type, FVector _Pos)
@@ -230,6 +230,7 @@ void ARoom::CreateMonsters(EMonsterType _Type, FVector _Pos)
 	FVector CurRoomPos = GetActorLocation();
 	FVector SetMonsterLocation = _Pos;
 	Monster->SetActorLocation(CurRoomPos + SetMonsterLocation);
+	Monster->SetMonsterRoom(this);
 	Monsters.push_back(Monster);
 }
 

@@ -20,6 +20,9 @@ public:
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
 	static APlayer* GetMainPlayer();
+	UCollision* GetPlayerCollision();
+	float GetPlayerMoveMaxSpeed();
+
 
 protected:
 	void BeginPlay() override;
@@ -58,14 +61,14 @@ protected:
 private:
 	static APlayer* MainPlayer;
 
-	float FireRate = 0.5f;
-	float BlinkTime = 0.1f;
+	float FireRate = 0.0f;
+	float BlinkTime = 0.0f;
 	float BulletCoolTime = 0.0f;
 
 	UImageRenderer* HeadRenderer = nullptr;
 	UImageRenderer* BodyRenderer = nullptr;
-	FVector HeadRendererPos = { 0,-28 };
-	FVector BodyRendererPos = { 0,0 };
+	FVector HeadRendererPos = { 0, -28 };
+	FVector BodyRendererPos = { 0, 0 };
 	const FVector RendererSize = { 64,64 };
 
 	UCollision* PlayerCollision = nullptr;

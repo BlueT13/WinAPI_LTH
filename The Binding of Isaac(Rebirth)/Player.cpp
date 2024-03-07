@@ -20,11 +20,24 @@ APlayer* APlayer::GetMainPlayer()
 {
 	return MainPlayer;
 }
+UCollision* APlayer::GetPlayerCollision()
+{
+	return PlayerCollision;
+}
+
+float APlayer::GetPlayerMoveMaxSpeed()
+{
+	return MoveMaxSpeed;
+}
 
 void APlayer::BeginPlay()
 {
 	AActor::BeginPlay();
 	MainPlayer = this;
+
+	FireRate = 0.5f;
+	BlinkTime = 0.1f;
+	BulletCoolTime = 0.0f;
 
 	// Renderer
 	{
@@ -57,7 +70,7 @@ void APlayer::BeginPlay()
 	{
 		PlayerCollision = CreateCollision(IsaacCollisionOrder::Player);
 		PlayerCollision->SetColType(ECollisionType::CirCle);
-		PlayerCollision->SetScale({ 30,30 });
+		PlayerCollision->SetTransform({ {0, -14} ,{ 40, 40 } });
 	}
 
 	HeadStateChange(EPlayerHeadState::Idle);
