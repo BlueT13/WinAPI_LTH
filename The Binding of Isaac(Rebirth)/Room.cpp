@@ -178,7 +178,7 @@ void ARoom::Tick(float _DeltaTime)
 		std::vector<UCollision*> Result;
 		if (true == DoorCollision[i]->CollisionCheck(IsaacCollisionOrder::Player, Result))
 		{
-			Player->HeadStateChange()
+			Player->BodyStateChange(EPlayerBodyState::Wait);
 
 			FVector CurPos = GetTransform().GetPosition();
 			PlayLevel->SetPrevRoom(RoomIndex.X, RoomIndex.Y);
@@ -210,6 +210,7 @@ void ARoom::Tick(float _DeltaTime)
 			default:
 				break;
 			}
+
 		}
 	}
 }

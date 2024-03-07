@@ -4,10 +4,9 @@
 #include "PlayLevel.h"
 
 // Ό³Έν :
-class ERoom;
 class APlayer : public AActor
 {
-	friend ERoom;
+	friend class ARoom;
 public:
 	static bool IsFreeCamera;
 	// constrcuter destructer
@@ -92,5 +91,5 @@ private:
 	void MoveLastMoveVector(float _DeltaTime);
 	void CalLastMoveVector(float _DeltaTime);
 
-	float ChangeRoomTime = 0.0f;
+	float ChangeRoomTime = 0.3f;
 };
