@@ -17,6 +17,8 @@ void UIsaacCore::BeginPlay()
 {
 	UEngineCore::BeginPlay();
 
+	SetFrame(60);
+
 	MainWindow.SetWindowScale(WindowSize);
 	MainWindow.SetWindowPosition({ 0, 0 });
 

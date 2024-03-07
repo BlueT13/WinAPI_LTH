@@ -94,7 +94,7 @@ void ARoom::CreateDoor(ERoomDir _Dir, ERoomType _OtherRoomType)
 		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
 		DoorCollision[DirIndex]->SetScale({ 30, 30 });
 		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
-		DoorCollision[DirIndex]->SetPosition({ 0, -190 });
+		DoorCollision[DirIndex]->SetPosition({ 0, -205 });
 		break;
 	case ERoomDir::Down:
 		RoomImageIndex = 7;
@@ -104,7 +104,7 @@ void ARoom::CreateDoor(ERoomDir _Dir, ERoomType _OtherRoomType)
 		DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
 		DoorCollision[DirIndex]->SetScale({ 30, 30 });
 		DoorCollision[DirIndex]->SetColType(ECollisionType::Rect);
-		DoorCollision[DirIndex]->SetPosition({ 0, 190 });
+		DoorCollision[DirIndex]->SetPosition({ 0, 185 });
 		break;
 	case ERoomDir::Max:
 		break;
@@ -112,20 +112,22 @@ void ARoom::CreateDoor(ERoomDir _Dir, ERoomType _OtherRoomType)
 		break;
 	}
 
-	switch (_OtherRoomType)
-	{
-	case ERoomType::Normal:
-		DoorRenderer[DirIndex]->SetImage("NormalRoomDoor.png", RoomImageIndex);
-		break;
-	case ERoomType::GoldRoom:
-		DoorRenderer[DirIndex]->SetImage("GoldRoomDoor.png", RoomImageIndex);
-		break;
-	case ERoomType::BossRoom:
-		DoorRenderer[DirIndex]->SetImage("BossRoomDoor.png", RoomImageIndex);
-		break;
-	default:
-		break;
-	}
+	DoorRenderer[DirIndex]->SetImage("Door.png", RoomImageIndex);
+
+	//switch (_OtherRoomType)
+	//{
+	//case ERoomType::Normal:
+	//	DoorRenderer[DirIndex]->SetImage("NormalRoomDoor.png", RoomImageIndex);
+	//	break;
+	//case ERoomType::GoldRoom:
+	//	DoorRenderer[DirIndex]->SetImage("GoldRoomDoor.png", RoomImageIndex);
+	//	break;
+	//case ERoomType::BossRoom:
+	//	DoorRenderer[DirIndex]->SetImage("BossRoomDoor.png", RoomImageIndex);
+	//	break;
+	//default:
+	//	break;
+	//}
 }
 
 void ARoom::BeginPlay()
