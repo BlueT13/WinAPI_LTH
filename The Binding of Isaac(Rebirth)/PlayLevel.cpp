@@ -40,13 +40,13 @@ void UPlayLevel::BeginPlay()
 
 	ARoom* Room_0 = CreateRoom(0, 0, "Room_01.png", ERoomType::Normal);
 	ARoom* Room_1 = CreateRoom(-1, 0, "Room_02.png", ERoomType::GoldRoom);
-	ARoom* Room_2 = CreateRoom(1, 0, "Room_03.png", ERoomType::Normal);
-	ARoom* Room_3 = CreateRoom(0, -1, "Room_02.png", ERoomType::Normal);
-	ARoom* Room_4 = CreateRoom(0, 1, "Room_03.png", ERoomType::BossRoom);
-	ARoom* Room_5 = CreateRoom(0, 2, "Room_01.png", ERoomType::Normal);
-	ARoom* Room_6 = CreateRoom(1, 2, "Room_02.png", ERoomType::Normal);
+	ARoom* Room_2 = CreateRoom(1, 0, "Room_03.png", ERoomType::GoldRoom);
+	ARoom* Room_3 = CreateRoom(0, -1, "Room_02.png", ERoomType::BossRoom);
+	ARoom* Room_4 = CreateRoom(0, 1, "Room_03.png", ERoomType::Normal);
+	ARoom* Room_5 = CreateRoom(0, 2, "Room_01.png", ERoomType::GoldRoom);
+	ARoom* Room_6 = CreateRoom(1, 2, "Room_02.png", ERoomType::BossRoom);
 	ARoom* Room_7 = CreateRoom(0, -2, "Room_03.png", ERoomType::Normal);
-	ARoom* Room_8 = CreateRoom(-1, -2, "Room_02.png", ERoomType::Normal);
+	ARoom* Room_8 = CreateRoom(-1, -2, "Room_02.png", ERoomType::BossRoom);
 
 	Room_0->CreateMonsters(EMonsterType::Fly, { 200, 0 });
 	Room_0->CreateMonsters(EMonsterType::Fly, { 200, 100 });
