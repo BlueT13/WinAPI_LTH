@@ -36,6 +36,7 @@ protected:
 private:
 	UImageRenderer* BulletRenderer = nullptr;
 	UCollision* BulletCollision = nullptr;
+
 	FVector Dir = FVector::Zero;
 	float Speed = 500.0f;
 	const FVector RendererSize = { 64,64 };

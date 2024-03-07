@@ -52,6 +52,13 @@ void UPlayLevel::BeginPlay()
 	Room_0->CreateMonsters(EMonsterType::Fly, { 200, -100 });
 
 	Room_1->CreateMonsters(EMonsterType::Fly, { -300, -100 });
+	Room_1->CreateMonsters(EMonsterType::Fly, { -300, 100 });
+
+	Room_2->CreateMonsters(EMonsterType::Fly, { 300, 0 });
+
+	Room_3->CreateMonsters(EMonsterType::Fly, { 0, -100 });
+
+	Room_4->CreateMonsters(EMonsterType::Fly, { 0, 100 });
 
 	SetPrevRoom(0, 0);
 	SetCurRoom(0, 0);
