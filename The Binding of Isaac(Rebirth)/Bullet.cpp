@@ -3,6 +3,7 @@
 #include <EngineCore\EngineCore.h>
 #include "ContentsHelper.h"
 #include "PlayLevel.h"
+#include "Monster.h"
 
 ABullet::ABullet()
 {
@@ -36,11 +37,11 @@ void ABullet::Tick(float _DeltaTime)
 	if (true == BulletCollision->CollisionCheck(IsaacCollisionOrder::Monster, Result))
 	{
 		UCollision* Collision = Result[0];
-		AActor* Ptr = Collision->GetOwner();
-		AMonster* Monster = dynamic_cast<AMonster*>(Ptr);
+		AActor* MonsterPtr = Collision->GetOwner();
+		AMonster* Monster = dynamic_cast<AMonster*>(MonsterPtr);
 
-		//Monster->MonsterStateChange(EMonsterState::GetHit);
-		Monster->Destroy();
+		Monster->MonsterStateChange(EMonsterState::GetHit);
+		
 		BulletStateChange(EBulletState::Crashed);
 	}
 	

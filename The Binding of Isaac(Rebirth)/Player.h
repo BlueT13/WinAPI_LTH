@@ -31,7 +31,6 @@ protected:
 	void HeadMove(float _DeltaTime);
 	void Attack(float _DeltaTime);
 	void CreateBullet(FVector _Dir);
-	void HeadWait(float _DeltaTime);
 	void HeadStateChange(EPlayerHeadState _State);
 	void HeadIdleStart();
 	void HeadMoveStart();

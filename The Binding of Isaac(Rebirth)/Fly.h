@@ -21,8 +21,17 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
+	void MonsterStateUpdate(float _DeltaTime) override;
+	void Move(float _DeltaTime);
+	void GetHit(float _DeltaTime);
+	void Die(float _DeltaTime);
+	void MonsterStateChange(EMonsterState _State) override;
+	void MoveStart();
+	void GetHitStart();
+	void DieStart();
+
+	float MonsterHp = 0.0f;
 private:
-	const FVector RendererSize = { 256,256 };
-	float MoveSpeed = 100.f;
+	float MoveSpeed = 50.0f;
 };
 

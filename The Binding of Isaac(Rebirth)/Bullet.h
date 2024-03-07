@@ -5,7 +5,6 @@
 // Ό³Έν :
 class ABullet : public AActor
 {
-friend class AFly;
 public:
 	// constrcuter destructer
 	ABullet();

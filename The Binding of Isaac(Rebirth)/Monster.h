@@ -6,6 +6,7 @@
 // Ό³Έν :
 class AMonster : public AActor
 {
+	friend class ABullet;
 public:
 	// constrcuter destructer
 	AMonster();
@@ -20,12 +21,20 @@ public:
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-
-	UImageRenderer* MonsterRenderer = nullptr;
-	UCollision* MonsterCollision = nullptr;
+	virtual void MonsterStateUpdate(float _DeltaTime) {};
+	virtual void MonsterStateChange(EMonsterState _State) {};
 
 	APlayer* Player = nullptr;
 	FVector PlayerLocation;
+
+	UImageRenderer* MonsterRenderer = nullptr;
+	UCollision* MonsterCollision = nullptr;
+	EMonsterState MonsterState = EMonsterState::None;
+
+	FVector MonsterPos = FVector::Zero;
+	FVector MonsterDir = FVector::Zero;
+	FVector MonsterDirNormal = FVector::Zero;
+
 private:
 };
 
