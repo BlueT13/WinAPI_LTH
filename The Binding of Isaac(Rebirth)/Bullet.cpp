@@ -41,9 +41,9 @@ void ABullet::Tick(float _DeltaTime)
 
 		//Monster->MonsterStateChange(EMonsterState::GetHit);
 		Monster->Destroy();
-		this->Destroy();
+		BulletStateChange(EBulletState::Crashed);
 	}
-
+	
 	BulletStateUpdate(_DeltaTime);
 
 	BulletLiveTime += _DeltaTime;
