@@ -12,6 +12,14 @@ enum class ERoomDir
 	Max,
 };
 
+enum class ERoomType
+{
+	None,
+	Normal,
+	GoldRoom,
+	BossRoom,
+};
+
 class AMonster;
 class FRoomIndex
 {
@@ -50,6 +58,7 @@ public:
 
 	void Link(ARoom* _Room);
 	ERoomDir GetOtherRoomDir(ARoom* _Room);
+	ERoomType GetOtherRoomType(ARoom* _Room);
 
 	void SetRoomIndex(FRoomIndex _RoomIndex)
 	{
@@ -81,7 +90,7 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	void CreateDoor(ERoomDir _Dir);
+	void CreateDoor(ERoomDir _Dir, ERoomType _RoomType);
 
 private:
 	UPlayLevel* PlayLevel = nullptr;
@@ -101,5 +110,7 @@ private:
 	std::vector<AMonster*> Monsters;
 
 	float ChangeRoomTime = 0.0f;
+
+	ERoomType RoomType = ERoomType::None;
 };
 

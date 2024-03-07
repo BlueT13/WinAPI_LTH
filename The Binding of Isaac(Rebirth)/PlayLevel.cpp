@@ -33,19 +33,20 @@ void UPlayLevel::BeginPlay()
 	UEngineResourcesManager::GetInst().CuttingImage("Tears.png", 5, 6);
 	UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
 	UEngineResourcesManager::GetInst().CuttingImage("Door.png", 4, 5);
+	UEngineResourcesManager::GetInst().CuttingImage("BossDoor.png", 4, 2);
 	UEngineResourcesManager::GetInst().CuttingImage("DestroyTear.png", 5, 3);
 
 	SpawnActor<APlayer>(IsaacUpdateOrder::Player);
 
-	ARoom* Room_0 = CreateRoom(0, 0, "Room_01.png");
-	ARoom* Room_1 = CreateRoom(-1, 0, "Room_02.png");
-	ARoom* Room_2 = CreateRoom(1, 0, "Room_03.png");
-	ARoom* Room_3 = CreateRoom(0, -1, "Room_02.png");
-	ARoom* Room_4 = CreateRoom(0, 1, "Room_03.png");
-	ARoom* Room_5 = CreateRoom(0, 2, "Room_01.png");
-	ARoom* Room_6 = CreateRoom(1, 2, "Room_02.png");
-	ARoom* Room_7 = CreateRoom(0, -2, "Room_03.png");
-	ARoom* Room_8 = CreateRoom(-1, -2, "Room_02.png");
+	ARoom* Room_0 = CreateRoom(0, 0, "Room_01.png", ERoomType::Normal);
+	ARoom* Room_1 = CreateRoom(-1, 0, "Room_02.png", ERoomType::GoldRoom);
+	ARoom* Room_2 = CreateRoom(1, 0, "Room_03.png", ERoomType::Normal);
+	ARoom* Room_3 = CreateRoom(0, -1, "Room_02.png", ERoomType::Normal);
+	ARoom* Room_4 = CreateRoom(0, 1, "Room_03.png", ERoomType::BossRoom);
+	ARoom* Room_5 = CreateRoom(0, 2, "Room_01.png", ERoomType::Normal);
+	ARoom* Room_6 = CreateRoom(1, 2, "Room_02.png", ERoomType::Normal);
+	ARoom* Room_7 = CreateRoom(0, -2, "Room_03.png", ERoomType::Normal);
+	ARoom* Room_8 = CreateRoom(-1, -2, "Room_02.png", ERoomType::Normal);
 
 	Room_0->CreateMonsters(EMonsterType::Fly, { 200, 0 });
 	Room_0->CreateMonsters(EMonsterType::Fly, { 200, 100 });
@@ -113,7 +114,7 @@ ARoom* UPlayLevel::GetPrevRoom()
 	return PrevRoom;
 }
 
-ARoom* UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img)
+ARoom* UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img, ERoomType _RoomType)
 {
 	FRoomIndex Index = { _X , _Y };
 
@@ -127,6 +128,7 @@ ARoom* UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img)
 	ARoom* NewRoom = SpawnActor<ARoom>(IsaacUpdateOrder::Room);
 	NewRoom->SetPlayLevel(this);
 	NewRoom->SetRoomImg(_Img);
+	CurRoomType = _RoomType;
 	NewRoom->SetRoomIndex(Index);
 	NewRoom->SetActorLocation({ WindowScale.X * _X, WindowScale.Y * _Y });
 

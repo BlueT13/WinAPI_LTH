@@ -22,8 +22,8 @@ ARoom::~ARoom()
 void ARoom::Link(ARoom* _Room)
 {
 	ERoomDir OtherRoomDir = GetOtherRoomDir(_Room);
-
-	CreateDoor(OtherRoomDir);
+	ERoomType OtherRoomType = GetOtherRoomType(_Room);
+	CreateDoor(OtherRoomDir, OtherRoomType);
 }
 
 ERoomDir ARoom::GetOtherRoomDir(ARoom* _Room)
@@ -51,16 +51,23 @@ ERoomDir ARoom::GetOtherRoomDir(ARoom* _Room)
 	MsgBoxAssert("대각선 방향에 존재하는 방을 링크하려고 했습니다.");
 }
 
-void ARoom::CreateDoor(ERoomDir _Dir)
+ERoomType ARoom::GetOtherRoomType(ARoom* _Room)
+{
+	return _Room->RoomType;
+}
+
+void ARoom::CreateDoor(ERoomDir _Dir, ERoomType _OtherRoomType)
 {
 	int DirIndex = static_cast<int>(_Dir);
 
 	DoorRenderer[DirIndex] = CreateImageRenderer(IsaacRenderOrder::Door);
 
+	int RoomImageIndex = 0;
+
 	switch (_Dir)
 	{
 	case ERoomDir::Left:
-		DoorRenderer[DirIndex]->SetImage("Door.png", 4);
+		RoomImageIndex = 12;
 		DoorRenderer[DirIndex]->AutoImageScale();
 		DoorRenderer[DirIndex]->SetPosition({ -370, 0 });
 
@@ -70,7 +77,7 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorCollision[DirIndex]->SetPosition({ -340, 0 });
 		break;
 	case ERoomDir::Right:
-		DoorRenderer[DirIndex]->SetImage("Door.png", 5);
+		RoomImageIndex = 5;
 		DoorRenderer[DirIndex]->AutoImageScale();
 		DoorRenderer[DirIndex]->SetPosition({ 370, 0 });
 
@@ -80,7 +87,7 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorCollision[DirIndex]->SetPosition({ 340, 0 });
 		break;
 	case ERoomDir::Up:
-		DoorRenderer[DirIndex]->SetImage("Door.png", 6);
+		RoomImageIndex = 6;
 		DoorRenderer[DirIndex]->AutoImageScale();
 		DoorRenderer[DirIndex]->SetPosition({ 0, -215 });
 
@@ -90,7 +97,7 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		DoorCollision[DirIndex]->SetPosition({ 0, -190 });
 		break;
 	case ERoomDir::Down:
-		DoorRenderer[DirIndex]->SetImage("Door.png", 7);
+		RoomImageIndex = 3;
 		DoorRenderer[DirIndex]->AutoImageScale();
 		DoorRenderer[DirIndex]->SetPosition({ 0, 215 });
 
@@ -105,7 +112,14 @@ void ARoom::CreateDoor(ERoomDir _Dir)
 		break;
 	}
 
-	// DoorCollision[DirIndex] = CreateCollision(IsaacCollisionOrder::Door);
+	DoorRenderer[DirIndex]->SetImage("Door.png", RoomImageIndex);
+
+	switch (_OtherRoomType)
+	{
+	default:
+		break;
+	}
+
 }
 
 void ARoom::BeginPlay()

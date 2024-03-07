@@ -30,13 +30,12 @@ protected:
 
 private:
 	// 방을 관리하는 건 레벨마다 해야하니까
-	ARoom* CreateRoom(int _X, int _Y, std::string_view _Img);
+	ARoom* CreateRoom(int _X, int _Y, std::string_view _Img, ERoomType _RoomType);
 	std::map<__int64, ARoom*> Rooms;
 	ARoom* CurRoom = nullptr;
 	ARoom* PrevRoom = nullptr;
+	ERoomType CurRoomType = ERoomType::None;
 	bool IsFreeCamera = false;
 	float RoomMoveCameraTime = 0.0f;
-
-	void CreateMonsters(EMonsterType _Type, FVector _Pos);
 };
 
