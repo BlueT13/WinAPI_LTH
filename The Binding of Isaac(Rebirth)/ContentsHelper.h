@@ -16,6 +16,7 @@ enum class IsaacRenderOrder
 {
 	Room,
 	Door,
+	SpawnEffect,
 	Monster,
 	PlayerBody,
 	Bullet,

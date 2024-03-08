@@ -32,6 +32,7 @@ protected:
 	float PlayerMoveMaxSpeed;
 
 	UImageRenderer* MonsterRenderer = nullptr;
+	UImageRenderer* SpawnRenderer = nullptr;
 	UCollision* MonsterCollision = nullptr;
 	EMonsterState MonsterState = EMonsterState::None;
 
