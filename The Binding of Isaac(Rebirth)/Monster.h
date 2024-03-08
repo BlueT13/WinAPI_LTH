@@ -7,6 +7,7 @@
 class AMonster : public AActor
 {
 	friend class ABullet;
+	friend class ARoom;
 public:
 	// constrcuter destructer
 	AMonster();

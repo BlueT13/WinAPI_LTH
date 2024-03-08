@@ -19,7 +19,7 @@ void AFly::BeginPlay()
 	SpawnRenderer = CreateImageRenderer(IsaacRenderOrder::SpawnEffect);
 	SpawnRenderer->SetImage("SpawnEffect_Small.png");
 	SpawnRenderer->AutoImageScale();
-	SpawnRenderer->CreateAnimation("Spawn", "SpawnEffect_Small.png", 0, 14, 0.03f, false);
+	SpawnRenderer->CreateAnimation("Spawn", "SpawnEffect_Small.png", 0, 14, 0.05f, false);
 
 	MonsterRenderer = CreateImageRenderer(IsaacRenderOrder::Monster);
 	MonsterRenderer->SetImage("Fly.png");
@@ -31,28 +31,22 @@ void AFly::BeginPlay()
 	MonsterCollision = CreateCollision(IsaacCollisionOrder::Monster);
 	MonsterCollision->SetScale({ 30, 30 });
 	MonsterCollision->SetColType(ECollisionType::CirCle);
-
-	if (IsActive())
-	{
-		SpawnRenderer->ChangeAnimation("Spawn");
-	}
 }
 
 void AFly::Tick(float _DeltaTime)
 {
-	AMonster::Tick(_DeltaTime);
 	// Player, PlayerLocation, MonsterPos, MonsterDir, MonsterDirNormal 받아온다.
 	// MonsterStateUpdate(_DeltaTime);을 실행
-	if (SpawnRenderer->IsCurAnimationEnd())
-	{
-		SpawnRenderer->Destroy();
-	}
+	AMonster::Tick(_DeltaTime);
 }
 
 void AFly::MonsterStateUpdate(float _DeltaTime)
 {
 	switch (MonsterState)
 	{
+	case EMonsterState::Spawn:
+		Spawn(_DeltaTime);
+		break;
 	case EMonsterState::Move:
 		Move(_DeltaTime);
 		break;
@@ -64,6 +58,15 @@ void AFly::MonsterStateUpdate(float _DeltaTime)
 		break;
 	default:
 		break;
+	}
+}
+
+void AFly::Spawn(float _DeltaTime)
+{
+	if (SpawnRenderer->IsCurAnimationEnd())
+	{
+		SpawnRenderer->Destroy();
+		MonsterStateChange(EMonsterState::Move);
 	}
 }
 
@@ -104,6 +107,9 @@ void AFly::MonsterStateChange(EMonsterState _State)
 	{
 		switch (_State)
 		{
+		case EMonsterState::Spawn:
+			SpawnStart();
+			break;
 		case EMonsterState::Move:
 			MoveStart();
 			break;
@@ -118,6 +124,12 @@ void AFly::MonsterStateChange(EMonsterState _State)
 		}
 	}
 	MonsterState = _State;
+}
+
+void AFly::SpawnStart()
+{
+	SpawnRenderer->ChangeAnimation("Spawn");
+	MonsterRenderer->ChangeAnimation("Move");
 }
 
 void AFly::MoveStart()

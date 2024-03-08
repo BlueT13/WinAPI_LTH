@@ -39,6 +39,7 @@ void UPlayLevel::BeginPlay()
 	UEngineResourcesManager::GetInst().CuttingImage("BossRoomDoor.png", 4, 2);
 
 	UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Small.png", 5, 3);
+	UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Medium.png", 5, 3);
 	UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Large.png", 5, 3);
 	UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
 
@@ -54,6 +55,7 @@ void UPlayLevel::BeginPlay()
 	ARoom* Room_7 = CreateRoom(0, -2, "Room_02.png", ERoomType::Normal);
 	ARoom* Room_8 = CreateRoom(-1, -2, "Room_03.png", ERoomType::BossRoom);
 
+	Room_0->CreateMonsters(EMonsterType::Fly, { -200, 0 });
 	Room_8->CreateMonsters(EMonsterType::Fly, { -200, 0 });
 
 

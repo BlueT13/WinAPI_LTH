@@ -22,10 +22,12 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 	void MonsterStateUpdate(float _DeltaTime) override;
+	void Spawn(float _DeltaTime);
 	void Move(float _DeltaTime);
 	void GetHit(float _DeltaTime);
 	void Die(float _DeltaTime);
 	void MonsterStateChange(EMonsterState _State) override;
+	void SpawnStart();
 	void MoveStart();
 	void GetHitStart();
 	void DieStart();

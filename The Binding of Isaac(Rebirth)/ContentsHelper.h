@@ -16,8 +16,8 @@ enum class IsaacRenderOrder
 {
 	Room,
 	Door,
-	SpawnEffect,
 	Monster,
+	SpawnEffect,
 	PlayerBody,
 	Bullet,
 	PlayerHead,
@@ -62,6 +62,7 @@ enum class EPlayerBodyState
 enum class EMonsterState
 {
 	None,
+	Spawn,
 	Idle,
 	Move,
 	Attack,

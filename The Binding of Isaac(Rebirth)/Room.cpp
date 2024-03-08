@@ -328,7 +328,7 @@ void ARoom::ActiveMonsters(bool _Active)
 	for (int i = 0; i < Monsters.size(); i++)
 	{
 		AMonster* Monster = Monsters[i];
-
 		Monster->SetActive(_Active);
+		Monster->MonsterStateChange(EMonsterState::Spawn);
 	}
 }

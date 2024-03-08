@@ -24,6 +24,7 @@
     <ClCompile Include="EngineFile.cpp" />
     <ClCompile Include="EngineMath.cpp" />
     <ClCompile Include="EnginePath.cpp" />
+    <ClCompile Include="EngineRandom.cpp" />
     <ClCompile Include="EngineSerializer.cpp" />
     <ClCompile Include="EngineString.cpp" />
     <ClCompile Include="EngineTime.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="EngineFile.h" />
     <ClInclude Include="EngineMath.h" />
     <ClInclude Include="EnginePath.h" />
+    <ClInclude Include="EngineRandom.h" />
     <ClInclude Include="EngineSerializer.h" />
     <ClInclude Include="EngineString.h" />
     <ClInclude Include="EngineTime.h" />
