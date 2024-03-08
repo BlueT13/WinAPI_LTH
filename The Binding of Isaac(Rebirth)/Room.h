@@ -94,7 +94,7 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	void CreateDoor(ERoomDir _Dir, ERoomType _RoomType);
+	void CreateDoor(ERoomDir _OtherRoomDir, ERoomType _RoomType);
 
 private:
 	UPlayLevel* PlayLevel = nullptr;

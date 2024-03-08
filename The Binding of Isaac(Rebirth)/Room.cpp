@@ -58,15 +58,15 @@ ERoomType ARoom::GetOtherRoomType(ARoom* _Room)
 	return _Room->RoomType;
 }
 
-void ARoom::CreateDoor(ERoomDir _Dir, ERoomType _OtherRoomType)
+void ARoom::CreateDoor(ERoomDir _OtherRoomDir, ERoomType _OtherRoomType)
 {
-	// 내 방에서 다른 방으로 가는 문 생성
 	{
-		int DirIndex = static_cast<int>(_Dir);
+		int DirIndex = static_cast<int>(_OtherRoomDir);
 
 		DoorRenderer[DirIndex] = CreateImageRenderer(IsaacRenderOrder::Door);
 
-		switch (_Dir)
+		// 다른 방의 방향에 따른 switch
+		switch (_OtherRoomDir)
 		{
 		case ERoomDir::Left:
 			RoomImageIndex = 4;
@@ -114,8 +114,11 @@ void ARoom::CreateDoor(ERoomDir _Dir, ERoomType _OtherRoomType)
 			break;
 		}
 
+
+		// 내 방과 다른 방의 타입에 따른 switch
 		switch (RoomType)
 		{
+			// 내 방의 타입 Normal
 		case ERoomType::Normal:
 			switch (_OtherRoomType)
 			{
@@ -132,6 +135,8 @@ void ARoom::CreateDoor(ERoomDir _Dir, ERoomType _OtherRoomType)
 				break;
 			}
 			break;
+			
+			// 내 방의 타입 GoldRoom
 		case ERoomType::GoldRoom:
 			switch (_OtherRoomType)
 			{
@@ -148,6 +153,8 @@ void ARoom::CreateDoor(ERoomDir _Dir, ERoomType _OtherRoomType)
 				break;
 			}
 			break;
+			
+			// 내 방의 타입 BossRoom
 		case ERoomType::BossRoom:
 			switch (_OtherRoomType)
 			{
@@ -273,22 +280,18 @@ void ARoom::Tick(float _DeltaTime)
 			{
 			case ERoomDir::Left:
 				Player->SetActorLocation({ CurPos.X - (WindowScale.X - 300), CurPos.Y });
-				//GetWorld()->AddCameraPos({ CurPos.X - WindowScale.X, CurPos.Y });
 				PlayLevel->SetCurRoom(RoomIndex.X - 1, RoomIndex.Y);
 				break;
 			case ERoomDir::Right:
 				Player->SetActorLocation({ CurPos.X + (WindowScale.X - 300), CurPos.Y });
-				//GetWorld()->AddCameraPos({ CurPos.X + WindowScale.X, CurPos.Y });
 				PlayLevel->SetCurRoom(RoomIndex.X + 1, RoomIndex.Y);
 				break;
 			case ERoomDir::Up:
 				Player->SetActorLocation({ CurPos.X, CurPos.Y - (WindowScale.Y - 150) });
-				//GetWorld()->AddCameraPos({ CurPos.X, CurPos.Y - WindowScale.Y });
 				PlayLevel->SetCurRoom(RoomIndex.X, RoomIndex.Y - 1);
 				break;
 			case ERoomDir::Down:
 				Player->SetActorLocation({ CurPos.X, CurPos.Y + (WindowScale.Y - 150) });
-				//GetWorld()->AddCameraPos({ CurPos.X, CurPos.Y + WindowScale.Y });
 				PlayLevel->SetCurRoom(RoomIndex.X, RoomIndex.Y + 1);
 				break;
 			case ERoomDir::Max:
