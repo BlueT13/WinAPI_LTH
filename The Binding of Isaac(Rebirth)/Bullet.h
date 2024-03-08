@@ -18,7 +18,7 @@ public:
 
 	void SetDir(const FVector& _Dir)
 	{
-		MoveVector = _Dir;
+		Dir = _Dir;
 	}
 
 protected:
@@ -31,7 +31,6 @@ protected:
 	void BulletCrashed(float _DeltaTime);
 	void BulletStateChange(EBulletState _State);
 
-
 private:
 	UImageRenderer* BulletRenderer = nullptr;
 	UCollision* BulletCollision = nullptr;
@@ -43,14 +42,7 @@ private:
 	float BulletLiveTime = 0.0f;
 	float BulletDestroyTime = 0.8f;
 
-	FVector MoveVector = FVector::Zero;
+	FVector Dir = FVector::Zero;
 	float Speed = 500.0f;
-	FVector LastMoveVector = FVector::Zero;
-
-	void AddMoveVector(const FVector& _DirDelta);
-	void BulletMoveUpdate(float _DeltaTime);
-	void CalMoveVector(float _DeltaTime);
-	void CalLastMoveVector(float _DeltaTime);
-	void MoveLastMoveVector(float _DeltaTime);
 };
 
