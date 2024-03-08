@@ -399,6 +399,15 @@ void UWindowImage::TextCopy(const std::string& _Text, const std::string& _Font, 
 	}
 }
 
+
+void UWindowImage::TextCopy(const std::string& _Text, const std::string& _Font, float _Size, const FTransform& _Trans, Gdiplus::StringAlignment _SortOption1, Gdiplus::StringAlignment _SortOption2, Color8Bit _FillColor)
+{
+	Gdiplus::StringFormat stringFormat;
+	stringFormat.SetAlignment(_SortOption1);
+	stringFormat.SetLineAlignment(_SortOption2);
+	TextCopyFormat(_Text, _Font, stringFormat, _Size, _Trans, _FillColor);  //Ãâ·Â
+}
+
 void UWindowImage::TextCopyBold(const std::string& _Text, const std::string& _Font, float _Size, const FTransform& _Trans, Color8Bit _Color)
 {
 	Gdiplus::StringFormat stringFormat;

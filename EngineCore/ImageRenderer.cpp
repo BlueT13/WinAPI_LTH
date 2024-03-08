@@ -257,9 +257,16 @@ void UImageRenderer::TextRender(float _DeltaTime)
 		GEngine->MainWindow.GetBackBufferImage()->TextCopyBold(Text, Font, Size, RendererTrans, TextColor);
 		break;
 	default:
-		GEngine->MainWindow.GetBackBufferImage()->TextCopy(Text, Font, Size, RendererTrans, TextColor);
+		GEngine->MainWindow.GetBackBufferImage()->TextCopy(Text, Font, Size, RendererTrans, SortOption1, SortOption1, TextColor);
 		break;
 	}
+}
+
+bool UImageRenderer::IsAnimation(std::string_view _Name)
+{
+	std::string UpperAniName = UEngineString::ToUpper(_Name);
+
+	return AnimationInfos.contains(UpperAniName);
 }
 
 void UImageRenderer::ImageRender(float _DeltaTime)
@@ -280,6 +287,11 @@ void UImageRenderer::ImageRender(float _DeltaTime)
 	case EImageSortType::Left:
 	{
 		RendererTrans.AddPosition({ RendererTrans.GetScale().hX() , 0.0f});
+		break;
+	}
+	case EImageSortType::Right:
+	{
+		RendererTrans.AddPosition({ -RendererTrans.GetScale().hX() , 0.0f });
 		break;
 	}
 	default:
