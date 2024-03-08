@@ -106,13 +106,10 @@ private:
 	// 한방은 최대 4의 방과 연결될 수 있기 때문에
 	ARoom* LinkRoom[static_cast<int>(ERoomDir::Max)];
 
-	int MyRoomImageIndex = 0;
-	int OtherRoomImageIndex = 0;
+	int RoomImageIndex = 0;
 	std::string DoorName[4];
-	UImageRenderer* OtherRoomDoorRenderer[4] = { nullptr, };
-	UCollision* OtherRoomDoorCollision[4] = { nullptr, };
-	UImageRenderer* MyRoomDoorRenderer[4] = { nullptr, };
-	UCollision* MyRoomDoorCollision[4] = { nullptr, };
+	UImageRenderer* DoorRenderer[4] = { nullptr, };
+	UCollision* DoorCollision[4] = { nullptr, };
 
 	FVector WindowScale = GEngine->MainWindow.GetWindowScale();
 

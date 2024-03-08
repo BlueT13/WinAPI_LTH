@@ -49,18 +49,18 @@ void UPlayLevel::BeginPlay()
 	//ARoom* Room_7 = CreateRoom(0, -2, "Room_03.png", ERoomType::Normal);
 	//ARoom* Room_8 = CreateRoom(-1, -2, "Room_02.png", ERoomType::BossRoom);
 
-	//Room_0->CreateMonsters(EMonsterType::Fly, { 200, 0 });
-	//Room_0->CreateMonsters(EMonsterType::Fly, { 200, 100 });
-	//Room_0->CreateMonsters(EMonsterType::Fly, { 200, -100 });
+	Room_0->CreateMonsters(EMonsterType::Fly, { 200, 0 });
+	Room_0->CreateMonsters(EMonsterType::Fly, { 200, 100 });
+	Room_0->CreateMonsters(EMonsterType::Fly, { 200, -100 });
 
-	//Room_1->CreateMonsters(EMonsterType::Fly, { -300, -100 });
-	//Room_1->CreateMonsters(EMonsterType::Fly, { -300, 100 });
+	Room_1->CreateMonsters(EMonsterType::Fly, { -300, -100 });
+	Room_1->CreateMonsters(EMonsterType::Fly, { -300, 100 });
 
-	//Room_2->CreateMonsters(EMonsterType::Fly, { 300, 0 });
+	Room_2->CreateMonsters(EMonsterType::Fly, { 300, 0 });
 
-	//Room_3->CreateMonsters(EMonsterType::Fly, { 0, -100 });
+	Room_3->CreateMonsters(EMonsterType::Fly, { 0, -100 });
 
-	//Room_4->CreateMonsters(EMonsterType::Fly, { 0, 100 });
+	Room_4->CreateMonsters(EMonsterType::Fly, { 0, 100 });
 
 	SetPrevRoom(0, 0);
 	SetCurRoom(0, 0);
@@ -148,7 +148,7 @@ ARoom* UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img, ERoomType _
 		ARoom* OtherRoom = Rooms[LinkCheckDir.Key];
 
 		NewRoom->Link(OtherRoom);
-		//OtherRoom->Link(NewRoom);
+		OtherRoom->Link(NewRoom);
 	}
 
 	Rooms[Index.Key] = NewRoom;
