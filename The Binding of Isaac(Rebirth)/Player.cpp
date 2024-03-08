@@ -92,25 +92,25 @@ void APlayer::Tick(float _DeltaTime)
 	{
 		if (UEngineInput::IsPress(VK_LEFT))
 		{
-			GetWorld()->AddCameraPos(FVector::Left);
+			GetWorld()->AddCameraPos(FVector::Left *10);
 			IsFreeCamera = true;
 		}
 
 		if (UEngineInput::IsPress(VK_RIGHT))
 		{
-			GetWorld()->AddCameraPos(FVector::Right);
+			GetWorld()->AddCameraPos(FVector::Right * 10);
 			IsFreeCamera = true;
 		}
 
 		if (UEngineInput::IsPress(VK_UP))
 		{
-			GetWorld()->AddCameraPos(FVector::Up);
+			GetWorld()->AddCameraPos(FVector::Up * 10);
 			IsFreeCamera = true;
 		}
 
 		if (UEngineInput::IsPress(VK_DOWN))
 		{
-			GetWorld()->AddCameraPos(FVector::Down);
+			GetWorld()->AddCameraPos(FVector::Down * 10);
 			IsFreeCamera = true;
 		}
 

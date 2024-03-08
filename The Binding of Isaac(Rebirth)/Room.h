@@ -14,7 +14,6 @@ enum class ERoomDir
 
 enum class ERoomType
 {
-	None,
 	Normal,
 	GoldRoom,
 	BossRoom,
@@ -57,6 +56,11 @@ public:
 	ARoom& operator=(ARoom&& _Other) noexcept = delete;
 
 	void Link(ARoom* _Room);
+
+	void SetRoomType(ERoomType _RoomType)
+	{
+		RoomType = _RoomType;
+	}
 	ERoomDir GetOtherRoomDir(ARoom* _Room);
 	ERoomType GetOtherRoomType(ARoom* _Room);
 
@@ -102,6 +106,7 @@ private:
 	// 한방은 최대 4의 방과 연결될 수 있기 때문에
 	ARoom* LinkRoom[static_cast<int>(ERoomDir::Max)];
 
+	std::string DoorName[4];
 	UImageRenderer* DoorRenderer[4] = { nullptr, };
 	UCollision* DoorCollision[4] = { nullptr, };
 
@@ -111,6 +116,6 @@ private:
 
 	float ChangeRoomTime = 0.0f;
 
-	ERoomType RoomType = ERoomType::None;
+	ERoomType RoomType = ERoomType::Normal;
 };
 

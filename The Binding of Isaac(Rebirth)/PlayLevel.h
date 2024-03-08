@@ -34,7 +34,6 @@ private:
 	std::map<__int64, ARoom*> Rooms;
 	ARoom* CurRoom = nullptr;
 	ARoom* PrevRoom = nullptr;
-	ERoomType CurRoomType = ERoomType::None;
 	bool IsFreeCamera = false;
 	float RoomMoveCameraTime = 0.0f;
 };

@@ -31,10 +31,11 @@ void UPlayLevel::BeginPlay()
 	UEngineResourcesManager::GetInst().CuttingImage("Head.png", 5, 2);
 	UEngineResourcesManager::GetInst().CuttingImage("Body.png", 5, 6);
 	UEngineResourcesManager::GetInst().CuttingImage("Tears.png", 5, 6);
-	UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
-	UEngineResourcesManager::GetInst().CuttingImage("Door.png", 4, 5);
-	UEngineResourcesManager::GetInst().CuttingImage("BossDoor.png", 4, 2);
 	UEngineResourcesManager::GetInst().CuttingImage("DestroyTear.png", 5, 3);
+	UEngineResourcesManager::GetInst().CuttingImage("NormalRoomDoor.png", 4, 2);
+	UEngineResourcesManager::GetInst().CuttingImage("GoldRoomDoor.png", 4, 3);
+	UEngineResourcesManager::GetInst().CuttingImage("BossRoomDoor.png", 4, 2);
+	UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
 
 	SpawnActor<APlayer>(IsaacUpdateOrder::Player);
 
@@ -79,7 +80,7 @@ void UPlayLevel::SetCurRoom(int _X, int _Y)
 	for (std::pair<const __int64, ARoom*>& _Pair : Rooms)
 	{
 		ARoom* Room = _Pair.second;
-		Room->SetActive(false);
+		//Room->SetActive(false);
 		Room->ActiveMonsters(false);
 	}
 
@@ -128,7 +129,7 @@ ARoom* UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img, ERoomType _
 	ARoom* NewRoom = SpawnActor<ARoom>(IsaacUpdateOrder::Room);
 	NewRoom->SetPlayLevel(this);
 	NewRoom->SetRoomImg(_Img);
-	CurRoomType = _RoomType;
+	NewRoom->SetRoomType(_RoomType);
 	NewRoom->SetRoomIndex(Index);
 	NewRoom->SetActorLocation({ WindowScale.X * _X, WindowScale.Y * _Y });
 
@@ -147,7 +148,7 @@ ARoom* UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img, ERoomType _
 		ARoom* OtherRoom = Rooms[LinkCheckDir.Key];
 
 		NewRoom->Link(OtherRoom);
-		OtherRoom->Link(NewRoom);
+		//OtherRoom->Link(NewRoom);
 	}
 
 	Rooms[Index.Key] = NewRoom;

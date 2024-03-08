@@ -51,6 +51,8 @@ ERoomDir ARoom::GetOtherRoomDir(ARoom* _Room)
 	MsgBoxAssert("대각선 방향에 존재하는 방을 링크하려고 했습니다.");
 }
 
+
+
 ERoomType ARoom::GetOtherRoomType(ARoom* _Room)
 {
 	return _Room->RoomType;
@@ -112,22 +114,33 @@ void ARoom::CreateDoor(ERoomDir _Dir, ERoomType _OtherRoomType)
 		break;
 	}
 
-	DoorRenderer[DirIndex]->SetImage("Door.png", RoomImageIndex);
+	if (DirIndex < 4)
+	{
+		switch (_OtherRoomType)
+		{
+		case ERoomType::Normal:
+			DoorName[DirIndex] = "NormalRoomDoor.png";
+			DoorRenderer[DirIndex]->SetImage("NormalRoomDoor.png", RoomImageIndex);
+			break;
 
-	//switch (_OtherRoomType)
-	//{
-	//case ERoomType::Normal:
-	//	DoorRenderer[DirIndex]->SetImage("NormalRoomDoor.png", RoomImageIndex);
-	//	break;
-	//case ERoomType::GoldRoom:
-	//	DoorRenderer[DirIndex]->SetImage("GoldRoomDoor.png", RoomImageIndex);
-	//	break;
-	//case ERoomType::BossRoom:
-	//	DoorRenderer[DirIndex]->SetImage("BossRoomDoor.png", RoomImageIndex);
-	//	break;
-	//default:
-	//	break;
-	//}
+		case ERoomType::GoldRoom:
+			DoorName[DirIndex] = "GoldRoomDoor.png";
+			DoorRenderer[DirIndex]->SetImage("GoldRoomDoor.png", RoomImageIndex);
+
+			break;
+		case ERoomType::BossRoom:
+			DoorName[DirIndex] = "BossRoomDoor.png";
+			DoorRenderer[DirIndex]->SetImage("BossRoomDoor.png", RoomImageIndex);
+
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		MsgBoxAssert("잘못된 방향으로 문을 생성하려 했습니다");
+	}
 }
 
 void ARoom::BeginPlay()
@@ -172,7 +185,7 @@ void ARoom::Tick(float _DeltaTime)
 				continue;
 			}
 
-			DoorRenderer[i]->SetImage("Door.png", i);
+			DoorRenderer[i]->SetImage(DoorName[i], i);
 			DoorCollision[i]->SetActive(true);
 		}
 	}
