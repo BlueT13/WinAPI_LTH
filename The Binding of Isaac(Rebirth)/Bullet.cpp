@@ -99,7 +99,7 @@ void ABullet::BulletMove(float _DeltaTime)
 		BulletStateChange(EBulletState::Crashed);
 	}
 
-	AddActorLocation(Dir * Speed * _DeltaTime);
+	AddActorLocation(MoveVector * Speed * _DeltaTime);
 }
 
 void ABullet::BulletCrashed(float _DeltaTime)
@@ -116,4 +116,25 @@ void ABullet::BulletCrashed(float _DeltaTime)
 void ABullet::BulletStateChange(EBulletState _State)
 {
 	BulletState = _State;
+}
+
+void ABullet::AddMoveVector(const FVector& _DirDelta)
+{
+	MoveVector += _DirDelta;
+}
+
+void ABullet::BulletMoveUpdate(float _DeltaTime)
+{
+}
+
+void ABullet::CalMoveVector(float _DeltaTime)
+{
+}
+
+void ABullet::MoveLastMoveVector(float _DeltaTime)
+{
+}
+
+void ABullet::CalLastMoveVector(float _DeltaTime)
+{
 }

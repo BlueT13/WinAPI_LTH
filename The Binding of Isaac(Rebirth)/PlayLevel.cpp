@@ -41,7 +41,7 @@ void UPlayLevel::BeginPlay()
 
 	ARoom* Room_0 = CreateRoom(0, 0, "Room_01.png", ERoomType::Normal);
 	ARoom* Room_1 = CreateRoom(-1, 0, "Room_02.png", ERoomType::GoldRoom);
-	ARoom* Room_2 = CreateRoom(1, 0, "Room_03.png", ERoomType::Normal);
+	ARoom* Room_2 = CreateRoom(1, 0, "Room_03.png", ERoomType::BossRoom);
 	ARoom* Room_3 = CreateRoom(0, -1, "Room_02.png", ERoomType::BossRoom);
 	ARoom* Room_4 = CreateRoom(0, 1, "Room_03.png", ERoomType::Normal);
 	//ARoom* Room_5 = CreateRoom(0, 2, "Room_01.png", ERoomType::GoldRoom);
@@ -148,7 +148,7 @@ ARoom* UPlayLevel::CreateRoom(int _X, int _Y, std::string_view _Img, ERoomType _
 		ARoom* OtherRoom = Rooms[LinkCheckDir.Key];
 
 		NewRoom->Link(OtherRoom);
-		OtherRoom->Link(NewRoom);
+		//OtherRoom->Link(NewRoom);
 	}
 
 	Rooms[Index.Key] = NewRoom;

@@ -85,13 +85,13 @@ private:
 	FVector MoveAcc = { 2500.0f, 2500.0f };
 	FVector StopAcc = { 2000.0f, 2000.0f };
 	float MoveMaxSpeed = 330.0f;
-	void AddMoveVector(const FVector& _DirDelta);
-
 	FVector LastMoveVector = FVector::Zero;
+
+	void AddMoveVector(const FVector& _DirDelta);
 	void BodyMoveUpdate(float _DeltaTime);
 	void CalMoveVector(float _DeltaTime);
-	void MoveLastMoveVector(float _DeltaTime);
 	void CalLastMoveVector(float _DeltaTime);
+	void MoveLastMoveVector(float _DeltaTime);
 
 	float ChangeRoomTime = 0.3f;
 };
