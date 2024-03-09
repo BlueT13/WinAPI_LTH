@@ -30,10 +30,12 @@ void UPlayLevel::BeginPlay()
 	}
 	UEngineResourcesManager::GetInst().CuttingImage("Head.png", 5, 2);
 	UEngineResourcesManager::GetInst().CuttingImage("Body.png", 5, 6);
-	
+
 	UEngineResourcesManager::GetInst().CuttingImage("Tears.png", 5, 6);
 	UEngineResourcesManager::GetInst().CuttingImage("DestroyTear.png", 5, 3);
-	
+	UEngineResourcesManager::GetInst().CuttingImage("Bomb.png", 2, 1);
+	UEngineResourcesManager::GetInst().CuttingImage("Explosion.png", 5, 3);
+
 	UEngineResourcesManager::GetInst().CuttingImage("NormalRoomDoor.png", 4, 2);
 	UEngineResourcesManager::GetInst().CuttingImage("GoldRoomDoor.png", 4, 3);
 	UEngineResourcesManager::GetInst().CuttingImage("BossRoomDoor.png", 4, 2);

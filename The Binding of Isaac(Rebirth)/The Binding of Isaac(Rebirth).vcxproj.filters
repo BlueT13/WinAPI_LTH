@@ -35,6 +35,9 @@
     <ClInclude Include="Room.h">
       <Filter>Object\PlayLevel\Actor\Room</Filter>
     </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>Object\PlayLevel\Actor\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -70,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="Room.cpp">
       <Filter>Object\PlayLevel\Actor\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>Object\PlayLevel\Actor\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

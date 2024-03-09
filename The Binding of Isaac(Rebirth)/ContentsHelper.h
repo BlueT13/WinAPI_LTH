@@ -8,6 +8,7 @@ enum class IsaacUpdateOrder
 	Player,
 	Monster,
 	Bullet,
+	Bomb,
 	Door,
 	Room,
 };
@@ -17,6 +18,7 @@ enum class IsaacRenderOrder
 	Room,
 	Door,
 	Monster,
+	Bomb,
 	SpawnEffect,
 	PlayerBody,
 	Bullet,
@@ -27,6 +29,7 @@ enum class IsaacCollisionOrder
 {
 	Door,
 	Bullet,
+	Bomb,
 	Monster,
 	Player
 };
@@ -77,11 +80,18 @@ enum class EBulletState
 	Crashed,
 };
 
+enum class EBombState
+{
+	None,
+	Idle,
+	Explosion,
+	Destroy,
+};
+
 enum class EMonsterType
 {
 	None,
 	Fly,
-
 };
 
 // Ό³Έν :

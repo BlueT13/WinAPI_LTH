@@ -50,6 +50,8 @@ protected:
 	void BodyMoveStart();
 	void BodyDirCheck();
 
+	void CreateBomb();
+
 	std::string GetHeadAnimationName(std::string _HeadAni);
 	std::string GetBodyAnimationName(std::string _BodyAni);
 

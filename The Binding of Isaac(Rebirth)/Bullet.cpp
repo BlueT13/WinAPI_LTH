@@ -13,9 +13,10 @@ ABullet::~ABullet()
 {
 }
 
-
 void ABullet::BeginPlay()
 {
+	AActor::BeginPlay();
+
 	BulletRenderer = CreateImageRenderer(IsaacRenderOrder::Bullet);
 	BulletRenderer->SetImage("Tears.png", 6);
 	BulletRenderer->SetTransform({ {0,-28}, RendererSize });

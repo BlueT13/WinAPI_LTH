@@ -22,8 +22,8 @@ public:
 	}
 
 protected:
-	void Tick(float _DeltaTime) override;
 	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
 	void IsCrashed();
 
 	void BulletStateUpdate(float _DeltaTime);

@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Bullet.h"
+#include "Bomb.h"
 #include <EnginePlatform/EngineInput.h>
 #include <EngineBase/EngineDebug.h>
 #include "ContentsHelper.h"
@@ -92,7 +93,7 @@ void APlayer::Tick(float _DeltaTime)
 	{
 		if (UEngineInput::IsPress(VK_LEFT))
 		{
-			GetWorld()->AddCameraPos(FVector::Left *10);
+			GetWorld()->AddCameraPos(FVector::Left * 10);
 			IsFreeCamera = true;
 		}
 
@@ -119,6 +120,7 @@ void APlayer::Tick(float _DeltaTime)
 
 	HeadStateUpdate(_DeltaTime);
 	BodyStateUpdate(_DeltaTime);
+	CreateBomb();
 
 	BulletCoolTime -= _DeltaTime;
 }
@@ -434,6 +436,15 @@ void APlayer::BodyDirCheck()
 		BodyDirState = BodyDir;
 		std::string Name = GetBodyAnimationName(CurBodyAnimationName);
 		BodyRenderer->ChangeAnimation(Name);
+	}
+}
+
+void APlayer::CreateBomb()
+{
+	if (UEngineInput::IsDown('E'))
+	{
+		ABomb* Bomb = GetWorld()->SpawnActor<ABomb>(IsaacUpdateOrder::Bomb);
+		Bomb->SetActorLocation(GetActorLocation());
 	}
 }
 
