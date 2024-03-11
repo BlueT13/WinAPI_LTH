@@ -41,8 +41,13 @@ protected:
 	FVector MonsterToPlayerDir = FVector::Zero;
 	FVector MonsterToPlayerDirNormal = FVector::Zero;
 
+	FTransform PlayerCollisionTrans;
+	FTransform MonsterCollisionTrans;
+	FTransform PlayerCheckCollisionTrans;
+
 	ARoom* CurRoom = nullptr;
 
+	float MonsterHp = 0.0f;
 	float MonsterMoveSpeed = 0.0f;
 
 private:

@@ -3,6 +3,7 @@
 #include "Room.h"
 #include "Player.h"
 #include "Fly.h"
+#include "Pooter.h"
 #include <EngineBase/EngineMath.h>
 
 FRoomIndex FRoomIndex::Left = { -1, 0 };
@@ -135,7 +136,7 @@ void ARoom::CreateDoor(ERoomDir _OtherRoomDir, ERoomType _OtherRoomType)
 				break;
 			}
 			break;
-			
+
 			// 내 방의 타입 GoldRoom
 		case ERoomType::GoldRoom:
 			switch (_OtherRoomType)
@@ -153,7 +154,7 @@ void ARoom::CreateDoor(ERoomDir _OtherRoomDir, ERoomType _OtherRoomType)
 				break;
 			}
 			break;
-			
+
 			// 내 방의 타입 BossRoom
 		case ERoomType::BossRoom:
 			switch (_OtherRoomType)
@@ -311,6 +312,9 @@ void ARoom::CreateMonsters(EMonsterType _Type, FVector _Pos)
 	{
 	case EMonsterType::Fly:
 		Monster = GetWorld()->SpawnActor<AFly>(IsaacUpdateOrder::Monster);
+		break;
+	case EMonsterType::Pooter:
+		Monster = GetWorld()->SpawnActor<APooter>(IsaacUpdateOrder::Monster);
 		break;
 	default:
 		break;

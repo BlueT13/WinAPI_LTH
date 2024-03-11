@@ -20,7 +20,7 @@ void ABullet::BeginPlay()
 	BulletRenderer = CreateImageRenderer(IsaacRenderOrder::Bullet);
 	BulletRenderer->SetImage("Tears.png", 6);
 	BulletRenderer->SetTransform({ {0,-28}, RendererSize });
-	BulletRenderer->CreateAnimation("DestroyBullet", "DestroyTear.png", 0, 13, 0.03f, true);
+	BulletRenderer->CreateAnimation("DestroyBullet", "DestroyTear.png", 0, 13, 0.03f, false);
 
 	BulletCollision = CreateCollision(IsaacCollisionOrder::Bullet);
 	BulletCollision->SetPosition({ 0, -28 });

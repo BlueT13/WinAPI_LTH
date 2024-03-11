@@ -44,6 +44,6 @@ private:
 	float MonsterBulletDestroyTime = 0.8f;
 
 	FVector Dir = FVector::Zero;
-	float Speed = 500.0f;
+	float Speed = 300.0f;
 };
 

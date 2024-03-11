@@ -191,7 +191,7 @@ void APlayer::Attack(float _DeltaTime)
 {
 	HeadDirCheck();
 
-	if (BulletCoolTime < 0)
+	if (BulletCoolTime <= 0)
 	{
 		if (UEngineInput::IsPress(VK_LEFT))
 		{

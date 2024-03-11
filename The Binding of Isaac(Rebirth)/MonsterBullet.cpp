@@ -15,12 +15,12 @@ void AMonsterBullet::BeginPlay()
 	AActor::BeginPlay();
 
 	MonsterBulletRenderer = CreateImageRenderer(IsaacRenderOrder::Bullet);
-	MonsterBulletRenderer->SetImage("MonsterTear", 0);
-	MonsterBulletRenderer->SetTransform({ {0,0}, RendererSize });
-	MonsterBulletRenderer->CreateAnimation("DestroyMonsterBullet", "MonsterTear.png", 0, 13, 0.03f, true);
+	MonsterBulletRenderer->SetImage("MonsterTear.png", 0);
+	MonsterBulletRenderer->AutoImageScale();
+	MonsterBulletRenderer->CreateAnimation("DestroyMonsterBullet", "MonsterTear.png", 0, 14, 0.03f, false);
 
 	MonsterBulletCollision = CreateCollision(IsaacCollisionOrder::Bullet);
-	MonsterBulletCollision->SetPosition({ 0, -28 });
+	MonsterBulletCollision->SetPosition({ 0, 0 });
 	MonsterBulletCollision->SetScale({ 20, 20 });
 	MonsterBulletCollision->SetColType(ECollisionType::CirCle);
 
@@ -50,20 +50,20 @@ void AMonsterBullet::IsCrashed()
 {
 	UPlayLevel* Level = dynamic_cast<UPlayLevel*>(GetWorld());
 	FVector CurRoomPos = Level->GetCurRoom()->GetActorLocation();
-	FVector BulletPos = GetActorLocation();
-	if (BulletPos.X < CurRoomPos.X - 330)
+	FVector MonsterBulletPos = GetActorLocation();
+	if (MonsterBulletPos.X < CurRoomPos.X - 330)
 	{
 		IsDestroy = true;
 	}
-	if (BulletPos.Y < CurRoomPos.Y - 180)
+	if (MonsterBulletPos.Y < CurRoomPos.Y - 180)
 	{
 		IsDestroy = true;
 	}
-	if (BulletPos.X > CurRoomPos.X + 330)
+	if (MonsterBulletPos.X > CurRoomPos.X + 330)
 	{
 		IsDestroy = true;
 	}
-	if (BulletPos.Y > CurRoomPos.Y + 230)
+	if (MonsterBulletPos.Y > CurRoomPos.Y + 230)
 	{
 		IsDestroy = true;
 	}

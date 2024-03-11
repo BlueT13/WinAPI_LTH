@@ -209,6 +209,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Pooter.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Room.h" />
     <ClInclude Include="StartImage.h">
       <SubType>
@@ -256,6 +260,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Pooter.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -32,7 +32,8 @@ enum class IsaacCollisionOrder
 	Bullet,
 	Bomb,
 	Monster,
-	Player
+	PlayerCheckCollision,
+	Player,
 };
 
 enum class EActorDir
@@ -93,6 +94,7 @@ enum class EMonsterType
 {
 	None,
 	Fly,
+	Pooter,
 };
 
 // Ό³Έν :

@@ -44,6 +44,9 @@
     <ClInclude Include="MonsterBullet.h">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Pooter.h">
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -87,6 +90,9 @@
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClCompile>
     <ClCompile Include="MonsterBullet.cpp">
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Pooter.cpp">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClCompile>
   </ItemGroup>

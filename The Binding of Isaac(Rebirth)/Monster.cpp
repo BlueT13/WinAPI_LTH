@@ -37,6 +37,7 @@ void AMonster::Tick(float _DeltaTime)
 
 	std::vector<AMonster*> Monsters = CurRoom->GetAllMonsters();
 
+	// 몬스터끼리 충돌
 	for (size_t i = 0; i < Monsters.size(); i++)
 	{
 		AMonster* OtherMonster = Monsters[i];
@@ -50,17 +51,18 @@ void AMonster::Tick(float _DeltaTime)
 		FVector ThisPos = MonsterPos;
 		FVector MonsterToMonsterDir = OtherMonsterPos - ThisPos;
 		FVector MonsterToMonsterDirNormal = MonsterToMonsterDir.Normalize2DReturn();
-		FTransform OtherTrans = OtherMonster->MonsterCollision->GetActorBaseTransform();
+		FTransform OtherMonsterTrans = OtherMonster->MonsterCollisionTrans;
 		FTransform ThisTrans = MonsterCollision->GetActorBaseTransform();
-		if (true == FTransform::CircleToCircle(OtherTrans, ThisTrans))
+		if (FTransform::CircleToCircle(OtherMonsterTrans, MonsterCollisionTrans))
 		{
 			AddActorLocation((-MonsterToMonsterDirNormal) * _DeltaTime * MonsterMoveSpeed);
 		}
 	}
 
-	FTransform PlayerTrans = Player->GetPlayerCollision()->GetActorBaseTransform();
-	FTransform ThisTrans = MonsterCollision->GetActorBaseTransform();
-	if (true == FTransform::CircleToCircle(PlayerTrans, ThisTrans))
+	// 플레이어와 몬스터가 직접 충돌
+	PlayerCollisionTrans = Player->GetPlayerCollision()->GetActorBaseTransform();
+	MonsterCollisionTrans = MonsterCollision->GetActorBaseTransform();
+	if (true == FTransform::CircleToCircle(PlayerCollisionTrans, MonsterCollisionTrans))
 	{
 		AddActorLocation((-MonsterToPlayerDirNormal) * _DeltaTime * PlayerMoveMaxSpeed);
 
