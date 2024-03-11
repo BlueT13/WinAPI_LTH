@@ -72,6 +72,8 @@ enum class EMonsterState
 	Move,
 	Attack,
 	GetHit,
+	SpawnFly,
+	SendFly,
 	Die,
 };
 
@@ -95,6 +97,7 @@ enum class EMonsterType
 	None,
 	Fly,
 	Pooter,
+	DukeOfFlies,
 };
 
 // Ό³Έν :

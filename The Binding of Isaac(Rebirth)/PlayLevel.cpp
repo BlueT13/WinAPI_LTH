@@ -45,6 +45,8 @@ void UPlayLevel::BeginPlay()
 	UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Small.png", 5, 3);
 	UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Medium.png", 5, 3);
 	UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Large.png", 5, 3);
+	UEngineResourcesManager::GetInst().CuttingImage("LargeBloodExplosion.png", 5, 2);
+
 	UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
 	UEngineResourcesManager::GetInst().CuttingImage("Pooter.png", 5, 4);
 	UEngineResourcesManager::GetInst().CuttingImage("DukeOfFlies_SpawnFly.png", 3, 1);
@@ -63,7 +65,8 @@ void UPlayLevel::BeginPlay()
 	ARoom* Room_8 = CreateRoom(-1, -2, "Room_03.png", ERoomType::BossRoom);
 
 	Room_0->CreateMonsters(EMonsterType::Pooter, { -200, 0 });
-	Room_8->CreateMonsters(EMonsterType::Fly, { -200, 0 });
+	Room_4->CreateMonsters(EMonsterType::Fly, { -200, 0 });
+	Room_8->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
 
 
 	SetPrevRoom(0, 0);

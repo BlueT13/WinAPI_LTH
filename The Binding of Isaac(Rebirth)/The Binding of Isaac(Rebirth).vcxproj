@@ -179,6 +179,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ContentsHelper.h" />
+    <ClInclude Include="DukeOfFlies.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="IntroBackground.h" />
     <ClInclude Include="IntroLevel.h" />
     <ClInclude Include="Fly.h">
@@ -233,6 +237,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ContentsHelper.cpp" />
+    <ClCompile Include="DukeOfFlies.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="IntroBackground.cpp" />
     <ClCompile Include="IntroLevel.cpp" />
     <ClCompile Include="Fly.cpp">

@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Fly.h"
 #include "Pooter.h"
+#include "DukeOfFlies.h"
 #include <EngineBase/EngineMath.h>
 
 FRoomIndex FRoomIndex::Left = { -1, 0 };
@@ -315,6 +316,9 @@ void ARoom::CreateMonsters(EMonsterType _Type, FVector _Pos)
 		break;
 	case EMonsterType::Pooter:
 		Monster = GetWorld()->SpawnActor<APooter>(IsaacUpdateOrder::Monster);
+		break;
+	case EMonsterType::DukeOfFlies:
+		Monster = GetWorld()->SpawnActor<ADukeOfFlies>(IsaacUpdateOrder::Monster);
 		break;
 	default:
 		break;
