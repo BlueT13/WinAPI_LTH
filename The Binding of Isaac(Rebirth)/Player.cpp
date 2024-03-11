@@ -243,6 +243,7 @@ void APlayer::GetHit(float _DeltaTime)
 		BodyRenderer->SetActive(true);
 		HeadStateChange(EPlayerHeadState::Idle);
 		BodyStateChange(EPlayerBodyState::Idle);
+		PlayerCollision->SetActive(true);
 		HitTime = 0.3f;
 	}
 }
@@ -295,6 +296,7 @@ void APlayer::AttackStart()
 void APlayer::GetHitStart()
 {
 	PlayerHp -= 1.0f;
+	PlayerCollision->SetActive(false);
 	HeadRenderer->SetActive(false);
 	BodyRenderer->SetActive(false);
 	PlayerStateRenderer->SetActive(true);

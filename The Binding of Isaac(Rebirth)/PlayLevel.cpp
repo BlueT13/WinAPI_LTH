@@ -34,7 +34,7 @@ void UPlayLevel::BeginPlay()
 
 	UEngineResourcesManager::GetInst().CuttingImage("Tears.png", 5, 6);
 	UEngineResourcesManager::GetInst().CuttingImage("DestroyTear.png", 5, 3);
-	UEngineResourcesManager::GetInst().CuttingImage("Bomb.png", 2, 1);
+	UEngineResourcesManager::GetInst().CuttingImage("Bomb.png", 5, 1);
 	UEngineResourcesManager::GetInst().CuttingImage("Explosion.png", 5, 3);
 
 	UEngineResourcesManager::GetInst().CuttingImage("NormalRoomDoor.png", 4, 2);
@@ -46,6 +46,8 @@ void UPlayLevel::BeginPlay()
 	UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Medium.png", 5, 3);
 	UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Large.png", 5, 3);
 	UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
+	UEngineResourcesManager::GetInst().CuttingImage("Pooter.png", 5, 4);
+	UEngineResourcesManager::GetInst().CuttingImage("Monstro.png", 5, 2);
 
 	SpawnActor<APlayer>(IsaacUpdateOrder::Player);
 
