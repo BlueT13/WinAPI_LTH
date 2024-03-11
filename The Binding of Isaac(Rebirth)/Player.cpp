@@ -150,9 +150,6 @@ void APlayer::HeadStateUpdate(float _DeltaTime)
 	case EPlayerHeadState::GetHit:
 		GetHit(_DeltaTime);
 		break;
-	case EPlayerHeadState::Die:
-		Die(_DeltaTime);
-		break;
 	default:
 		break;
 	}
@@ -234,7 +231,7 @@ void APlayer::GetHit(float _DeltaTime)
 {
 	if (PlayerHp <= 0.0f)
 	{
-		HeadStateChange(EPlayerHeadState::Die);
+		BodyStateChange(EPlayerBodyState::Die);
 		return;
 	}
 
@@ -247,14 +244,6 @@ void APlayer::GetHit(float _DeltaTime)
 		HeadStateChange(EPlayerHeadState::Idle);
 		BodyStateChange(EPlayerBodyState::Idle);
 		HitTime = 0.3f;
-	}
-}
-
-void APlayer::Die(float _DeltaTime)
-{
-	if (PlayerStateRenderer->IsCurAnimationEnd())
-	{
-		int a = 0;
 	}
 }
 
@@ -305,18 +294,11 @@ void APlayer::AttackStart()
 
 void APlayer::GetHitStart()
 {
+	PlayerHp -= 1.0f;
 	HeadRenderer->SetActive(false);
 	BodyRenderer->SetActive(false);
 	PlayerStateRenderer->SetActive(true);
 	PlayerStateRenderer->ChangeAnimation("GetHit");
-}
-
-void APlayer::DieStart()
-{
-	HeadRenderer->SetActive(false);
-	BodyRenderer->SetActive(false);
-	PlayerStateRenderer->SetActive(true);
-	PlayerStateRenderer->ChangeAnimation("Die");
 }
 
 void APlayer::HeadDirCheck()
@@ -380,6 +362,9 @@ void APlayer::BodyStateUpdate(float _DeltaTime)
 	case EPlayerBodyState::Wait:
 		BodyWait(_DeltaTime);
 		break;
+	case EPlayerBodyState::Die:
+		Die(_DeltaTime);
+		break;
 	default:
 		break;
 	}
@@ -437,6 +422,17 @@ void APlayer::BodyWait(float _DeltaTime)
 	}
 }
 
+void APlayer::Die(float _DeltaTime)
+{
+
+	MoveVector = FVector::Zero;
+
+	if (PlayerStateRenderer->IsCurAnimationEnd())
+	{
+		int a = 0;
+	}
+}
+
 void APlayer::BodyStateChange(EPlayerBodyState _State)
 {
 	if (BodyState != _State)
@@ -449,8 +445,12 @@ void APlayer::BodyStateChange(EPlayerBodyState _State)
 		case EPlayerBodyState::Move:
 			BodyMoveStart();
 			break;
+		case EPlayerBodyState::Die:
+			DieStart();
+			break;
 		default:
 			break;
+
 		}
 	}
 
@@ -467,6 +467,14 @@ void APlayer::BodyMoveStart()
 	BodyRenderer->ChangeAnimation(GetBodyAnimationName("BodyMove"));
 
 	BodyDirCheck();
+}
+
+void APlayer::DieStart()
+{
+	HeadRenderer->SetActive(false);
+	BodyRenderer->SetActive(false);
+	PlayerStateRenderer->SetActive(true);
+	PlayerStateRenderer->ChangeAnimation("Die");
 }
 
 void APlayer::BodyDirCheck()

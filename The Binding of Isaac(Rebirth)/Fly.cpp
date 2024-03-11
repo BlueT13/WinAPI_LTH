@@ -77,8 +77,6 @@ void AFly::Move(float _DeltaTime)
 
 void AFly::GetHit(float _DeltaTime)
 {
-	MonsterHp -= 1.0f;
-
 	// 뒤로 밀려나야 함
 	//
 
@@ -139,6 +137,7 @@ void AFly::MoveStart()
 
 void AFly::GetHitStart()
 {
+	MonsterHp -= 1.0f;
 	//MonsterRenderer->ChangeAnimation("GetHit");
 }
 

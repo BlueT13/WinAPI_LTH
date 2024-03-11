@@ -52,7 +52,6 @@ enum class EPlayerHeadState
 	Attack,
 	Wait,
 	GetHit,
-	Die,
 };
 
 enum class EPlayerBodyState
@@ -61,6 +60,7 @@ enum class EPlayerBodyState
 	Idle,
 	Move,
 	Wait,
+	Die,
 };
 
 enum class EMonsterState

@@ -42,13 +42,11 @@ protected:
 	void Attack(float _DeltaTime);
 	void CreateBullet(FVector _Dir);
 	void GetHit(float _DeltaTime);
-	void Die(float _DeltaTime);
 	void HeadStateChange(EPlayerHeadState _State);
 	void HeadIdleStart();
 	void HeadMoveStart();
 	void AttackStart();
 	void GetHitStart();
-	void DieStart();
 	void HeadDirCheck();
 
 	// Body
@@ -56,9 +54,11 @@ protected:
 	void BodyIdle(float _DeltaTime);
 	void BodyMove(float _DeltaTime);
 	void BodyWait(float _DeltaTime);
+	void Die(float _DeltaTime);
 	void BodyStateChange(EPlayerBodyState _State);
 	void BodyIdleStart();
 	void BodyMoveStart();
+	void DieStart();
 	void BodyDirCheck();
 
 	void CreateBomb();
