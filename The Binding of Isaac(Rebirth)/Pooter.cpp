@@ -88,7 +88,7 @@ void APooter::Spawn(float _DeltaTime)
 void APooter::Move(float _DeltaTime)
 {
 
-	if (FTransform::CircleToCircle(PlayerCollisionTrans, PlayerCheckCollisionTrans))
+	if (FTransform::CircleToCircle(PlayerCollisionTrans, PlayerCheckCollisionTrans) && MonsterBulletCoolTime <= 0)
 	{
 		MonsterStateChange(EMonsterState::Attack);
 	}
@@ -97,7 +97,7 @@ void APooter::Move(float _DeltaTime)
 
 void APooter::Attack(float _DeltaTime)
 {
-	if (MonsterBulletCoolTime <= 0)
+	if (MonsterRenderer->IsCurAnimationEnd())
 	{
 		CreateMonsterBullet(MonsterToPlayerDirNormal);
 		MonsterBulletCoolTime = MonsterFireRate;

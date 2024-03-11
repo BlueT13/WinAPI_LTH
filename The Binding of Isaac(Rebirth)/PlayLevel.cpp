@@ -47,7 +47,8 @@ void UPlayLevel::BeginPlay()
 	UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Large.png", 5, 3);
 	UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
 	UEngineResourcesManager::GetInst().CuttingImage("Pooter.png", 5, 4);
-	UEngineResourcesManager::GetInst().CuttingImage("Monstro.png", 5, 2);
+	UEngineResourcesManager::GetInst().CuttingImage("DukeOfFlies_SpawnFly.png", 3, 1);
+	UEngineResourcesManager::GetInst().CuttingImage("DukeOfFlies_SendFly.png", 3, 1);
 
 	SpawnActor<APlayer>(IsaacUpdateOrder::Player);
 
