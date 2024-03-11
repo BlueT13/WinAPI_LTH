@@ -71,4 +71,58 @@ void AMonster::Tick(float _DeltaTime)
 	}
 
 	MonsterStateUpdate(_DeltaTime);
+
+	// 벽 이동 불가능
+	MonsterMoveUpdate(_DeltaTime);
+}
+
+void AMonster::MonsterMoveUpdate(float _DeltaTime)
+{
+	CalHitPower(_DeltaTime);
+	CalLastMoveVector(_DeltaTime);
+	MoveLastMoveVector(_DeltaTime);
+}
+
+void AMonster::CalHitPower(float _DeltaTime)
+{
+	HitPower -= HitPower * _DeltaTime * 2;
+	if (HitPower.Size2D() < 100.0f)
+	{
+		HitPower = FVector::Zero;
+	}
+}
+
+void AMonster::CalLastMoveVector(float _DeltaTime)
+{
+	MonsterLastMoveVector = FVector::Zero;
+	MonsterLastMoveVector += HitPower;
+	MonsterLastMoveVector += MonsterMoveVector;
+}
+
+void AMonster::MoveLastMoveVector(float _DeltaTime)
+{
+	UPlayLevel* Level = dynamic_cast<UPlayLevel*>(GetWorld());
+
+	FVector CurRoomPos = Level->GetCurRoom()->GetActorLocation();
+
+	FVector MonsterPos = GetActorLocation();
+	FVector MonsterNextPos = MonsterPos + MonsterMoveVector * _DeltaTime;
+	if (MonsterNextPos.X < CurRoomPos.X - 320)
+	{
+		MonsterOut(_DeltaTime, EActorDir::Left);
+	}
+	if (MonsterNextPos.Y < CurRoomPos.Y - 170)
+	{
+		MonsterOut(_DeltaTime, EActorDir::Up);
+	}
+	if (MonsterNextPos.X > CurRoomPos.X + 320)
+	{
+		MonsterOut(_DeltaTime, EActorDir::Right);
+	}
+	if (MonsterNextPos.Y > CurRoomPos.Y + 170)
+	{
+		MonsterOut(_DeltaTime, EActorDir::Down);
+	}
+
+	AddActorLocation(MonsterLastMoveVector * _DeltaTime);
 }

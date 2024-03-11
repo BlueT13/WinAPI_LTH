@@ -14,7 +14,7 @@ void ADukeOfFlies::BeginPlay()
 	AMonster::BeginPlay();
 
 	MonsterHp = 5.0f;
-	MonsterMoveSpeed = 30.f;
+	MonsterMoveSpeed = 100.f;
 	SpawnFlyCoolTime = 0.0f;
 
 	SpawnRenderer = CreateImageRenderer(IsaacRenderOrder::SpawnEffect);
@@ -31,8 +31,9 @@ void ADukeOfFlies::BeginPlay()
 	MonsterRenderer->CreateAnimation("Die", "LargeBloodExplosion.png", 0, 9, 0.05f, true);
 
 	MonsterCollision = CreateCollision(IsaacCollisionOrder::Monster);
-	MonsterCollision->SetScale({ 200, 200 });
+	MonsterCollision->SetScale({ 150, 150 });
 	MonsterCollision->SetColType(ECollisionType::CirCle);
+
 }
 
 void ADukeOfFlies::Tick(float _DeltaTime)
@@ -41,7 +42,9 @@ void ADukeOfFlies::Tick(float _DeltaTime)
 	// MonsterStateUpdate(_DeltaTime);À» ½ÇÇà
 	AMonster::Tick(_DeltaTime);
 
-	AddActorLocation(MonsterToPlayerDirNormal * _DeltaTime * MonsterMoveSpeed);
+	MonsterMoveVector = (-MonsterToPlayerDirNormal);
+
+	AddActorLocation(MonsterMoveVector * _DeltaTime * MonsterMoveSpeed);
 
 	SpawnFlyCoolTime -= _DeltaTime;
 }

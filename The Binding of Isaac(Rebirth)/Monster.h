@@ -50,6 +50,18 @@ protected:
 	float MonsterHp = 0.0f;
 	float MonsterMoveSpeed = 0.0f;
 
+	FVector HitPower = FVector::Zero;
+	FVector MonsterMoveVector = FVector::Zero;
+	FVector MonsterLastMoveVector = FVector::Zero;
+
+	void MonsterMoveUpdate(float _DeltaTime);
+	void CalMoveVector(float _DeltaTime);
+	void CalHitPower(float _DeltaTime);
+	void CalLastMoveVector(float _DeltaTime);
+	void MoveLastMoveVector(float _DeltaTime);
+
+	virtual void MonsterOut(float _DeltaTime, EActorDir _Dir)	{	}
+
 private:
 };
 
