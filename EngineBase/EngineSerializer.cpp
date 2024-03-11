@@ -20,10 +20,10 @@ void UEngineSerializer::Write(void* _Data, unsigned int _Size)
 		Data.resize(Data.capacity() * 2 + _Size);
 	}
 
-	// &Data[WriteOffset] 주속값에
+	// &Data[WriteOffset] 주소값에
 	// _Size 크기만큼
 	// _Data 주소값에 있는 데이터를 
-	// _Size 크기만큼 복사해라.
+	// _Size 크기만큼 복사
 	// &Data[WriteOffset]<= _Data
 	memcpy_s(&Data[WriteOffset], _Size, _Data, _Size);
 	WriteOffset += _Size;

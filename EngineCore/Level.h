@@ -8,7 +8,7 @@ class AActor;
 class UCollision;
 class UEngineCore;
 class UImageRenderer;
-// 설명 : U는 그냥 엔진 속해있다는 것을 의미.
+// 설명 : U는 엔진 속해있다는 것을 의미
 class ULevel : public UNameObject
 {
 
@@ -30,11 +30,11 @@ public:
 	virtual void BeginPlay() {};
 	virtual void Tick(float _DeltaTime) {};
 
-	// 어떠한 레벨이 시작할때마다 실행됩니다.
+	// 어떤 레벨이 시작할 때마다 실행
 	// 이전레벨이 들어온다.
 	virtual void LevelStart(ULevel* _PrevLevel) {};
 
-	// 내가 현재 실행되고 있는 레벨인데.
+	// 내가 현재 실행되고 있는 레벨
 	// 그 레벨이 끝나는 순간 실행된다.
 	virtual void LevelEnd(ULevel* _NextLevel) {};
 
@@ -77,7 +77,7 @@ public:
 		}
 	}
 
-	// 이거는 기존의 타임스케일이 존재 해야만 가능하다.
+	// 기존의 타임스케일이 존재해야만 사용 가능
 	template<typename EnumType>
 	void SetOtherTimeScale(EnumType _Value, float _Scale)
 	{

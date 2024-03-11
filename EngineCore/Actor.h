@@ -11,7 +11,7 @@ class UActorComponent;
 class UImageRenderer;
 class UCollision;
 
-// 설명 : A가 붙은 오브젝트는 화면에 위치가 존재해야한다.
+// 설명 : A가 붙은 오브젝트는 화면에 위치가 존재해야 한다.
 // Level->SpawnActor를 통해서 만들면
 // 레벨이 자연스럽게 자신의 관리하에 두고 언제나 Tick을 실행해준다.
 class AActor : public UNameObject, public UTickObject

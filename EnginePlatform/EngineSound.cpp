@@ -2,17 +2,22 @@
 #include <EngineBase\EngineString.h>
 #include <EngineBase\EngineDebug.h>
 
-// lib를 사용하는법
+// lib 사용법
 
-// Debug 일때는
+// Debug일 때는
 // #pragma comment(lib, "ThirdParty\\FMOD\\inc\\fmodL_vc.lib")
+
+// Release일 때는 
+// #pragma comment(lib, "fmod_vc.lib")
 #pragma comment(lib, "fmodL_vc.lib")
 
-// Release 일때는 
-// #pragma comment(lib, "fmod_vc.lib")
 
 std::map<std::string, UEngineSound*> UEngineSound::Resources;
 float UEngineSound::GlobalVolume = 1.0f;
+
+void UEngineSoundPlayer::SetLoop(int Count)
+{
+}
 
 void UEngineSoundPlayer::SetVolume(float _Volume)
 {
@@ -20,7 +25,7 @@ void UEngineSoundPlayer::SetVolume(float _Volume)
 }
 
 
-// FMOD와 관련된 사운드를 로드할수 있는 권한.
+// FMOD와 관련된 사운드를 로드할수 있는 권한
 FMOD::System* SoundSystem = nullptr;
 
 class ResControl
@@ -72,7 +77,7 @@ UEngineSound::~UEngineSound()
 void UEngineSound::ResLoad(std::string_view _Path)
 {
 
-	// FMOD_DEFAULT; => 반복재생이 안된다.
+	// FMOD_DEFAULT; -> 반복재생 X
 	SoundSystem->createSound(_Path.data(), FMOD_LOOP_NORMAL, nullptr, &SoundHandle);
 	if (nullptr == SoundHandle)
 	{
@@ -127,8 +132,8 @@ UEngineSoundPlayer UEngineSound::SoundPlay(std::string_view _Name)
 
 void UEngineSound::Update()
 {
-	// 매프레임마다 호출되어야 한다.
-	// 그래서 FMOD 라이브러리가 다수의 사운드를 제어해준다.
+	// 매 프레임마다 호출되어야 한다.
+	// 그래서 FMOD 라이브러리가 다수의 사운드를 제어
 	if (nullptr == SoundSystem)
 	{
 		MsgBoxAssert("사운드 시스템에 치명적인 오류가 있습니다.");

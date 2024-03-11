@@ -1,11 +1,8 @@
 #pragma once
-// 키보드를 제어해주는 건 OS일것이기 때문에
-// 입력에 대한 함수도 당연히 OS가 우리에게 제공해야 합니다.
 #include <Windows.h>
 #include <map>
 #include <EngineBase\EngineDebug.h>
 
-// AllStateClass
 // 설명 :
 class UEngineInput
 {
@@ -17,15 +14,15 @@ private:
 		friend UEngineInput;
 
 	public:
-		bool Down = false; // 누른 순간
-		bool Press = false; // 계속 누르면
-		bool Up = false; // 떼어진 순간
-		bool Free = true; // 누리지 않으면
+		bool Down = false;
+		bool Press = false;
+		bool Up = false;
+		bool Free = true;
 
 		float PressTime = 0.0f;
 		float UpTime = 0.0f;
 
-		int Key = -1; // VK_LBUTTON
+		int Key = -1;
 
 		void KeyCheck(float _DeltaTime);
 
@@ -141,7 +138,6 @@ public:
 	static void KeyCheckTick(float _DeltaTime);
 
 protected:
-	//              'A'  상태가 어때?
 	static std::map<int, EngineKey> AllKeys;
 
 	static bool AnykeyDown;

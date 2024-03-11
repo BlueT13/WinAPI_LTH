@@ -45,7 +45,6 @@ public:
 
 	bool IsActive()
 	{
-		// 내가 켜져있고         죽지도 않았다면
 		return IsActiveValue && IsDestroyValue == false;
 	}
 

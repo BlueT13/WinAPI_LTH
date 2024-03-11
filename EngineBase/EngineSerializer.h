@@ -2,9 +2,7 @@
 #include <vector>
 #include <string>
 
-// 직렬화
-// 
-// 설명 :
+// 설명 : 직렬화
 class UEngineFile;
 class UEngineSerializer
 {

@@ -34,8 +34,6 @@ public:
 	//FTransform& operator=(const FTransform& _Other) = delete;
 	//FTransform& operator=(FTransform&& _Other) noexcept = delete;
 
-	// bool CircleToPoint(const FTransform& _Left, const FTransform& _Right);
-
 	static bool CircleToCircle(const FTransform& _Left, const FTransform& _Right);
 	static bool CircleToRect(const FTransform& _Left, const FTransform& _Right);
 	static bool CircleToPoint(const FTransform& _Left, const FTransform& _Right);
@@ -139,8 +137,6 @@ public:
 		return Scale.hX();
 	}
 
-	// 충돌을 이녀석이 가질까?
-	// 위치와 크기를 가지고 있기 때문에.
 	bool Collision(ECollisionType _ThisType, ECollisionType _OtherType, const FTransform& _Other);
 
 protected:

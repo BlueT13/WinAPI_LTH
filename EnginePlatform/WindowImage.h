@@ -10,10 +10,10 @@
 #include <objidl.h>
 #include <gdiplus.h>
 
-// 우리 엔진 WinAPi단계에서 랜더링이라는것은
-// 이미지가 다른 이미지를 자신내부에 그리는 겁니다.
-// DC라는게 외부로 드러나면 안됩니다.
-// DC를 통해서 그리는 모든 책임은 오로지 => UWindowImage가 모두 담당한다.
+// WinAPi단계에서 랜더링이라는 것은
+// 이미지가 다른 이미지를 자신 내부에 그리는 것
+// DC가 외부로 드러나면 안됨
+// DC를 통해서 그리는 모든 책임은 UWindowImage가 모두 담당한다.
 
 enum class EImageLoadType
 {
@@ -62,7 +62,7 @@ public:
 
 	FVector GetScale();
 
-	// 윈도우 랜더링의 핵심 인터페이스중 하나인 HDC를 외부에 공개할 필요는 굳이 없어.
+	// 윈도우 랜더링의 핵심 인터페이스중 하나인 HDC를 외부에 공개할 필요는 없다.
 	//HDC GetImageDC()
 	//{
 	//	return ImageDC;
@@ -70,17 +70,16 @@ public:
 
 	// UWindowImage* _Copy 이 이미지를
 	// FTransform _Trans 이 위치와 크기로
-	// 나한테 카피해라.
-	// 이미지를 이미지 크기대로만 그릴수 있다.
+	// 나한테 카피
+	// 이미지를 이미지 크기대로만 그릴 수 있다.
 	void BitCopy(UWindowImage* _CopyImage, const FTransform& _Trans);
 
-	// 이녀석은 이미지를 키울수도 있고 특정 색상을 안그릴수도 있다.
-	// EX) 검은색 화면에서 없애
+	// 이 함수는 이미지를 키울 수도 있고 특정 색상을 안 그릴 수도 있다.
 	void TransCopy(UWindowImage* _CopyImage, const FTransform& _Trans, int _Index, Color8Bit _Color = Color8Bit::Black);
 
 	void AlphaCopy(UWindowImage* _CopyImage, const FTransform& _Trans, int _Index, Color8Bit _Color = Color8Bit::Black);
 
-	// 알파랑 동시에 안될것이다.
+	// 알파랑 동시에 안될 것이다.
 	void PlgCopy(UWindowImage* _CopyImage, const FTransform& _Trans, int _Index, float _RadAngle);
 
 	void TextCopy(const std::string& _Text, const std::string& _Font, float _Size, const FTransform& _Trans, Color8Bit _Color /*= Color8Bit::Black*/);
@@ -109,7 +108,7 @@ public:
 		return ImageType;
 	}
 
-	// 이걸 해줘야 회전이 가능합니다.
+	// 이 함수를 사용해야 회전이 가능
 	void SetRotationMaskImage(int _Index, UWindowImage* _RotationMaskImage, int _MaskIndex)
 	{
 		UImageInfo& Ref = _RotationMaskImage->Infos[_MaskIndex];
@@ -147,11 +146,11 @@ private:
 
 	EImageLoadType LoadType = EImageLoadType::IMG_Cutting;
 
-	// 윈도우에서 지원해주는 H붙은 애들은 다 struct HBITMAP__{int unused;}; typedef struct HBITMAP__ *HBITMAP
-	// 포인터이면서 8바이트 정수입니다.
+	// 윈도우에서 지원해주는 H가 붙은 것은 전부 struct HBITMAP__{int unused;}; typedef struct HBITMAP__ *HBITMAP
+	// 포인터이면서 8바이트 정수
 	HBITMAP hBitMap = 0;
 	HDC ImageDC = 0;
-	BITMAP BitMapInfo = BITMAP(); // 비트맵를 담는 구조체인데 이걸 얻어와야 합니다.
+	BITMAP BitMapInfo = BITMAP(); // 비트맵를 담는 구조체인데 이걸 받아야 함
 	EWIndowImageType ImageType = EWIndowImageType::IMG_NONE;
 
 	std::vector<UImageInfo> Infos;

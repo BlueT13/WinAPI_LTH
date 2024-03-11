@@ -5,13 +5,6 @@
 UEnginePath::UEnginePath() 
 	: Path(std::filesystem::current_path())
 {
-	// 과거의 방식
-	//char Arr[100];
-	//GetCurrentDirectoryA(100, Arr);
-	//StringPath = Arr;
-
-	// 내부에서는 윈도우의 함수를 사용하고 있다
-	// 내부에서 
 }
 
 UEnginePath::UEnginePath(std::filesystem::path _Path)

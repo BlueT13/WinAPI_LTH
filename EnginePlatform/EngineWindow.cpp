@@ -19,7 +19,6 @@ LRESULT CALLBACK UEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, 
 	break;
 	case WM_DESTROY:
 		WindowLive = false;
-		// PostQuitMessage(123213);
 		break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
@@ -56,7 +55,6 @@ UEngineWindow::~UEngineWindow()
 
 void UEngineWindow::Open(std::string_view _Title /*= "Title"*/)
 {
-	// 간혹가다가 앞쪽이이나 뒤쪽에 W가 붙거나 A가 붙어있는 함수들을 보게 될겁니다.
 	// A가 붙어있으면 멀티바이트 함수
 	// W가 붙어있으면 와이드 바이트 함수
 	WNDCLASSEXA wcex;
@@ -77,10 +75,9 @@ void UEngineWindow::Open(std::string_view _Title /*= "Title"*/)
 
 	RegisterClassExA(&wcex);
 
-	// const std::string& = 내부에 뭘들고 있다고 생각하라고 했나요?
-	// std::vector<char> 들고 있다고 생각하라고 했다.
+	// const std::string&은 내부에 std::vector<char> 들고 있다고 생각
 	// _Title[0] = char&를 리턴해준 것과 같다.
-	// _Title.c_str(); => 자연스럽게 내부에서 
+	// _Title.c_str();은 내부에서 
 	// const char* Test = &_Title[0]
 	// return Test;
 
@@ -95,8 +92,6 @@ void UEngineWindow::Open(std::string_view _Title /*= "Title"*/)
 
 	// void CreateWindow(bool IsTitle, bool IsMenu, bool IsMax, bool )
 	// bool IsTitle, 
-
-
 	hWnd = CreateWindowA("DefaultWindow", _Title.data(), Style,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
@@ -125,8 +120,7 @@ unsigned __int64 UEngineWindow::WindowMessageLoop(void(*_Update)(), void(*_End)(
 
 	while (WindowLive)
 	{
-		// 기본 메시지 루프입니다:
-		// 10개가 들어있을 
+		// 기본 메시지 루프:
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
@@ -138,7 +132,7 @@ unsigned __int64 UEngineWindow::WindowMessageLoop(void(*_Update)(), void(*_End)(
 			}
 		}
 
-		// 메세지 루프의 데드타임이라는 곳에서 실행됩니다.
+		// 메세지 루프의 데드타임이라는 곳에서 실행
 		if (nullptr != _Update)
 		{
 			_Update();
@@ -174,10 +168,6 @@ void UEngineWindow::SetWindowScale(const FVector& _Scale)
 {
 	Scale = _Scale;
 	
-
-	// window크기만한 이미지를 만들거라고 했는데.
-	// Load랑 다르다.
-
 	if (nullptr != BackBufferImage)
 	{
 		delete BackBufferImage;
@@ -187,16 +177,16 @@ void UEngineWindow::SetWindowScale(const FVector& _Scale)
 	BackBufferImage = new UWindowImage();
 	BackBufferImage->Create(WindowImage, Scale);
 
-	// 메뉴크기까지 포함 윈도우의 크기를 만들어줍니다.
-	// EX) 1000, 1000짜리 윈도우 만들어줘 => 1000 1100 이라는 수치를 내려줘
-	//     윈도우의 부가요소 크기까지 다 포함해서 내부크기가 1000 1000이 될수 있는 수치를 리턴해준다.
+	// 메뉴크기까지 포함 윈도우의 크기를 만들어줌
+	// ex) 1000, 1000짜리 윈도우가 필요
+	// => 윈도우의 부가요소 크기까지 다 포함해서 내부크기가 1000 1000이 될 수 있는 수치를 리턴해준다.
 
 	RECT Rc = { 0, 0, _Scale.iX(), _Scale.iY() };
 
 	AdjustWindowRect(&Rc, WS_OVERLAPPEDWINDOW, FALSE);
 
-	// SWP_NOMOVE 현재 위치를 유지합니다(X 및 Y 매개 변수 무시).
-	// 크기 조절기능 + 위치조절 다들어가 있다.
+	// SWP_NOMOVE 현재 위치를 유지(X 및 Y 매개 변수 무시).
+	// 크기 조절기능 + 위치조절 전부 포함됨.
 	::SetWindowPos(hWnd, nullptr, 0, 0, Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER | SWP_NOMOVE);
 }
 
@@ -223,8 +213,3 @@ void UEngineWindow::ScreenUpdate()
 
 	WindowImage->BitCopy(BackBufferImage, CopyTrans);
 }
-
-//void UEngineWindow::SetWindowScale(const FVector& _Scale)
-//{
-//
-//}

@@ -163,7 +163,6 @@ void AActor::CheckReleaseChild()
 
 void AActor::DestroyUpdate(float _DeltaTime)
 {
-	// 부모의 함수를 호출하는게 기본이다.
 	UTickObject::DestroyUpdate(_DeltaTime);
 
 	for (UImageRenderer* Renderer : Renderers)
@@ -179,7 +178,6 @@ void AActor::DestroyUpdate(float _DeltaTime)
 
 void AActor::ActiveUpdate(float _DeltaTime)
 {
-	// 부모의 함수를 호출하는게 기본이다.
 	UTickObject::ActiveUpdate(_DeltaTime);
 
 	for (UImageRenderer* Renderer : Renderers)

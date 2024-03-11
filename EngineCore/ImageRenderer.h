@@ -47,7 +47,7 @@ public:
 
 	void SetOrder(int _Order) override;
 	void Render(float _DeltaTime);
-	// 이미지를 세팅하는 역할만 하고
+	// 이미지를 세팅하는 역할
 	void SetImage(std::string_view _Name, int _InfoIndex = 0);
 
 	bool IsAnimation(std::string_view _Name);
@@ -173,10 +173,10 @@ public:
 	{
 		Size = _Value;
 	}
-	void SetTextColor(Color8Bit _Color, Color8Bit _Color2 = Color8Bit::White)  //변경
+	void SetTextColor(Color8Bit _Color, Color8Bit _Color2 = Color8Bit::White)
 	{
 		TextColor = _Color;
-		TextColor2 = _Color2; //추가
+		TextColor2 = _Color2;
 	}
 	void SetCameraRatio(float _Ratio)
 	{
@@ -231,7 +231,7 @@ private:
 	std::string Font = "궁서";
 	float Size = 10.0f;
 	Color8Bit TextColor = Color8Bit::BlackA;
-	Color8Bit TextColor2 = Color8Bit::BlackA; //추가
+	Color8Bit TextColor2 = Color8Bit::BlackA;
 	int TextEffect = 0;
 
 	bool AutoImageScaleValue = false;
@@ -241,10 +241,5 @@ private:
 
 	Gdiplus::StringAlignment SortOption1 = Gdiplus::StringAlignment::StringAlignmentCenter;
 	Gdiplus::StringAlignment SortOption2 = Gdiplus::StringAlignment::StringAlignmentCenter;
-
-	// Default : 0, 
-	// Bold & Italic : 1, (custom)
-	// Bold : 2,
-	// ...
 };
 

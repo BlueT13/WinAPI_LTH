@@ -91,7 +91,6 @@ void UImageRenderer::Render(float _DeltaTime)
 
 void UImageRenderer::BeginPlay()
 {
-	// 부모것을 실행시켜주는 습관을 들이자.
 	USceneComponent::BeginPlay();
 }
 
@@ -112,7 +111,6 @@ void UImageRenderer::SetImage(std::string_view _Name, int _InfoIndex /*= 0*/)
 
 	if (nullptr == Image)
 	{
-		// 예외를 출력하게 하는것도 중요하다.
 		MsgBoxAssert(std::string(_Name) + "이미지가 존재하지 않습니다.");
 		return;
 	}
@@ -151,7 +149,6 @@ void UImageRenderer::CreateAnimation(
 {
 	
 	std::vector<float> Inters;
-	//          12         0
 	int Size = static_cast<int>(_Indexs.size());
 	Inters.reserve(Size);
 	for (int i = 0; i <= Size; i++)
@@ -206,7 +203,7 @@ void UImageRenderer::ChangeAnimation(std::string_view _AnimationName, bool _IsFo
 		return;
 	}
 
-	// 지금 진행중인 애니메이션과 완전히 똑같은 애니메이션을 실행하라고하면 그걸 실행하지 않는다.
+	// 지금 진행중인 애니메이션과 완전히 똑같은 애니메이션을 실행하라고하면 실행하지 않는다.
 	if (false == _IsForce && nullptr != CurAnimation && CurAnimation->Name == UpperAniName)
 	{
 		return;

@@ -73,11 +73,7 @@ private:
 	UWindowImage* WindowImage = nullptr;
 	// 윈도우를 오직 1번만 갱신하기 위한 이미지
 
-	// 이녀석을 만들어야 합니다.
-	// 윈도우의 크기를 우린 지금 특정 할수가 없어요.
-	// 이미지를 1개 만들어요. => 윈도우 전체 크기만하게 => 단계를 할수가 없다.
 	UWindowImage* BackBufferImage = nullptr;
-	// 이미지가 2개다 이미지는 버퍼라는 개념으로도 부른다. => 더블버퍼링이라는 이름인 겁니다.
 	FVector Scale;
 	FVector Position;
 

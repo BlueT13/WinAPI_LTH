@@ -21,9 +21,9 @@ public:
 	static const float PI;
 	static const float PI2;
 
-	// 디그리가 => 라디안
+	// 디그리 To 라디안
 	static const float DToR;
-	// 라디안이 => 디그리로
+	// 라디안 To 디그리
 	static const float RToD;
 
 protected:
@@ -36,8 +36,6 @@ private:
 
 struct float4
 {
-	// F구조체의 
-
 public:
 	static const float4 Zero;
 	static const float4 Left;
@@ -49,23 +47,21 @@ public:
 	{
 		struct
 		{
-			float X; // 2D
-			float Y; // 2D
+			float X;
+			float Y;
 			float Z;
 			float W;
 		};
 
 		struct
 		{
-			float R; // 2D
-			float G; // 2D
+			float R;
+			float G;
 			float B;
 			float A;
 		};
 	};
 
-	// 생성자를 한번 만들게 되면 리스트 이니셜라이저가 동작하지 않아서
-	// 내가 생성하는 방식을 다 정의해야 합니다.
 	float4()
 		: X(0.0f), Y(0.0f), Z(0.0f), W(1.0f)
 	{
@@ -77,7 +73,6 @@ public:
 	{
 
 	}
-
 
 	float4(int _X, int _Y)
 		: X(static_cast<float>(_X)), Y(static_cast<float>(_Y)), Z(0.0f), W(1.0f)
@@ -103,7 +98,6 @@ public:
 
 	}
 
-
 public:
 	static float4 VectorRotationZToDeg(float4 _OriginVector, float _Angle)
 	{
@@ -124,7 +118,6 @@ public:
 	}
 	static float4 RadToDir(float _Angle)
 	{
-		// 특정 각도에 빗변의 길이가 1인 방향 벡터를 구해줍니다.
 		return float4(cosf(_Angle), sinf(_Angle));
 	}
 
@@ -143,16 +136,13 @@ public:
 		return Lerp(p1, p2, d1);
 	}
 
-	// p1 p2          d1의 비율로 간다.
 	static float4 Lerp(float4 p1, float4 p2, float d1) 
 	{
 		return (p1 * (1.0f - d1)) + (p2 * d1);
 	}
 
-
 	float Size2D()
 	{
-		// sqrtf 제곱근 구해주는 함수
 		return std::sqrtf((X * X) + (Y * Y));
 	}
 
@@ -167,7 +157,6 @@ public:
 		return;
 	}
 
-	// 나 자신이 길이 1짜리로 변경되는 것.
 	void Normalize2D()
 	{
 		float Size = Size2D();
@@ -180,7 +169,6 @@ public:
 		}
 	}
 
-	// 나는 변화하지 않고 길이 1짜리로 변한 나와 방향이 같은 벡터를 리턴하는 함수
 	float4 Normalize2DReturn()
 	{
 		float4 Result = *this;
@@ -338,10 +326,6 @@ using FColor = float4;
 
 class Color8Bit
 {
-	// 현실에서의 색상은
-	// 물감으로 치면 다섞으면 어두운색
-	// 빛으로 치면 다섞으면 흰색
-	// 컴퓨터는 빛의 삼원색을 사용합니다.
 public:
 	static const Color8Bit Black;
 	static const Color8Bit Red;
@@ -360,7 +344,6 @@ public:
 	static const Color8Bit WhiteA;
 	static const Color8Bit MagentaA;
 	static const Color8Bit OrangeA;
-
 
 	union
 	{
@@ -391,7 +374,6 @@ public:
 	{
 
 	}
-
 
 	bool operator==(Color8Bit _Color)
 	{
