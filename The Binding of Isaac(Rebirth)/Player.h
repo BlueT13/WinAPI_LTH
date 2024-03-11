@@ -7,6 +7,8 @@
 class APlayer : public AActor
 {
 	friend class ARoom;
+	friend class AMonster;
+	friend class AMonsterBullet;
 public:
 	static bool IsFreeCamera;
 	// constrcuter destructer
@@ -22,6 +24,11 @@ public:
 	static APlayer* GetMainPlayer();
 	UCollision* GetPlayerCollision();
 	float GetPlayerMoveMaxSpeed();
+	void SetHitPower(const FVector& _Vector)
+	{
+		HitPower = _Vector;
+	}
+
 
 
 protected:
@@ -34,10 +41,14 @@ protected:
 	void HeadMove(float _DeltaTime);
 	void Attack(float _DeltaTime);
 	void CreateBullet(FVector _Dir);
+	void GetHit(float _DeltaTime);
+	void Die(float _DeltaTime);
 	void HeadStateChange(EPlayerHeadState _State);
 	void HeadIdleStart();
 	void HeadMoveStart();
 	void AttackStart();
+	void GetHitStart();
+	void DieStart();
 	void HeadDirCheck();
 
 	// Body
@@ -63,15 +74,20 @@ protected:
 private:
 	static APlayer* MainPlayer;
 
+	float PlayerHp = 5.0f;
 	float FireRate = 0.0f;
 	float BlinkTime = 0.0f;
 	float BulletCoolTime = 0.0f;
 
 	UImageRenderer* HeadRenderer = nullptr;
 	UImageRenderer* BodyRenderer = nullptr;
+	UImageRenderer* PlayerStateRenderer = nullptr;
 	FVector HeadRendererPos = { 0, -28 };
 	FVector BodyRendererPos = { 0, 0 };
+	FVector PlayerStateRendererPos = { 0, -20 };
+	FVector HitPower = { 0, 0 };
 	const FVector RendererSize = { 64,64 };
+	const FVector PlayerStateRendererSize = { 128,128 };
 
 	UCollision* PlayerCollision = nullptr;
 
@@ -92,8 +108,10 @@ private:
 	void AddMoveVector(const FVector& _DirDelta);
 	void BodyMoveUpdate(float _DeltaTime);
 	void CalMoveVector(float _DeltaTime);
+	void CalHitPower(float _DeltaTime);
 	void CalLastMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
 
+	float HitTime = 0.3f;
 	float ChangeRoomTime = 0.3f;
 };

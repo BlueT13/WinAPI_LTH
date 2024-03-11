@@ -28,8 +28,8 @@ protected:
 	virtual void MonsterStateChange(EMonsterState _State) {};
 
 	APlayer* Player = nullptr;
-	FVector PlayerLocation;
-	UCollision* PlayerCollision;
+	FVector PlayerLocation = FVector::Zero;
+	UCollision* PlayerCollision = nullptr;
 	float PlayerMoveMaxSpeed;
 
 	UImageRenderer* MonsterRenderer = nullptr;

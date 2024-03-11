@@ -23,6 +23,7 @@ enum class IsaacRenderOrder
 	PlayerBody,
 	Bullet,
 	PlayerHead,
+	PlayerState,
 };
 
 enum class IsaacCollisionOrder
@@ -50,6 +51,7 @@ enum class EPlayerHeadState
 	Move,
 	Attack,
 	Wait,
+	GetHit,
 	Die,
 };
 
@@ -59,7 +61,6 @@ enum class EPlayerBodyState
 	Idle,
 	Move,
 	Wait,
-	Die,
 };
 
 enum class EMonsterState

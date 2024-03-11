@@ -66,6 +66,13 @@ void APlayer::BeginPlay()
 		BodyRenderer->CreateAnimation("BodyMove_UP", "Body.png", 20, 29, 0.1f, true);
 		BodyRenderer->CreateAnimation("BodyMove_Down", "Body.png", 20, 29, 0.1f, true);
 	}
+	{
+		PlayerStateRenderer = CreateImageRenderer(IsaacRenderOrder::PlayerState);
+		PlayerStateRenderer->SetImage("PlayerState.png");
+		PlayerStateRenderer->SetTransform({ PlayerStateRendererPos ,PlayerStateRendererSize });
+		PlayerStateRenderer->CreateAnimation("GetHit", "PlayerState.png", 6, 6, 1.0f, false);
+		PlayerStateRenderer->CreateAnimation("Die", "PlayerState.png", { 0, 3 }, 0.3f, false);
+	}
 
 	// Collision
 	{
@@ -76,6 +83,7 @@ void APlayer::BeginPlay()
 
 	HeadStateChange(EPlayerHeadState::Idle);
 	BodyStateChange(EPlayerBodyState::Idle);
+	PlayerStateRenderer->SetActive(false);
 }
 
 void APlayer::Tick(float _DeltaTime)
@@ -138,6 +146,12 @@ void APlayer::HeadStateUpdate(float _DeltaTime)
 		break;
 	case EPlayerHeadState::Attack:
 		Attack(_DeltaTime);
+		break;
+	case EPlayerHeadState::GetHit:
+		GetHit(_DeltaTime);
+		break;
+	case EPlayerHeadState::Die:
+		Die(_DeltaTime);
 		break;
 	default:
 		break;
@@ -216,6 +230,34 @@ void APlayer::CreateBullet(FVector _Dir)
 	Tear->SetDir(_Dir);
 }
 
+void APlayer::GetHit(float _DeltaTime)
+{
+	if (PlayerHp <= 0.0f)
+	{
+		HeadStateChange(EPlayerHeadState::Die);
+		return;
+	}
+
+	HitTime -= _DeltaTime;
+	if (HitTime <= 0.0f)
+	{
+		PlayerStateRenderer->SetActive(false);
+		HeadRenderer->SetActive(true);
+		BodyRenderer->SetActive(true);
+		HeadStateChange(EPlayerHeadState::Idle);
+		BodyStateChange(EPlayerBodyState::Idle);
+		HitTime = 0.3f;
+	}
+}
+
+void APlayer::Die(float _DeltaTime)
+{
+	if (PlayerStateRenderer->IsCurAnimationEnd())
+	{
+		int a = 0;
+	}
+}
+
 void APlayer::HeadStateChange(EPlayerHeadState _State)
 {
 	if (HeadState != _State)
@@ -230,6 +272,9 @@ void APlayer::HeadStateChange(EPlayerHeadState _State)
 			break;
 		case EPlayerHeadState::Attack:
 			AttackStart();
+			break;
+		case EPlayerHeadState::GetHit:
+			GetHitStart();
 			break;
 		default:
 			break;
@@ -256,6 +301,22 @@ void APlayer::AttackStart()
 	HeadRenderer->ChangeAnimation(GetHeadAnimationName("Attack"));
 
 	HeadDirCheck();
+}
+
+void APlayer::GetHitStart()
+{
+	HeadRenderer->SetActive(false);
+	BodyRenderer->SetActive(false);
+	PlayerStateRenderer->SetActive(true);
+	PlayerStateRenderer->ChangeAnimation("GetHit");
+}
+
+void APlayer::DieStart()
+{
+	HeadRenderer->SetActive(false);
+	BodyRenderer->SetActive(false);
+	PlayerStateRenderer->SetActive(true);
+	PlayerStateRenderer->ChangeAnimation("Die");
 }
 
 void APlayer::HeadDirCheck()
@@ -511,6 +572,7 @@ void APlayer::BodyMoveUpdate(float _DeltaTime)
 {
 	CalLastMoveVector(_DeltaTime);
 	CalMoveVector(_DeltaTime);
+	CalHitPower(_DeltaTime);
 	MoveLastMoveVector(_DeltaTime);
 }
 
@@ -534,10 +596,20 @@ void APlayer::CalMoveVector(float _DeltaTime)
 	}
 }
 
+void APlayer::CalHitPower(float _DeltaTime)
+{
+	HitPower -= HitPower * _DeltaTime * 2;
+	if (HitPower.Size2D() < 100.0f)
+	{
+		HitPower = FVector::Zero;
+	}
+}
+
 void APlayer::CalLastMoveVector(float _DeltaTime)
 {
 	LastMoveVector = FVector::Zero;
-	LastMoveVector = LastMoveVector + MoveVector;
+	LastMoveVector += HitPower;
+	LastMoveVector += MoveVector;
 }
 
 void APlayer::MoveLastMoveVector(float _DeltaTime)

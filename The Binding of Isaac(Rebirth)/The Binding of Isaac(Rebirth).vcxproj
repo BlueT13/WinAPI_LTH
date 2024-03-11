@@ -189,6 +189,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="MonsterBullet.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Monstro.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -228,6 +236,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MonsterBullet.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Monstro.cpp">
       <SubType>
       </SubType>
     </ClCompile>

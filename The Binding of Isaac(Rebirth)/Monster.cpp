@@ -63,6 +63,9 @@ void AMonster::Tick(float _DeltaTime)
 	if (true == FTransform::CircleToCircle(PlayerTrans, ThisTrans))
 	{
 		AddActorLocation((-MonsterToPlayerDirNormal) * _DeltaTime * PlayerMoveMaxSpeed);
+
+		Player->SetHitPower(MonsterToPlayerDirNormal * 200.0f);
+		Player->HeadStateChange(EPlayerHeadState::GetHit);
 	}
 
 	MonsterStateUpdate(_DeltaTime);
