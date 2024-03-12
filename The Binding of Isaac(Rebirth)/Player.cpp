@@ -608,7 +608,7 @@ void APlayer::CalMoveVector(float _DeltaTime)
 
 void APlayer::CalHitPower(float _DeltaTime)
 {
-	HitPower -= HitPower * _DeltaTime * 2;
+	HitPower -= HitPower * _DeltaTime * 10.0f;
 	if (HitPower.Size2D() < 100.0f)
 	{
 		HitPower = FVector::Zero;
