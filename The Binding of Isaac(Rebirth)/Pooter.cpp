@@ -28,7 +28,7 @@ void APooter::BeginPlay()
 	MonsterRenderer->CreateAnimation("Move", "Pooter.png", 0, 1, 0.05f, true);
 	MonsterRenderer->CreateAnimation("Attack", "Pooter.png", 0, 15, 0.03f, false);
 	//MonsterRenderer->CreateAnimation("GetHit", "Pooter.png", 0, 3, 0.05f, true);
-	MonsterRenderer->CreateAnimation("Die", "Fly.png", 4, 14, 0.03f, true);
+	MonsterRenderer->CreateAnimation("Die", "Fly.png", 4, 14, 0.03f, false);
 
 	MonsterCollision = CreateCollision(IsaacCollisionOrder::Monster);
 	MonsterCollision->SetScale({ 30, 30 });
@@ -75,9 +75,13 @@ void APooter::MonsterStateUpdate(float _DeltaTime)
 
 void APooter::Spawn(float _DeltaTime)
 {
+	MonsterCollision->SetActive(false);
+	PlayerCheckCollision->SetActive(false);
 	if (SpawnRenderer->IsCurAnimationEnd())
 	{
 		SpawnRenderer->Destroy();
+		MonsterCollision->SetActive(true);
+		PlayerCheckCollision->SetActive(true);
 		MonsterStateChange(EMonsterState::Move);
 	}
 }
@@ -111,7 +115,6 @@ void APooter::CreateMonsterBullet(FVector _Dir)
 
 void APooter::Die(float _DeltaTime)
 {
-	MonsterCollision->SetActive(false);
 	if (MonsterRenderer->IsCurAnimationEnd())
 	{
 		Destroy();
@@ -161,5 +164,6 @@ void APooter::AttackStart()
 
 void APooter::DieStart()
 {
+	MonsterCollision->SetActive(false);
 	MonsterRenderer->ChangeAnimation("Die");
 }

@@ -26,7 +26,7 @@ void AFly::BeginPlay()
 	MonsterRenderer->AutoImageScale();
 	MonsterRenderer->CreateAnimation("Move", "Fly.png", 0, 3, 0.05f, true);
 	//MonsterRenderer->CreateAnimation("GetHit", "Fly.png", 0, 3, 0.05f, true);
-	MonsterRenderer->CreateAnimation("Die", "Fly.png", 4, 14, 0.03f, true);
+	MonsterRenderer->CreateAnimation("Die", "Fly.png", 4, 14, 0.03f, false);
 
 	MonsterCollision = CreateCollision(IsaacCollisionOrder::Monster);
 	MonsterCollision->SetScale({ 30, 30 });
@@ -60,9 +60,11 @@ void AFly::MonsterStateUpdate(float _DeltaTime)
 
 void AFly::Spawn(float _DeltaTime)
 {
+	MonsterCollision->SetActive(false);
 	if (SpawnRenderer->IsCurAnimationEnd())
 	{
 		SpawnRenderer->Destroy();
+		MonsterCollision->SetActive(true);
 		MonsterStateChange(EMonsterState::Move);
 	}
 }
@@ -74,7 +76,6 @@ void AFly::Move(float _DeltaTime)
 
 void AFly::Die(float _DeltaTime)
 {
-	MonsterCollision->SetActive(false);
 	if (MonsterRenderer->IsCurAnimationEnd())
 	{
 		Destroy();
@@ -116,5 +117,6 @@ void AFly::MoveStart()
 
 void AFly::DieStart()
 {
+	MonsterCollision->SetActive(false);
 	MonsterRenderer->ChangeAnimation("Die");
 }

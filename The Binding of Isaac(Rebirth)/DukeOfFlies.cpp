@@ -28,7 +28,7 @@ void ADukeOfFlies::BeginPlay()
 	MonsterRenderer->CreateAnimation("SpawnFly", "DukeOfFlies_SpawnFly.png", { 0,1,2 }, { 1.0f,2.0f,1.0f }, false);
 	MonsterRenderer->CreateAnimation("SendFly", "DukeOfFlies_SendFly.png", { 0,1,2 }, { 1.0f,2.0f,1.0f }, false);
 	//MonsterRenderer->CreateAnimation("GetHit", ".png", 0, 3, 0.05f, true);
-	MonsterRenderer->CreateAnimation("Die", "LargeBloodExplosion.png", 0, 9, 0.05f, true);
+	MonsterRenderer->CreateAnimation("Die", "LargeBloodExplosion.png", 0, 9, 0.05f, false);
 
 	MonsterCollision = CreateCollision(IsaacCollisionOrder::Monster);
 	MonsterCollision->SetScale({ 150, 150 });
@@ -72,9 +72,11 @@ void ADukeOfFlies::MonsterStateUpdate(float _DeltaTime)
 
 void ADukeOfFlies::Spawn(float _DeltaTime)
 {
+	MonsterCollision->SetActive(false);
 	if (SpawnRenderer->IsCurAnimationEnd())
 	{
 		SpawnRenderer->Destroy();
+		MonsterCollision->SetActive(true);
 		MonsterStateChange(EMonsterState::Move);
 	}
 }
@@ -105,7 +107,6 @@ void ADukeOfFlies::SendFly(float _DeltaTime)
 
 void ADukeOfFlies::Die(float _DeltaTime)
 {
-	MonsterCollision->SetActive(false);
 	if (MonsterRenderer->IsCurAnimationEnd())
 	{
 		Destroy();
@@ -158,5 +159,6 @@ void ADukeOfFlies::SendFlyStart()
 
 void ADukeOfFlies::DieStart()
 {
+	MonsterCollision->SetActive(false);
 	MonsterRenderer->ChangeAnimation("Die");
 }
