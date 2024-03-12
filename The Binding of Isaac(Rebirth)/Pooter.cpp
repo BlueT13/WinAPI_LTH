@@ -62,9 +62,6 @@ void APooter::MonsterStateUpdate(float _DeltaTime)
 	case EMonsterState::Move:
 		Move(_DeltaTime);
 		break;
-	case EMonsterState::GetHit:
-		GetHit(_DeltaTime);
-		break;
 	case EMonsterState::Attack:
 		Attack(_DeltaTime);
 		break;
@@ -112,18 +109,6 @@ void APooter::CreateMonsterBullet(FVector _Dir)
 	MonsterBullet->SetDir(MonsterToPlayerDirNormal);
 }
 
-void APooter::GetHit(float _DeltaTime)
-{
-	if (MonsterHp <= 0.0f)
-	{
-		MonsterStateChange(EMonsterState::Die);
-	}
-	else
-	{
-		MonsterStateChange(EMonsterState::Move);
-	}
-}
-
 void APooter::Die(float _DeltaTime)
 {
 	MonsterCollision->SetActive(false);
@@ -144,9 +129,6 @@ void APooter::MonsterStateChange(EMonsterState _State)
 			break;
 		case EMonsterState::Move:
 			MoveStart();
-			break;
-		case EMonsterState::GetHit:
-			GetHitStart();
 			break;
 		case EMonsterState::Attack:
 			AttackStart();
@@ -175,12 +157,6 @@ void APooter::MoveStart()
 void APooter::AttackStart()
 {
 	MonsterRenderer->ChangeAnimation("Attack");
-}
-
-void APooter::GetHitStart()
-{
-	MonsterHp -= 1.0f;
-	//MonsterRenderer->ChangeAnimation("GetHit");
 }
 
 void APooter::DieStart()

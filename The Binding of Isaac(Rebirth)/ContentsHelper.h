@@ -71,9 +71,6 @@ enum class EMonsterState
 	Idle,
 	Move,
 	Attack,
-	GetHit,
-	SpawnFly,
-	SendFly,
 	Die,
 };
 

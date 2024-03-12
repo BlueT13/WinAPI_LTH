@@ -26,6 +26,7 @@ protected:
 	void Tick(float _DeltaTime) override;
 	virtual void MonsterStateUpdate(float _DeltaTime) {};
 	virtual void MonsterStateChange(EMonsterState _State) {};
+	void GetHit(float _Damage);
 
 	APlayer* Player = nullptr;
 	FVector PlayerLocation = FVector::Zero;
@@ -59,7 +60,7 @@ protected:
 	void CalLastMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
 
-	virtual void MonsterTouchWall(float _DeltaTime, EActorDir _Dir) {	}
+	virtual void MonsterTouchWall(float _DeltaTime, EActorDir _Dir) {};
 
 private:
 };

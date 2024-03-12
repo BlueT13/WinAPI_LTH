@@ -59,14 +59,8 @@ void ADukeOfFlies::MonsterStateUpdate(float _DeltaTime)
 	case EMonsterState::Move:
 		Move(_DeltaTime);
 		break;
-	case EMonsterState::GetHit:
-		GetHit(_DeltaTime);
-		break;
-	case EMonsterState::SpawnFly:
+	case EMonsterState::Attack:
 		SpawnFly(_DeltaTime);
-		break;
-	case EMonsterState::SendFly:
-		SendFly(_DeltaTime);
 		break;
 	case EMonsterState::Die:
 		Die(_DeltaTime);
@@ -109,18 +103,6 @@ void ADukeOfFlies::SendFly(float _DeltaTime)
 {
 }
 
-void ADukeOfFlies::GetHit(float _DeltaTime)
-{
-	if (MonsterHp <= 0.0f)
-	{
-		MonsterStateChange(EMonsterState::Die);
-	}
-	else
-	{
-		MonsterStateChange(EMonsterState::Move);
-	}
-}
-
 void ADukeOfFlies::Die(float _DeltaTime)
 {
 	MonsterCollision->SetActive(false);
@@ -142,14 +124,8 @@ void ADukeOfFlies::MonsterStateChange(EMonsterState _State)
 		case EMonsterState::Move:
 			MoveStart();
 			break;
-		case EMonsterState::GetHit:
-			GetHitStart();
-			break;
-		case EMonsterState::SpawnFly:
+		case EMonsterState::Attack:
 			SpawnFlyStart();
-			break;
-		case EMonsterState::SendFly:
-			SendFlyStart();
 			break;
 		case EMonsterState::Die:
 			DieStart();
@@ -178,12 +154,6 @@ void ADukeOfFlies::SpawnFlyStart()
 void ADukeOfFlies::SendFlyStart()
 {
 	MonsterRenderer->ChangeAnimation("SendFly");
-}
-
-void ADukeOfFlies::GetHitStart()
-{
-	MonsterHp -= 1.0f;
-	//MonsterRenderer->ChangeAnimation("GetHit");
 }
 
 void ADukeOfFlies::DieStart()

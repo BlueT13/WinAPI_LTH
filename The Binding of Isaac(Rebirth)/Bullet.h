@@ -44,5 +44,6 @@ private:
 
 	FVector Dir = FVector::Zero;
 	float Speed = 500.0f;
+	float BulletDamage = 1.0f;
 };
 

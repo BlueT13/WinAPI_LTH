@@ -26,13 +26,11 @@ protected:
 	void Move(float _DeltaTime);
 	void Attack(float _DeltaTime);
 	void CreateMonsterBullet(FVector _Dir);
-	void GetHit(float _DeltaTime);
 	void Die(float _DeltaTime);
 	void MonsterStateChange(EMonsterState _State) override;
 	void SpawnStart();
 	void MoveStart();
 	void AttackStart();
-	void GetHitStart();
 	void DieStart();
 
 	UCollision* PlayerCheckCollision = nullptr;

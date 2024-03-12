@@ -50,9 +50,6 @@ void AFly::MonsterStateUpdate(float _DeltaTime)
 	case EMonsterState::Move:
 		Move(_DeltaTime);
 		break;
-	case EMonsterState::GetHit:
-		GetHit(_DeltaTime);
-		break;
 	case EMonsterState::Die:
 		Die(_DeltaTime);
 		break;
@@ -73,18 +70,6 @@ void AFly::Spawn(float _DeltaTime)
 void AFly::Move(float _DeltaTime)
 {
 	MonsterMoveVector = MonsterToPlayerDirNormal * MonsterMoveSpeed;
-}
-
-void AFly::GetHit(float _DeltaTime)
-{
-	if (MonsterHp <= 0.0f)
-	{
-		MonsterStateChange(EMonsterState::Die);
-	}
-	else
-	{
-		MonsterStateChange(EMonsterState::Move);
-	}
 }
 
 void AFly::Die(float _DeltaTime)
@@ -108,9 +93,6 @@ void AFly::MonsterStateChange(EMonsterState _State)
 		case EMonsterState::Move:
 			MoveStart();
 			break;
-		case EMonsterState::GetHit:
-			GetHitStart();
-			break;
 		case EMonsterState::Die:
 			DieStart();
 			break;
@@ -130,12 +112,6 @@ void AFly::SpawnStart()
 void AFly::MoveStart()
 {
 	MonsterRenderer->ChangeAnimation("Move");
-}
-
-void AFly::GetHitStart()
-{
-	MonsterHp -= 1.0f;
-	//MonsterRenderer->ChangeAnimation("GetHit");
 }
 
 void AFly::DieStart()

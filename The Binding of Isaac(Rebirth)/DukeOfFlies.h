@@ -26,14 +26,12 @@ protected:
 	void Move(float _DeltaTime);
 	void SpawnFly(float _DeltaTime);
 	void SendFly(float _DeltaTime);
-	void GetHit(float _DeltaTime);
 	void Die(float _DeltaTime);
 	void MonsterStateChange(EMonsterState _State) override;
 	void SpawnStart();
 	void MoveStart();
 	void SpawnFlyStart();
 	void SendFlyStart();
-	void GetHitStart();
 	void DieStart();
 
 private:
