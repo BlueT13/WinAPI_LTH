@@ -76,7 +76,7 @@ bool UWindowImage::Load(UWindowImage* _Image)
 		//int cx, // 이미지를 로드할 크기 X 0을 넣으면 전체 크기로 로드
 		//int cy, // 이미지를 로드할 크기 Y 0을 넣으면 전체 크기로 로드
 		//UINT fuLoad 로드 옵션
-
+		
 		// 비트맵을 제어할수 있는 핸들
 		// 비트맵을 그릴수 있는 핸들이 아님
 		// 그린다는 목적을 가진 핸들과
