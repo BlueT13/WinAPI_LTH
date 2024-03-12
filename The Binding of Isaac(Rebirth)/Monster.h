@@ -21,6 +21,9 @@ public:
 
 	void SetMonsterRoom(ARoom* _Room);
 
+	// R = P + 2n(-P¡¤n)
+	FVector Ref(FVector _Dir, FVector _Nor);
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -63,5 +66,7 @@ protected:
 	virtual void MonsterTouchWall(float _DeltaTime, EActorDir _Dir) {};
 
 private:
+
+	
 };
 

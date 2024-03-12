@@ -120,3 +120,24 @@ void AFly::DieStart()
 	MonsterCollision->SetActive(false);
 	MonsterRenderer->ChangeAnimation("Die");
 }
+
+void AFly::MonsterTouchWall(float _DeltaTime, EActorDir _Dir)
+{
+	switch (_Dir)
+	{
+	case EActorDir::Left:
+		MonsterLastMoveVector.X = 0.0f;
+		break;
+	case EActorDir::Up:
+		MonsterLastMoveVector.Y = 0.0f;
+		break;
+	case EActorDir::Right:
+		MonsterLastMoveVector.X = 0.0f;
+		break;
+	case EActorDir::Down:
+		MonsterLastMoveVector.Y = 0.0f;
+		break;
+	default:
+		break;
+	}
+}

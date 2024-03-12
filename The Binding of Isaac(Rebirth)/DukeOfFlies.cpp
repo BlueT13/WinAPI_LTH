@@ -34,6 +34,7 @@ void ADukeOfFlies::BeginPlay()
 	MonsterCollision->SetScale({ 150, 150 });
 	MonsterCollision->SetColType(ECollisionType::CirCle);
 
+	MonsterMoveVector = { -1,-1 };
 }
 
 void ADukeOfFlies::Tick(float _DeltaTime)
@@ -41,8 +42,6 @@ void ADukeOfFlies::Tick(float _DeltaTime)
 	// Player, PlayerLocation, MonsterPos, MonsterDir, MonsterDirNormal 받아온다.
 	// MonsterStateUpdate(_DeltaTime);을 실행
 	AMonster::Tick(_DeltaTime);
-
-	MonsterMoveVector = (-MonsterToPlayerDirNormal);
 
 	AddActorLocation(MonsterMoveVector * _DeltaTime * MonsterMoveSpeed);
 
@@ -95,9 +94,9 @@ void ADukeOfFlies::SpawnFly(float _DeltaTime)
 {
 	if (MonsterRenderer->IsCurAnimationEnd())
 	{
-		AFly* Fly = GetWorld()->SpawnActor<AFly>(IsaacRenderOrder::Monster);
-		SpawnFlyCoolTime = SpawnFlyRate;
-		MonsterStateChange(EMonsterState::Move);
+		// AFly* Fly = GetWorld()->SpawnActor<AFly>(IsaacRenderOrder::Monster);
+		// SpawnFlyCoolTime = SpawnFlyRate;
+		// MonsterStateChange(EMonsterState::Move);
 	}
 }
 
@@ -161,4 +160,30 @@ void ADukeOfFlies::DieStart()
 {
 	MonsterCollision->SetActive(false);
 	MonsterRenderer->ChangeAnimation("Die");
+}
+
+void ADukeOfFlies::MonsterTouchWall(float _DeltaTime, EActorDir _Dir)
+{
+	float Size = MonsterMoveVector.Size2D();
+	FVector Dir = MonsterMoveVector.Normalize2DReturn();
+
+	switch (_Dir)
+	{
+	case EActorDir::Left:
+		Dir = Ref(Dir, FVector::Right);
+		break;
+	case EActorDir::Up:
+		Dir = Ref(Dir, FVector::Down);
+		break;
+	case EActorDir::Right:
+		Dir = Ref(Dir, FVector::Left);
+		break;
+	case EActorDir::Down:
+		Dir = Ref(Dir, FVector::Up);
+		break;
+	default:
+		break;
+	}
+
+	MonsterMoveVector = Dir * Size;
 }

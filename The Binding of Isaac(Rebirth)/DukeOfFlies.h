@@ -34,6 +34,8 @@ protected:
 	void SendFlyStart();
 	void DieStart();
 
+	void MonsterTouchWall(float _DeltaTime, EActorDir _Dir) override;
+
 private:
 	float SpawnFlyCoolTime = 0.0f;
 	float SpawnFlyRate = 10.0f;

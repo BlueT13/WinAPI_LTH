@@ -29,6 +29,8 @@ protected:
 	void SpawnStart();
 	void MoveStart();
 	void DieStart();
+
+	void MonsterTouchWall(float _DeltaTime, EActorDir _Dir) override;
 private:
 };
 
