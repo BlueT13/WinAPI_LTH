@@ -72,7 +72,6 @@ void AMonster::Tick(float _DeltaTime)
 
 	MonsterStateUpdate(_DeltaTime);
 
-	// 벽 이동 불가능
 	MonsterMoveUpdate(_DeltaTime);
 }
 
@@ -85,7 +84,7 @@ void AMonster::MonsterMoveUpdate(float _DeltaTime)
 
 void AMonster::CalHitPower(float _DeltaTime)
 {
-	HitPower -= HitPower * _DeltaTime * 2;
+	HitPower -= HitPower * _DeltaTime * 10.0f;
 	if (HitPower.Size2D() < 100.0f)
 	{
 		HitPower = FVector::Zero;

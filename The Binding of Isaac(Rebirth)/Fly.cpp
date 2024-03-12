@@ -36,7 +36,7 @@ void AFly::BeginPlay()
 void AFly::Tick(float _DeltaTime)
 {
 	// Player, PlayerLocation, MonsterPos, MonsterDir, MonsterDirNormal 받아온다.
-	// MonsterStateUpdate(_DeltaTime);을 실행
+	// MonsterStateUpdate(_DeltaTime), MonsterMoveUpdate(_DeltaTime)를 실행
 	AMonster::Tick(_DeltaTime);
 }
 
@@ -72,14 +72,11 @@ void AFly::Spawn(float _DeltaTime)
 
 void AFly::Move(float _DeltaTime)
 {
-	AddActorLocation(MonsterToPlayerDirNormal * _DeltaTime * MonsterMoveSpeed);
+	MonsterMoveVector = MonsterToPlayerDirNormal * MonsterMoveSpeed;
 }
 
 void AFly::GetHit(float _DeltaTime)
 {
-	// 뒤로 밀려나야 함
-	//
-
 	if (MonsterHp <= 0.0f)
 	{
 		MonsterStateChange(EMonsterState::Die);

@@ -30,7 +30,7 @@ protected:
 	APlayer* Player = nullptr;
 	FVector PlayerLocation = FVector::Zero;
 	UCollision* PlayerCollision = nullptr;
-	float PlayerMoveMaxSpeed;
+	float PlayerMoveMaxSpeed = 0.0f;
 
 	UImageRenderer* MonsterRenderer = nullptr;
 	UImageRenderer* SpawnRenderer = nullptr;
@@ -55,12 +55,11 @@ protected:
 	FVector MonsterLastMoveVector = FVector::Zero;
 
 	void MonsterMoveUpdate(float _DeltaTime);
-	void CalMoveVector(float _DeltaTime);
 	void CalHitPower(float _DeltaTime);
 	void CalLastMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
 
-	virtual void MonsterOut(float _DeltaTime, EActorDir _Dir)	{	}
+	virtual void MonsterOut(float _DeltaTime, EActorDir _Dir) {	}
 
 private:
 };

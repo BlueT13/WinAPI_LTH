@@ -111,9 +111,6 @@ void ADukeOfFlies::SendFly(float _DeltaTime)
 
 void ADukeOfFlies::GetHit(float _DeltaTime)
 {
-	// 뒤로 밀려나야 함
-	//
-
 	if (MonsterHp <= 0.0f)
 	{
 		MonsterStateChange(EMonsterState::Die);

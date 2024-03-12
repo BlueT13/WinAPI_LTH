@@ -41,11 +41,12 @@ void ABullet::Tick(float _DeltaTime)
 		AActor* MonsterPtr = Collision->GetOwner();
 		AMonster* Monster = dynamic_cast<AMonster*>(MonsterPtr);
 
+		Monster->HitPower = Dir * Speed;
 		Monster->MonsterStateChange(EMonsterState::GetHit);
-		
+
 		BulletStateChange(EBulletState::Crashed);
 	}
-	
+
 	BulletStateUpdate(_DeltaTime);
 
 	BulletLiveTime += _DeltaTime;

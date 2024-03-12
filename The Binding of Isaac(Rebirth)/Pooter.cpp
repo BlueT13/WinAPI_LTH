@@ -45,7 +45,7 @@ void APooter::Tick(float _DeltaTime)
 	// MonsterStateUpdate(_DeltaTime);을 실행
 	AMonster::Tick(_DeltaTime);
 
-	AddActorLocation(MonsterToPlayerDirNormal * _DeltaTime * MonsterMoveSpeed);
+	MonsterMoveVector = MonsterToPlayerDirNormal * MonsterMoveSpeed;
 
 	PlayerCheckCollisionTrans = PlayerCheckCollision->GetActorBaseTransform();
 
@@ -114,9 +114,6 @@ void APooter::CreateMonsterBullet(FVector _Dir)
 
 void APooter::GetHit(float _DeltaTime)
 {
-	// 뒤로 밀려나야 함
-	//
-
 	if (MonsterHp <= 0.0f)
 	{
 		MonsterStateChange(EMonsterState::Die);
