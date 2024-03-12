@@ -66,9 +66,9 @@ void UPlayLevel::BeginPlay()
 
 	//Room_0->CreateMonsters(EMonsterType::Fly, { -200, 0 });
 	//Room_1->CreateMonsters(EMonsterType::Fly, { -200, 0 });
-	//Room_3->CreateMonsters(EMonsterType::Pooter, { -100, -200 });
-	//Room_3->CreateMonsters(EMonsterType::Pooter, { 100, -200 });
-	Room_0->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
+	Room_3->CreateMonsters(EMonsterType::Pooter, { -100, -100 });
+	Room_3->CreateMonsters(EMonsterType::Pooter, { 100, -100 });
+	//Room_0->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
 
 
 	SetPrevRoom(0, 0);

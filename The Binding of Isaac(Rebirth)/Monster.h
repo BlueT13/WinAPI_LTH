@@ -30,6 +30,7 @@ protected:
 	virtual void MonsterStateUpdate(float _DeltaTime) {};
 	virtual void MonsterStateChange(EMonsterState _State) {};
 	void GetHit();
+	virtual void SetHitDir(FVector _BulletDir) {};
 
 	APlayer* Player = nullptr;
 	FVector PlayerLocation = FVector::Zero;

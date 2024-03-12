@@ -34,10 +34,13 @@ protected:
 	void SendFlyStart();
 	void DieStart();
 
+	void SetHitDir(FVector _BulletDir);
+	void GetHit();
 	void MonsterTouchWall(float _DeltaTime, EActorDir _Dir) override;
 
 private:
 	float SpawnFlyCoolTime = 0.0f;
 	float SpawnFlyRate = 10.0f;
+	FVector HitDir = FVector::Zero;
 };
 

@@ -13,7 +13,7 @@ void ADukeOfFlies::BeginPlay()
 {
 	AMonster::BeginPlay();
 
-	MonsterHp = 5;
+	MonsterHp = 100;
 	MonsterMoveSpeed = 100.f;
 	SpawnFlyCoolTime = 0.0f;
 
@@ -87,7 +87,6 @@ void ADukeOfFlies::Move(float _DeltaTime)
 	{
 		MonsterStateChange(EMonsterState::Attack);
 	}
-
 }
 
 void ADukeOfFlies::SpawnFly(float _DeltaTime)
@@ -160,6 +159,17 @@ void ADukeOfFlies::DieStart()
 {
 	MonsterCollision->SetActive(false);
 	MonsterRenderer->ChangeAnimation("Die");
+}
+
+void ADukeOfFlies::SetHitDir(FVector _BulletDir)
+{
+	HitDir = _BulletDir;
+}
+
+void ADukeOfFlies::GetHit()
+{
+	AMonster::GetHit();
+	MonsterMoveVector = HitDir;
 }
 
 void ADukeOfFlies::MonsterTouchWall(float _DeltaTime, EActorDir _Dir)
