@@ -131,6 +131,35 @@ void APlayer::Tick(float _DeltaTime)
 	CreateBomb();
 
 	BulletCoolTime -= _DeltaTime;
+	HitTime -= _DeltaTime;
+
+	if (HitTime <= 0.0f)
+	{
+		PlayerStateRenderer->SetActive(false);
+		PlayerCollision->SetActive(true);
+		HeadRenderer->SetActive(true);
+		BodyRenderer->SetActive(true);
+	}
+}
+
+void APlayer::GetHit(float _MonsterDamage)
+{
+	if (PlayerHp <= 0.0f)
+	{
+		BodyStateChange(EPlayerBodyState::Die);
+		return;
+	}
+
+	if (HitTime <= 0.0f)
+	{
+		PlayerHp -= _MonsterDamage;
+		PlayerCollision->SetActive(false);
+		HeadRenderer->SetActive(false);
+		BodyRenderer->SetActive(false);
+		PlayerStateRenderer->SetActive(true);
+		PlayerStateRenderer->ChangeAnimation("GetHit");
+		HitTime = 0.5f;
+	}
 }
 
 // Head
@@ -146,9 +175,6 @@ void APlayer::HeadStateUpdate(float _DeltaTime)
 		break;
 	case EPlayerHeadState::Attack:
 		Attack(_DeltaTime);
-		break;
-	case EPlayerHeadState::GetHit:
-		GetHit(_DeltaTime);
 		break;
 	default:
 		break;
@@ -227,27 +253,6 @@ void APlayer::CreateBullet(FVector _Dir)
 	Tear->SetDir(_Dir);
 }
 
-void APlayer::GetHit(float _DeltaTime)
-{
-	if (PlayerHp <= 0.0f)
-	{
-		BodyStateChange(EPlayerBodyState::Die);
-		return;
-	}
-
-	HitTime -= _DeltaTime;
-	if (HitTime <= 0.0f)
-	{
-		PlayerStateRenderer->SetActive(false);
-		HeadRenderer->SetActive(true);
-		BodyRenderer->SetActive(true);
-		HeadStateChange(EPlayerHeadState::Idle);
-		BodyStateChange(EPlayerBodyState::Idle);
-		PlayerCollision->SetActive(true);
-		HitTime = 0.3f;
-	}
-}
-
 void APlayer::HeadStateChange(EPlayerHeadState _State)
 {
 	if (HeadState != _State)
@@ -262,9 +267,6 @@ void APlayer::HeadStateChange(EPlayerHeadState _State)
 			break;
 		case EPlayerHeadState::Attack:
 			AttackStart();
-			break;
-		case EPlayerHeadState::GetHit:
-			GetHitStart();
 			break;
 		default:
 			break;
@@ -291,16 +293,6 @@ void APlayer::AttackStart()
 	HeadRenderer->ChangeAnimation(GetHeadAnimationName("Attack"));
 
 	HeadDirCheck();
-}
-
-void APlayer::GetHitStart()
-{
-	PlayerHp -= 1.0f;
-	PlayerCollision->SetActive(false);
-	HeadRenderer->SetActive(false);
-	BodyRenderer->SetActive(false);
-	PlayerStateRenderer->SetActive(true);
-	PlayerStateRenderer->ChangeAnimation("GetHit");
 }
 
 void APlayer::HeadDirCheck()

@@ -52,7 +52,6 @@ enum class EPlayerHeadState
 	Move,
 	Attack,
 	Wait,
-	GetHit,
 };
 
 enum class EPlayerBodyState

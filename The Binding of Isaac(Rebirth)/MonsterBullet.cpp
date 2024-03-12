@@ -36,7 +36,7 @@ void AMonsterBullet::Tick(float _DeltaTime)
 	{
 		Player = APlayer::GetMainPlayer();
 
-		Player->HeadStateChange(EPlayerHeadState::GetHit);
+		Player->GetHit(MonsterBulletDamage);
 
 		MonsterBulletStateChange(EBulletState::Crashed);
 	}

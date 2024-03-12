@@ -35,18 +35,18 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
+	void GetHit(float _MonsterDamage);
+
 	// Head
 	void HeadStateUpdate(float _DeltaTime);
 	void HeadIdle(float _DeltaTime);
 	void HeadMove(float _DeltaTime);
 	void Attack(float _DeltaTime);
 	void CreateBullet(FVector _Dir);
-	void GetHit(float _DeltaTime);
 	void HeadStateChange(EPlayerHeadState _State);
 	void HeadIdleStart();
 	void HeadMoveStart();
 	void AttackStart();
-	void GetHitStart();
 	void HeadDirCheck();
 
 	// Body
@@ -112,6 +112,7 @@ private:
 	void CalLastMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
 
-	float HitTime = 0.3f;
 	float ChangeRoomTime = 0.3f;
+
+	float HitTime = 0.5f;
 };

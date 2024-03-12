@@ -45,5 +45,6 @@ private:
 
 	FVector Dir = FVector::Zero;
 	float Speed = 300.0f;
+	float MonsterBulletDamage = 2.0f;
 };
 

@@ -67,7 +67,7 @@ void AMonster::Tick(float _DeltaTime)
 		AddActorLocation((-MonsterToPlayerDirNormal) * _DeltaTime * PlayerMoveMaxSpeed);
 
 		Player->SetHitPower(MonsterToPlayerDirNormal * 1000.0f);
-		Player->HeadStateChange(EPlayerHeadState::GetHit);
+		Player->GetHit(MonsterDamage);
 	}
 
 	MonsterStateUpdate(_DeltaTime);
@@ -75,9 +75,9 @@ void AMonster::Tick(float _DeltaTime)
 	MonsterMoveUpdate(_DeltaTime);
 }
 
-void AMonster::GetHit(float _Damage)
+void AMonster::GetHit(float _PlayerDamage)
 {
-	MonsterHp -= _Damage;
+	MonsterHp -= _PlayerDamage;
 	if (MonsterHp <= 0.0f)
 	{
 		MonsterStateChange(EMonsterState::Die);
