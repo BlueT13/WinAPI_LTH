@@ -13,7 +13,7 @@ void APooter::BeginPlay()
 {
 	AMonster::BeginPlay();
 
-	MonsterHp = 2.0f;
+	MonsterHp = 2;
 	MonsterMoveSpeed = 30.f;
 	MonsterBulletCoolTime = 0.0f;
 

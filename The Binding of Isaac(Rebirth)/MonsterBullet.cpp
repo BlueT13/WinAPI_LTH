@@ -35,8 +35,8 @@ void AMonsterBullet::Tick(float _DeltaTime)
 	if (true == MonsterBulletCollision->CollisionCheck(IsaacCollisionOrder::Player, Result))
 	{
 		Player = APlayer::GetMainPlayer();
-
-		Player->GetHit(MonsterBulletDamage);
+		Player->SetHitPower(Dir * Speed);
+		Player->HeadStateChange(EPlayerHeadState::GetHit);
 
 		MonsterBulletStateChange(EBulletState::Crashed);
 	}

@@ -26,7 +26,7 @@ protected:
 	void Tick(float _DeltaTime) override;
 	virtual void MonsterStateUpdate(float _DeltaTime) {};
 	virtual void MonsterStateChange(EMonsterState _State) {};
-	void GetHit(float _PlayerDamage);
+	void GetHit();
 
 	APlayer* Player = nullptr;
 	FVector PlayerLocation = FVector::Zero;
@@ -48,9 +48,8 @@ protected:
 
 	ARoom* CurRoom = nullptr;
 
-	float MonsterHp = 0.0f;
+	int MonsterHp = 0;
 	float MonsterMoveSpeed = 0.0f;
-	float MonsterDamage = 1.0f;
 
 	FVector HitPower = FVector::Zero;
 	FVector MonsterMoveVector = FVector::Zero;

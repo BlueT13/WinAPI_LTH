@@ -42,7 +42,7 @@ void ABullet::Tick(float _DeltaTime)
 		AMonster* Monster = dynamic_cast<AMonster*>(MonsterPtr);
 
 		Monster->HitPower = Dir * Speed;
-		Monster->GetHit(BulletDamage);
+		Monster->GetHit();
 
 		BulletStateChange(EBulletState::Crashed);
 	}

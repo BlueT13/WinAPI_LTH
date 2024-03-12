@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 #include <EngineCore/Actor.h>
 #include "ContentsHelper.h"
 #include "PlayLevel.h"
 
-// ¼³¸í :
+// Â¼Â³Â¸Ã­ :
 class APlayer : public AActor
 {
 	friend class ARoom;
@@ -35,18 +35,18 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	void GetHit(float _MonsterDamage);
-
 	// Head
 	void HeadStateUpdate(float _DeltaTime);
 	void HeadIdle(float _DeltaTime);
 	void HeadMove(float _DeltaTime);
 	void Attack(float _DeltaTime);
 	void CreateBullet(FVector _Dir);
+	void GetHit(float _DeltaTime);
 	void HeadStateChange(EPlayerHeadState _State);
 	void HeadIdleStart();
 	void HeadMoveStart();
 	void AttackStart();
+	void GetHitStart();
 	void HeadDirCheck();
 
 	// Body
@@ -74,7 +74,7 @@ protected:
 private:
 	static APlayer* MainPlayer;
 
-	float PlayerHp = 5.0f;
+	int PlayerHp = 6;
 	float FireRate = 0.0f;
 	float BlinkTime = 0.0f;
 	float BulletCoolTime = 0.0f;
@@ -112,7 +112,6 @@ private:
 	void CalLastMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
 
+	float HitTime = 0.3f;
 	float ChangeRoomTime = 0.3f;
-
-	float HitTime = 0.5f;
 };

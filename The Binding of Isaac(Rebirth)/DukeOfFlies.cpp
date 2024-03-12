@@ -13,7 +13,7 @@ void ADukeOfFlies::BeginPlay()
 {
 	AMonster::BeginPlay();
 
-	MonsterHp = 5.0f;
+	MonsterHp = 5;
 	MonsterMoveSpeed = 100.f;
 	SpawnFlyCoolTime = 0.0f;
 
