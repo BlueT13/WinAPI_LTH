@@ -241,7 +241,7 @@ void APlayer::GetHit(float _DeltaTime)
 		PlayerStateRenderer->SetActive(false);
 		HeadRenderer->SetActive(true);
 		BodyRenderer->SetActive(true);
-		HeadStateChange(EPlayerHeadState::Idle);
+		HeadStateChange(EPlayerHeadState::Attack);
 		BodyStateChange(EPlayerBodyState::Idle);
 		HitTime = 0.3f;
 	}

@@ -96,7 +96,7 @@ void ADukeOfFlies::SpawnFly(float _DeltaTime)
 		ARoom* CurRoom = GetCurRoom();
 		AFly* Fly = GetWorld()->SpawnActor<AFly>(IsaacRenderOrder::Monster);
 		Fly->SetMonsterRoom(CurRoom);
-		Fly->SetActorLocation(GetActorLocation());
+		Fly->SetActorLocation(GetActorLocation() + MonsterToPlayerDirNormal * 100);
 		Fly->MonsterStateChange(EMonsterState::Spawn);
 		CurRoom->PushBackMonster(Fly);
 		Flys.push_back(Fly);
