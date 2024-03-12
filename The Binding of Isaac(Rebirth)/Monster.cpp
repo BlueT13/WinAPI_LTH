@@ -108,19 +108,19 @@ void AMonster::MoveLastMoveVector(float _DeltaTime)
 	FVector MonsterNextPos = MonsterPos + MonsterMoveVector * _DeltaTime;
 	if (MonsterNextPos.X < CurRoomPos.X - 320)
 	{
-		MonsterOut(_DeltaTime, EActorDir::Left);
+		MonsterTouchWall(_DeltaTime, EActorDir::Left);
 	}
 	if (MonsterNextPos.Y < CurRoomPos.Y - 170)
 	{
-		MonsterOut(_DeltaTime, EActorDir::Up);
+		MonsterTouchWall(_DeltaTime, EActorDir::Up);
 	}
 	if (MonsterNextPos.X > CurRoomPos.X + 320)
 	{
-		MonsterOut(_DeltaTime, EActorDir::Right);
+		MonsterTouchWall(_DeltaTime, EActorDir::Right);
 	}
 	if (MonsterNextPos.Y > CurRoomPos.Y + 170)
 	{
-		MonsterOut(_DeltaTime, EActorDir::Down);
+		MonsterTouchWall(_DeltaTime, EActorDir::Down);
 	}
 
 	AddActorLocation(MonsterLastMoveVector * _DeltaTime);

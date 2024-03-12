@@ -111,7 +111,7 @@ void ARoom::CreateDoor(ERoomDir _OtherRoomDir, ERoomType _OtherRoomType)
 			DoorCollision[DirIndex]->SetPosition({ 0, 185 });
 			break;
 		case ERoomDir::Max:
-			break;
+			return;
 		default:
 			break;
 		}

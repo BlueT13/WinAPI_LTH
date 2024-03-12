@@ -59,7 +59,7 @@ protected:
 	void CalLastMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
 
-	virtual void MonsterOut(float _DeltaTime, EActorDir _Dir) {	}
+	virtual void MonsterTouchWall(float _DeltaTime, EActorDir _Dir) {	}
 
 private:
 };
