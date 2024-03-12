@@ -203,6 +203,11 @@ void ARoom::CreateDoor(ERoomDir _OtherRoomDir, ERoomType _OtherRoomType)
 	}
 }
 
+void ARoom::PushBackMonster(AMonster* _Monster)
+{
+	Monsters.push_back(_Monster);
+}
+
 void ARoom::BeginPlay()
 {
 	AActor::BeginPlay();

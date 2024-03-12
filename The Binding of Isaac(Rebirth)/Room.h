@@ -90,6 +90,8 @@ public:
 		return Monsters;
 	}
 
+	void PushBackMonster(AMonster* _Monster);
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

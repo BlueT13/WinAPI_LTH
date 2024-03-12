@@ -22,11 +22,12 @@ void ADukeOfFlies::BeginPlay()
 	SpawnRenderer->AutoImageScale();
 	SpawnRenderer->CreateAnimation("Spawn", "SpawnEffect_Large.png", 0, 14, 0.05f, false);
 
-	MonsterRenderer = CreateImageRenderer(IsaacRenderOrder::Monster);
+	MonsterRenderer = CreateImageRenderer(IsaacRenderOrder::Boss);
 	MonsterRenderer->SetImage("DukeOfFlies_SpawnFly.png");
 	MonsterRenderer->AutoImageScale();
-	MonsterRenderer->CreateAnimation("SpawnFly", "DukeOfFlies_SpawnFly.png", { 0,1,2 }, { 1.0f,2.0f,1.0f }, false);
-	MonsterRenderer->CreateAnimation("SendFly", "DukeOfFlies_SendFly.png", { 0,1,2 }, { 1.0f,2.0f,1.0f }, false);
+	MonsterRenderer->CreateAnimation("Move", "DukeOfFlies_SpawnFly.png", 0, 0, 1.0f, true);
+	MonsterRenderer->CreateAnimation("SpawnFly", "DukeOfFlies_SpawnFly.png", 0, 2, 0.5f, false);
+	MonsterRenderer->CreateAnimation("SendFly", "DukeOfFlies_SendFly.png", 0, 2, 0.5f, false);
 	//MonsterRenderer->CreateAnimation("GetHit", ".png", 0, 3, 0.05f, true);
 	MonsterRenderer->CreateAnimation("Die", "LargeBloodExplosion.png", 0, 9, 0.05f, false);
 
@@ -82,8 +83,7 @@ void ADukeOfFlies::Spawn(float _DeltaTime)
 
 void ADukeOfFlies::Move(float _DeltaTime)
 {
-
-	if (FTransform::CircleToCircle(PlayerCollisionTrans, PlayerCheckCollisionTrans) && SpawnFlyCoolTime <= 0)
+	if (SpawnFlyCoolTime <= 0)
 	{
 		MonsterStateChange(EMonsterState::Attack);
 	}
@@ -93,14 +93,24 @@ void ADukeOfFlies::SpawnFly(float _DeltaTime)
 {
 	if (MonsterRenderer->IsCurAnimationEnd())
 	{
-		// AFly* Fly = GetWorld()->SpawnActor<AFly>(IsaacRenderOrder::Monster);
-		// SpawnFlyCoolTime = SpawnFlyRate;
-		// MonsterStateChange(EMonsterState::Move);
+		ARoom* CurRoom = GetCurRoom();
+		AFly* Fly = GetWorld()->SpawnActor<AFly>(IsaacRenderOrder::Monster);
+		Fly->SetMonsterRoom(CurRoom);
+		Fly->SetActorLocation(GetActorLocation());
+		Fly->MonsterStateChange(EMonsterState::Spawn);
+		CurRoom->PushBackMonster(Fly);
+		Flys.push_back(Fly);
+		SpawnFlyCoolTime = SpawnFlyRate;
+		MonsterStateChange(EMonsterState::Move);
 	}
 }
 
 void ADukeOfFlies::SendFly(float _DeltaTime)
 {
+	for (size_t i = 0; i < Flys.size(); i++)
+	{
+		//	Flys[i];
+	}
 }
 
 void ADukeOfFlies::Die(float _DeltaTime)
@@ -143,6 +153,7 @@ void ADukeOfFlies::SpawnStart()
 
 void ADukeOfFlies::MoveStart()
 {
+	MonsterRenderer->ChangeAnimation("Move");
 }
 
 void ADukeOfFlies::SpawnFlyStart()

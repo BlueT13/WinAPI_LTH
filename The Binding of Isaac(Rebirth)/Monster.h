@@ -20,6 +20,10 @@ public:
 	AMonster& operator=(AMonster&& _Other) noexcept = delete;
 
 	void SetMonsterRoom(ARoom* _Room);
+	ARoom* GetCurRoom()
+	{
+		return CurRoom;
+	}
 
 	// R = P + 2n(-P¡¤n)
 	FVector Ref(FVector _Dir, FVector _Nor);

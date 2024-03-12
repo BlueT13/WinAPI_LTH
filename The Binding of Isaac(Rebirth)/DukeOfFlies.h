@@ -2,6 +2,7 @@
 #include "Monster.h"
 #include <EngineCore/Actor.h>
 #include "ContentsHelper.h"
+#include "Fly.h"
 
 // Ό³Έν :
 class ADukeOfFlies : public AMonster
@@ -40,7 +41,8 @@ protected:
 
 private:
 	float SpawnFlyCoolTime = 0.0f;
-	float SpawnFlyRate = 10.0f;
+	float SpawnFlyRate = 2.0f;
 	FVector HitDir = FVector::Zero;
+	std::vector<AFly*> Flys;
 };
 

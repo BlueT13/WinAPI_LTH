@@ -1,5 +1,6 @@
 #include "Fly.h"
 #include "Bullet.h"
+//#include "DukeOfFlies.h"
 
 AFly::AFly()
 {
@@ -63,7 +64,7 @@ void AFly::Spawn(float _DeltaTime)
 	MonsterCollision->SetActive(false);
 	if (SpawnRenderer->IsCurAnimationEnd())
 	{
-		SpawnRenderer->Destroy();
+		SpawnRenderer->SetActive(false);
 		MonsterCollision->SetActive(true);
 		MonsterStateChange(EMonsterState::Move);
 	}

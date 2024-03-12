@@ -6,6 +6,7 @@
 // Ό³Έν :
 class AFly : public AMonster
 {
+	friend class ADukeOfFlies;
 public:
 	// constrcuter destructer
 	AFly();
