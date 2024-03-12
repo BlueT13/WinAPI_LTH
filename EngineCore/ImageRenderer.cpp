@@ -147,7 +147,7 @@ void UImageRenderer::CreateAnimation(
 	bool _Loop/* = true*/
 )
 {
-	
+
 	std::vector<float> Inters;
 	int Size = static_cast<int>(_Indexs.size());
 	Inters.reserve(Size);
@@ -254,7 +254,7 @@ void UImageRenderer::TextRender(float _DeltaTime)
 		GEngine->MainWindow.GetBackBufferImage()->TextCopyBold(Text, Font, Size, RendererTrans, TextColor);
 		break;
 	default:
-		GEngine->MainWindow.GetBackBufferImage()->TextCopy(Text, Font, Size, RendererTrans, SortOption1, SortOption1, TextColor);
+		GEngine->MainWindow.GetBackBufferImage()->TextCopy(Text, Font, Size, RendererTrans, SortOption1, SortOption2, TextColor);
 		break;
 	}
 }
@@ -283,7 +283,7 @@ void UImageRenderer::ImageRender(float _DeltaTime)
 	{
 	case EImageSortType::Left:
 	{
-		RendererTrans.AddPosition({ RendererTrans.GetScale().hX() , 0.0f});
+		RendererTrans.AddPosition({ RendererTrans.GetScale().hX() , 0.0f });
 		break;
 	}
 	case EImageSortType::Right:
@@ -311,7 +311,7 @@ void UImageRenderer::ImageRender(float _DeltaTime)
 		{
 			GEngine->MainWindow.GetBackBufferImage()->AlphaCopy(Image, RendererTrans, InfoIndex, TransColor);
 		}
-		else 
+		else
 		{
 			GEngine->MainWindow.GetBackBufferImage()->PlgCopy(Image, RendererTrans, InfoIndex, Angle * UEngineMath::DToR);
 		}
