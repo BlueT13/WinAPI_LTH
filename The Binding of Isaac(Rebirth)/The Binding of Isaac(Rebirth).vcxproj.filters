@@ -38,9 +38,6 @@
     <ClInclude Include="Bomb.h">
       <Filter>Object\PlayLevel\Actor\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Monstro.h">
-      <Filter>Object\PlayLevel\Actor\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="MonsterBullet.h">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClInclude>
@@ -88,9 +85,6 @@
     </ClCompile>
     <ClCompile Include="Bomb.cpp">
       <Filter>Object\PlayLevel\Actor\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Monstro.cpp">
-      <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClCompile>
     <ClCompile Include="MonsterBullet.cpp">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>

@@ -20,7 +20,7 @@ void ADukeOfFlies::BeginPlay()
 	SpawnRenderer = CreateImageRenderer(IsaacRenderOrder::SpawnEffect);
 	SpawnRenderer->SetImage("SpawnEffect_Small.png");
 	SpawnRenderer->AutoImageScale();
-	SpawnRenderer->CreateAnimation("Spawn", "SpawnEffect_Large.png", 0, 14, 0.05f, false);
+	SpawnRenderer->CreateAnimation("Spawn", "SpawnEffect_Large.png", 0, 14, 0.03f, false);
 
 	MonsterRenderer = CreateImageRenderer(IsaacRenderOrder::Boss);
 	MonsterRenderer->SetImage("DukeOfFlies_SpawnFly.png");

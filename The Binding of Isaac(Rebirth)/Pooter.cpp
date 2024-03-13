@@ -20,7 +20,7 @@ void APooter::BeginPlay()
 	SpawnRenderer = CreateImageRenderer(IsaacRenderOrder::SpawnEffect);
 	SpawnRenderer->SetImage("SpawnEffect_Small.png");
 	SpawnRenderer->AutoImageScale();
-	SpawnRenderer->CreateAnimation("Spawn", "SpawnEffect_Small.png", 0, 14, 0.05f, false);
+	SpawnRenderer->CreateAnimation("Spawn", "SpawnEffect_Small.png", 0, 14, 0.03f, false);
 
 	MonsterRenderer = CreateImageRenderer(IsaacRenderOrder::Monster);
 	MonsterRenderer->SetImage("Pooter.png");
