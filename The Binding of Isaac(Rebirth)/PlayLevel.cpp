@@ -19,38 +19,44 @@ void UPlayLevel::BeginPlay()
 {
 	ULevel::BeginPlay();
 
-	UEngineDirectory FilePath;
-	FilePath.MoveToSearchChild("Res");
-	FilePath.Move("PlayLevel");
-	std::list<UEngineFile> AllFileList = FilePath.AllFile({ ".png", ".bmp" }, true);
-	for (UEngineFile& File : AllFileList)
+	if (false == UEngineResourcesManager::GetInst().IsImage("Head.png"))
 	{
-		std::string FullPath = File.GetFullPath();
-		UEngineResourcesManager::GetInst().LoadImg(FullPath);
+		UEngineDirectory FilePath;
+		FilePath.MoveToSearchChild("Res");
+		FilePath.Move("PlayLevel");
+		std::list<UEngineFile> AllFileList = FilePath.AllFile({ ".png", ".bmp" }, true);
+
+
+		for (UEngineFile& File : AllFileList)
+		{
+			std::string FullPath = File.GetFullPath();
+			UEngineResourcesManager::GetInst().LoadImg(FullPath);
+		}
+		UEngineResourcesManager::GetInst().CuttingImage("Head.png", 5, 2);
+		UEngineResourcesManager::GetInst().CuttingImage("Body.png", 5, 6);
+		UEngineResourcesManager::GetInst().CuttingImage("PlayerState.png", 5, 3);
+
+		UEngineResourcesManager::GetInst().CuttingImage("Tears.png", 5, 6);
+		UEngineResourcesManager::GetInst().CuttingImage("DestroyTear.png", 5, 3);
+		UEngineResourcesManager::GetInst().CuttingImage("Bomb.png", 5, 1);
+		UEngineResourcesManager::GetInst().CuttingImage("Explosion.png", 5, 3);
+
+		UEngineResourcesManager::GetInst().CuttingImage("NormalRoomDoor.png", 4, 2);
+		UEngineResourcesManager::GetInst().CuttingImage("GoldRoomDoor.png", 4, 3);
+		UEngineResourcesManager::GetInst().CuttingImage("BossRoomDoor.png", 4, 2);
+
+		UEngineResourcesManager::GetInst().CuttingImage("MonsterTear.png", 5, 3);
+		UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Small.png", 5, 3);
+		UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Medium.png", 5, 3);
+		UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Large.png", 5, 3);
+		UEngineResourcesManager::GetInst().CuttingImage("LargeBloodExplosion.png", 5, 2);
+
+		UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
+		UEngineResourcesManager::GetInst().CuttingImage("Pooter.png", 5, 4);
+		UEngineResourcesManager::GetInst().CuttingImage("DukeOfFlies_SpawnFly.png", 3, 1);
+		UEngineResourcesManager::GetInst().CuttingImage("DukeOfFlies_SendFly.png", 3, 1);
+
 	}
-	UEngineResourcesManager::GetInst().CuttingImage("Head.png", 5, 2);
-	UEngineResourcesManager::GetInst().CuttingImage("Body.png", 5, 6);
-	UEngineResourcesManager::GetInst().CuttingImage("PlayerState.png", 5, 3);
-
-	UEngineResourcesManager::GetInst().CuttingImage("Tears.png", 5, 6);
-	UEngineResourcesManager::GetInst().CuttingImage("DestroyTear.png", 5, 3);
-	UEngineResourcesManager::GetInst().CuttingImage("Bomb.png", 5, 1);
-	UEngineResourcesManager::GetInst().CuttingImage("Explosion.png", 5, 3);
-
-	UEngineResourcesManager::GetInst().CuttingImage("NormalRoomDoor.png", 4, 2);
-	UEngineResourcesManager::GetInst().CuttingImage("GoldRoomDoor.png", 4, 3);
-	UEngineResourcesManager::GetInst().CuttingImage("BossRoomDoor.png", 4, 2);
-
-	UEngineResourcesManager::GetInst().CuttingImage("MonsterTear.png", 5, 3);
-	UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Small.png", 5, 3);
-	UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Medium.png", 5, 3);
-	UEngineResourcesManager::GetInst().CuttingImage("SpawnEffect_Large.png", 5, 3);
-	UEngineResourcesManager::GetInst().CuttingImage("LargeBloodExplosion.png", 5, 2);
-
-	UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
-	UEngineResourcesManager::GetInst().CuttingImage("Pooter.png", 5, 4);
-	UEngineResourcesManager::GetInst().CuttingImage("DukeOfFlies_SpawnFly.png", 3, 1);
-	UEngineResourcesManager::GetInst().CuttingImage("DukeOfFlies_SendFly.png", 3, 1);
 
 	SpawnActor<APlayer>(IsaacUpdateOrder::Player);
 
@@ -204,14 +210,11 @@ void UPlayLevel::Tick(float _DeltaTime)
 	if (UEngineInput::IsPress('R'))
 	{
 		GEngine->DestroyLevel("PlayLevel");
-		
-		//GEngine->CreateLevel<UPlayLevel>("PlayLevel");
-
 	}
-
 }
 
 void UPlayLevel::End()
 {
-	int a = 0;
+	GEngine->CreateLevel<UPlayLevel>("PlayLevel");
+	GEngine->ChangeLevel("PlayLevel");
 }

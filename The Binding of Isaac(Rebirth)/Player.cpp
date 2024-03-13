@@ -429,7 +429,7 @@ void APlayer::Die(float _DeltaTime)
 
 	if (PlayerStateRenderer->IsCurAnimationEnd())
 	{
-		int a = 0;
+		GEngine->DestroyLevel("PlayLevel");
 	}
 }
 
