@@ -200,4 +200,18 @@ void UPlayLevel::Tick(float _DeltaTime)
 	{
 		GEngine->ChangeLevel("TitleLevel");
 	}
+
+	if (UEngineInput::IsPress('R'))
+	{
+		GEngine->DestroyLevel("PlayLevel");
+		
+		//GEngine->CreateLevel<UPlayLevel>("PlayLevel");
+
+	}
+
+}
+
+void UPlayLevel::End()
+{
+	int a = 0;
 }

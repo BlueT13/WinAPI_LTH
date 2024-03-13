@@ -27,6 +27,7 @@ public:
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+	void End() override;
 
 private:
 	// 방을 관리하는 건 레벨마다 해야하니까
