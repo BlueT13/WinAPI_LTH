@@ -29,8 +29,6 @@ public:
 
 	void CoreInit(HINSTANCE _Init);
 
-	void Exit();
-
 	virtual void BeginPlay();
 	virtual void Tick(float _DeltaTime);
 	virtual void End();
