@@ -19,7 +19,7 @@ void UIsaacCore::BeginPlay()
 	UEngineCore::BeginPlay();
 
 	SetFrame(60);
-	UEngineSound::SetGlobalVolume(0.5f);
+	UEngineSound::SetGlobalVolume(1.0f);
 
 	MainWindow.SetWindowScale(WindowSize);
 	MainWindow.SetWindowPosition({ 0, 0 });

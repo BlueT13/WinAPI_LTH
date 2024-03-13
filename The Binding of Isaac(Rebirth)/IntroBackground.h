@@ -2,6 +2,7 @@
 #include <EngineCore/Actor.h>
 #include <EngineBase/EngineDirectory.h>
 #include <EngineBase/EngineFile.h>
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class AIntroBackground :public AActor
@@ -26,5 +27,8 @@ private:
 	float AnimationDurationTime = 0.068f;
 	UImageRenderer* intro = nullptr;
 	std::list<UEngineFile> AllFileList;
+	std::list<UEngineFile> SoundFileList;
 	std::list<UEngineFile>::iterator CurIter;
+
+	UEngineSoundPlayer IntroSound;
 };

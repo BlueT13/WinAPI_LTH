@@ -4,6 +4,7 @@
 #include <string>
 #include <EngineBase/EngineDirectory.h>
 #include <EngineCore/EngineResourcesManager.h>
+#include "IntroLevel.h"
 
 AIntroBackground::AIntroBackground()
 {
@@ -23,6 +24,12 @@ void AIntroBackground::BeginPlay()
 	FilePath.MoveToSearchChild("Res");
 	FilePath.Move("IntroLevel");
 	AllFileList = FilePath.AllFile({ ".png", ".bmp" }, true);
+	SoundFileList = FilePath.AllFile({ ".wav" }, true);
+	for (UEngineFile& File : SoundFileList)
+	{
+		UEngineSound::Load(File.GetFullPath());
+	}
+	IntroSound = UEngineSound::SoundPlay("Intro.wav");
 
 	CurIter = AllFileList.begin();
 
@@ -41,6 +48,8 @@ void AIntroBackground::Tick(float _DeltaTime)
 	if (UEngineInput::IsDown(VK_SPACE))
 	{
 		AllFileList.clear();
+		IntroSound.Off();
+		SoundFileList.clear();
 		GEngine->ChangeLevel("TitleLevel");
 		return;
 	}
@@ -48,6 +57,8 @@ void AIntroBackground::Tick(float _DeltaTime)
 	if (CurIter == AllFileList.end())
 	{
 		AllFileList.clear();
+		IntroSound.Off();
+		SoundFileList.clear();
 		GEngine->ChangeLevel("TitleLevel");
 		return;
 	}
