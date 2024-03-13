@@ -11,10 +11,12 @@ enum class IsaacUpdateOrder
 	Bomb,
 	Door,
 	Room,
+	UI,
 };
 
 enum class IsaacRenderOrder
 {
+	Background,
 	Room,
 	Door,
 	Boss,
@@ -25,6 +27,7 @@ enum class IsaacRenderOrder
 	Bullet,
 	PlayerHead,
 	PlayerState,
+	UI,
 };
 
 enum class IsaacCollisionOrder

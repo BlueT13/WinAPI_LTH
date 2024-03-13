@@ -1,11 +1,12 @@
 #include "StartImage.h"
 #include "IsaacCore.h"
+#include "ContentsHelper.h"
 
-AStartImage::AStartImage() 
+AStartImage::AStartImage()
 {
 }
 
-AStartImage::~AStartImage() 
+AStartImage::~AStartImage()
 {
 }
 
@@ -15,14 +16,13 @@ void AStartImage::BeginPlay()
 
 	FVector HalfScale = GEngine->MainWindow.GetWindowScale().Half2D();
 
-	UImageRenderer* Background = CreateImageRenderer(0);
+	UImageRenderer* Background = CreateImageRenderer(IsaacRenderOrder::Background);
 	Background->SetImage("start");
-	UWindowImage* Image = Background->GetImage();
-	FVector BackgroundScale = Image->GetScale();
-	Background->SetTransform({ BackgroundScale.Half2D(), BackgroundScale });
+	Background->AutoImageScale();
+	Background->SetPosition(HalfScale);
 	Background->CreateAnimation("StartAnimation", "start", 0, 1, 0.2f, true);
 	Background->ChangeAnimation("StartAnimation");
-	
+
 }
 
 void AStartImage::Tick(float _DeltaTime)

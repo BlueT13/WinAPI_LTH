@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Bomb.h"
+#include "UIManager.h"
 #include <EnginePlatform/EngineInput.h>
 #include <EngineBase/EngineDebug.h>
 #include "ContentsHelper.h"
@@ -429,7 +430,15 @@ void APlayer::Die(float _DeltaTime)
 
 	if (PlayerStateRenderer->IsCurAnimationEnd())
 	{
-		GEngine->DestroyLevel("PlayLevel");
+		// 사망 이미지 랜더러 create
+		UPlayLevel* Level = dynamic_cast<UPlayLevel*>(GetWorld());
+		FVector CurRoomPos = Level->GetCurRoom()->GetActorLocation();
+
+		UIManager::DeathPortrait->SetActive(true);
+		if (UEngineInput::IsDown(VK_SPACE))
+		{
+			GEngine->DestroyLevel("PlayLevel");
+		}
 	}
 }
 

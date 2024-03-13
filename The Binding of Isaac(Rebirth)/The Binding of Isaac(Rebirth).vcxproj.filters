@@ -48,10 +48,13 @@
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Polyphemus.h">
-      <Filter>Object\PlayLevel\Actor\Item</Filter>
+      <Filter>Object\PlayLevel\Actor\Items</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>Object\PlayLevel\Actor\Item</Filter>
+      <Filter>Object\PlayLevel\Actor\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Object\PlayLevel\Actor\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -102,10 +105,13 @@
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Polyphemus.cpp">
-      <Filter>Object\PlayLevel\Actor\Item</Filter>
+      <Filter>Object\PlayLevel\Actor\Items</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>Object\PlayLevel\Actor\Item</Filter>
+      <Filter>Object\PlayLevel\Actor\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Object\PlayLevel\Actor\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,8 +148,11 @@
     <Filter Include="Object\PlayLevel\Actor\Room">
       <UniqueIdentifier>{181d8ba9-27ff-4adc-b758-fb0be251ffea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\PlayLevel\Actor\Item">
+    <Filter Include="Object\PlayLevel\Actor\Items">
       <UniqueIdentifier>{70238ffe-b069-4e61-86a2-473363c66e93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Actor\UI">
+      <UniqueIdentifier>{19b2ea49-2ad3-4029-b620-607e10d1840d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

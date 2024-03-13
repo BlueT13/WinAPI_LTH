@@ -1,6 +1,7 @@
 #include "PlayLevel.h"
 #include "Player.h"
 #include "Room.h"
+#include "UIManager.h"
 #include "Fly.h"
 #include "ContentsHelper.h"
 #include <EngineCore/EngineResourcesManager.h>
@@ -59,6 +60,7 @@ void UPlayLevel::BeginPlay()
 	}
 
 	SpawnActor<APlayer>(IsaacUpdateOrder::Player);
+	SpawnActor<UIManager>(IsaacUpdateOrder::UI);
 
 	ARoom* Room_0 = CreateRoom(0, 0, "Room_01.png", ERoomType::Normal);
 	//ARoom* Room_1 = CreateRoom(-1, 0, "Room_02.png", ERoomType::GoldRoom);
@@ -204,6 +206,7 @@ void UPlayLevel::Tick(float _DeltaTime)
 
 	if (UEngineInput::IsDown(VK_ESCAPE))
 	{
+
 		GEngine->ChangeLevel("TitleLevel");
 	}
 

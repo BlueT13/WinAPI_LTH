@@ -1,6 +1,5 @@
 #include "Fly.h"
 #include "Bullet.h"
-//#include "DukeOfFlies.h"
 
 AFly::AFly()
 {
