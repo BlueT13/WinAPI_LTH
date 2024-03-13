@@ -3,6 +3,7 @@
 #include "IntroLevel.h"
 #include "TitleLevel.h"
 #include "PlayLevel.h"
+#include <EnginePlatform/EngineSound.h>
 
 UIsaacCore::UIsaacCore()
 {
@@ -18,6 +19,7 @@ void UIsaacCore::BeginPlay()
 	UEngineCore::BeginPlay();
 
 	SetFrame(60);
+	UEngineSound::SetGlobalVolume(0.5f);
 
 	MainWindow.SetWindowScale(WindowSize);
 	MainWindow.SetWindowPosition({ 0, 0 });
@@ -26,7 +28,7 @@ void UIsaacCore::BeginPlay()
 	CreateLevel<UTitleLevel>("TitleLevel");
 	CreateLevel<UPlayLevel>("PlayLevel");
 
-	ChangeLevel("PlayLevel");
+	ChangeLevel("IntroLevel");
 }
 
 void UIsaacCore::Tick(float _DeltaTime)
