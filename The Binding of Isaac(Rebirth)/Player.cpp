@@ -459,7 +459,6 @@ void APlayer::BodyStateChange(EPlayerBodyState _State)
 			break;
 		default:
 			break;
-
 		}
 	}
 

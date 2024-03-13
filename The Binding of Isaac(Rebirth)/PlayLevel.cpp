@@ -206,9 +206,23 @@ void UPlayLevel::Tick(float _DeltaTime)
 
 	if (UEngineInput::IsDown(VK_ESCAPE))
 	{
-
-		GEngine->ChangeLevel("TitleLevel");
+		UIManager::PauseScreen->SetActive(true);
+		SetAllTimeScale(0.0f);
 	}
+
+	if (UIManager::PauseScreen->IsActive())
+	{
+		if (UEngineInput::IsDown(VK_SPACE))
+		{
+			UIManager::PauseScreen->SetActive(false);
+			SetAllTimeScale(1.0f);
+		}
+		else if(UEngineInput::IsDown(VK_RETURN))
+		{
+			GEngine->ChangeLevel("TitleLevel");
+		}
+	}
+
 
 	if (UEngineInput::IsPress('R'))
 	{
