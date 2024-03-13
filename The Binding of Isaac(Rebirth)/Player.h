@@ -9,6 +9,7 @@ class APlayer : public AActor
 	friend class ARoom;
 	friend class AMonster;
 	friend class AMonsterBullet;
+	friend class AItem;
 public:
 	static bool IsFreeCamera;
 	// constrcuter destructer

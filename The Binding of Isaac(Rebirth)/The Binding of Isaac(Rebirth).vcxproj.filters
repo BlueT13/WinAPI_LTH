@@ -47,6 +47,12 @@
     <ClInclude Include="DukeOfFlies.h">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Polyphemus.h">
+      <Filter>Object\PlayLevel\Actor\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Object\PlayLevel\Actor\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -95,6 +101,12 @@
     <ClCompile Include="DukeOfFlies.cpp">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="Polyphemus.cpp">
+      <Filter>Object\PlayLevel\Actor\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Object\PlayLevel\Actor\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameCore">
@@ -129,6 +141,9 @@
     </Filter>
     <Filter Include="Object\PlayLevel\Actor\Room">
       <UniqueIdentifier>{181d8ba9-27ff-4adc-b758-fb0be251ffea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\PlayLevel\Actor\Item">
+      <UniqueIdentifier>{70238ffe-b069-4e61-86a2-473363c66e93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
