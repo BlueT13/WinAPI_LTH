@@ -23,14 +23,19 @@ protected:
 	void BombStateUpdate(float _DeltaTime);
 	void Idle(float _DeltaTime);
 	void Explosion(float _DeltaTime);
+	void BombDestroy(float _DeltaTime);
 	void BombStateChange(EBombState _State);
+	void BombCollisionCheck(float _DeltaTime);
 
 private:
 	UImageRenderer* BombRenderer = nullptr;
 	UCollision* BombCollision = nullptr;
+	UCollision* ExplosionCollision = nullptr;
 
 	EBombState BombState = EBombState::None;
+	APlayer* Player = nullptr;
 
-	float BoomTime = 2.0f;
+	float BombPower = 1000.0f;
+	float BoomTime = 1.5f;
 };
 

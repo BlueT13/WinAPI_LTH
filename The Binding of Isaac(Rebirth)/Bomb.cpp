@@ -1,4 +1,6 @@
 #include "Bomb.h"
+#include "Monster.h"
+#include "Player.h"
 #include "ContentsHelper.h"
 
 ABomb::ABomb()
@@ -22,6 +24,11 @@ void ABomb::BeginPlay()
 	BombCollision->SetScale({ 30, 30 });
 	BombCollision->SetColType(ECollisionType::CirCle);
 
+	ExplosionCollision = CreateCollision(IsaacCollisionOrder::Bomb);
+	ExplosionCollision->SetScale({ 100, 100 });
+	ExplosionCollision->SetColType(ECollisionType::CirCle);
+	ExplosionCollision->SetActive(false);
+
 	BombStateChange(EBombState::Idle);
 }
 
@@ -43,7 +50,7 @@ void ABomb::BombStateUpdate(float _DeltaTime)
 		Explosion(_DeltaTime);
 		break;
 	case EBombState::Destroy:
-		Destroy();
+		BombDestroy(_DeltaTime);
 		break;
 	}
 }
@@ -62,13 +69,47 @@ void ABomb::Explosion(float _DeltaTime)
 {
 	BombRenderer->ChangeAnimation("Explosion");
 	BombCollision->SetActive(false);
+	ExplosionCollision->SetActive(true);
+
+	std::vector<UCollision*> Results;
+	if (ExplosionCollision->CollisionCheck(IsaacCollisionOrder::Monster, Results))
+	{
+		for (UCollision* Result : Results)
+		{
+			AActor* MonsterPtr = Result->GetOwner();
+			AMonster* Monster = dynamic_cast<AMonster*>(MonsterPtr);
+
+			FVector Dir = (Monster->GetActorLocation() - GetActorLocation()).Normalize2DReturn();
+			Monster->HitPower = Dir * BombPower;
+		}
+	}
+
+	if (ExplosionCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
+	{
+		/*Player = 
+
+		FVector Dir = (Player->GetActorLocation() - GetActorLocation()).Normalize2DReturn();
+		Player->HitPower = Dir * BombPower;*/
+
+	}
+
+	BombStateChange(EBombState::Destroy);
+}
+
+void ABomb::BombDestroy(float _DeltaTime)
+{
 	if (BombRenderer->IsCurAnimationEnd())
 	{
-		BombStateChange(EBombState::Destroy);
+		Destroy();
 	}
 }
 
 void ABomb::BombStateChange(EBombState _State)
 {
 	BombState = _State;
+}
+
+void ABomb::BombCollisionCheck(float _DeltaTime)
+{
+
 }

@@ -35,8 +35,6 @@ protected:
 	void SendFlyStart();
 	void DieStart();
 
-	void SetHitDir(FVector _BulletDir);
-	void GetHit();
 	void MonsterTouchWall(float _DeltaTime, EActorDir _Dir) override;
 
 private:

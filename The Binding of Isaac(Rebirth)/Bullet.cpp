@@ -34,15 +34,14 @@ void ABullet::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-	std::vector<UCollision*> Result;
-	if (true == BulletCollision->CollisionCheck(IsaacCollisionOrder::Monster, Result))
+	std::vector<UCollision*> Results;
+	if (true == BulletCollision->CollisionCheck(IsaacCollisionOrder::Monster, Results))
 	{
-		UCollision* Collision = Result[0];
+		UCollision* Collision = Results[0];
 		AActor* MonsterPtr = Collision->GetOwner();
 		AMonster* Monster = dynamic_cast<AMonster*>(MonsterPtr);
 
 		Monster->HitPower = Dir * Speed;
-		Monster->SetHitDir(Dir);
 		Monster->GetHit();
 
 		BulletStateChange(EBulletState::Crashed);

@@ -172,17 +172,6 @@ void ADukeOfFlies::DieStart()
 	MonsterRenderer->ChangeAnimation("Die");
 }
 
-void ADukeOfFlies::SetHitDir(FVector _BulletDir)
-{
-	HitDir = _BulletDir;
-}
-
-void ADukeOfFlies::GetHit()
-{
-	AMonster::GetHit();
-	MonsterMoveVector = HitDir;
-}
-
 void ADukeOfFlies::MonsterTouchWall(float _DeltaTime, EActorDir _Dir)
 {
 	float Size = MonsterMoveVector.Size2D();
