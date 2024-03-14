@@ -204,12 +204,16 @@ void UPlayLevel::Tick(float _DeltaTime)
 		}
 	}
 
-	if (UEngineInput::IsDown(VK_ESCAPE))
+	// esc 버튼이 눌리고 퍼즈창이 꺼져있다면
+	if (UEngineInput::IsDown(VK_ESCAPE) && !UIManager::PauseScreen->IsActive())
 	{
+		// 퍼즈창을 띄운다.
 		UIManager::PauseScreen->SetActive(true);
 		SetAllTimeScale(0.0f);
+		return;
 	}
 
+	// 퍼즈창이 켜져있을 때
 	if (UIManager::PauseScreen->IsActive())
 	{
 		if (UEngineInput::IsDown(VK_SPACE))
@@ -217,9 +221,11 @@ void UPlayLevel::Tick(float _DeltaTime)
 			UIManager::PauseScreen->SetActive(false);
 			SetAllTimeScale(1.0f);
 		}
-		else if(UEngineInput::IsDown(VK_RETURN))
+		else if (UEngineInput::IsDown(VK_ESCAPE))
 		{
 			GEngine->ChangeLevel("TitleLevel");
+			IsEnd = true;
+			GEngine->DestroyLevel("PlayLevel");
 		}
 	}
 
@@ -233,5 +239,8 @@ void UPlayLevel::Tick(float _DeltaTime)
 void UPlayLevel::End()
 {
 	GEngine->CreateLevel<UPlayLevel>("PlayLevel");
-	GEngine->ChangeLevel("PlayLevel");
+	if (IsEnd = false)
+	{
+		GEngine->ChangeLevel("PlayLevel");
+	}
 }

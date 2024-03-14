@@ -37,5 +37,7 @@ private:
 	ARoom* PrevRoom = nullptr;
 	bool IsFreeCamera = false;
 	float RoomMoveCameraTime = 0.0f;
+	bool IsEnd = false;
+	bool IsEscape = false;
 };
 
