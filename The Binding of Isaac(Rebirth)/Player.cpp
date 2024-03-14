@@ -93,6 +93,11 @@ void APlayer::Tick(float _DeltaTime)
 
 	UContentsHelper::MainPlayerLocation = this->GetActorLocation();
 
+	if (UEngineInput::IsDown('Q'))
+	{
+		PlayerCollision->SetActive(false);
+	}
+
 	if (UEngineInput::IsDown('F'))
 	{
 		IsFreeCamera = !IsFreeCamera;

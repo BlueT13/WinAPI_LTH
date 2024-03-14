@@ -1,15 +1,14 @@
-#include "Fly.h"
-#include "Bullet.h"
+#include "BossFly.h"
 
-AFly::AFly()
+ABossFly::ABossFly() 
 {
 }
 
-AFly::~AFly()
+ABossFly::~ABossFly() 
 {
 }
 
-void AFly::BeginPlay()
+void ABossFly::BeginPlay()
 {
 	AMonster::BeginPlay();
 
@@ -33,14 +32,14 @@ void AFly::BeginPlay()
 	MonsterCollision->SetColType(ECollisionType::CirCle);
 }
 
-void AFly::Tick(float _DeltaTime)
+void ABossFly::Tick(float _DeltaTime)
 {
 	// Player, PlayerLocation, MonsterPos, MonsterDir, MonsterDirNormal 받아온다.
 	// MonsterStateUpdate(_DeltaTime), MonsterMoveUpdate(_DeltaTime)를 실행
 	AMonster::Tick(_DeltaTime);
 }
 
-void AFly::MonsterStateUpdate(float _DeltaTime)
+void ABossFly::MonsterStateUpdate(float _DeltaTime)
 {
 	switch (MonsterState)
 	{
@@ -48,8 +47,7 @@ void AFly::MonsterStateUpdate(float _DeltaTime)
 		Spawn(_DeltaTime);
 		break;
 	case EMonsterState::Idle:
-		Idle(_DeltaTime);
-		break;
+		Idle(_DeltaTime)
 	case EMonsterState::Move:
 		Move(_DeltaTime);
 		break;
@@ -61,45 +59,23 @@ void AFly::MonsterStateUpdate(float _DeltaTime)
 	}
 }
 
-void AFly::Spawn(float _DeltaTime)
+void ABossFly::Spawn(float _DeltaTime)
 {
 	MonsterCollision->SetActive(false);
 	if (SpawnRenderer->IsCurAnimationEnd())
 	{
 		SpawnRenderer->SetActive(false);
 		MonsterCollision->SetActive(true);
-		if (nullptr == Boss)
-		{
-			MonsterStateChange(EMonsterState::Move);
-		}
-		else {
-			MonsterStateChange(EMonsterState::Idle);
-		}
-	}
-}
-
-void AFly::Idle(float _DeltaTime)
-{
-	if (Boss->IsDestroy())
-	{
 		MonsterStateChange(EMonsterState::Move);
-		return;
 	}
-	FVector Dir = FVector::Right * 100.0f;
-
-	Angle += _DeltaTime * 50.0f;
-
-	Dir.RotationZToDeg(Angle);
-
-	SetActorLocation(Boss->GetActorLocation() + Dir);
 }
 
-void AFly::Move(float _DeltaTime)
+void ABossFly::Move(float _DeltaTime)
 {
 	MonsterMoveVector = MonsterToPlayerDirNormal * MonsterMoveSpeed;
 }
 
-void AFly::Die(float _DeltaTime)
+void ABossFly::Die(float _DeltaTime)
 {
 	if (MonsterRenderer->IsCurAnimationEnd())
 	{
@@ -107,7 +83,7 @@ void AFly::Die(float _DeltaTime)
 	}
 }
 
-void AFly::MonsterStateChange(EMonsterState _State)
+void ABossFly::MonsterStateChange(EMonsterState _State)
 {
 	if (MonsterState != _State)
 	{
@@ -129,24 +105,24 @@ void AFly::MonsterStateChange(EMonsterState _State)
 	MonsterState = _State;
 }
 
-void AFly::SpawnStart()
+void ABossFly::SpawnStart()
 {
 	SpawnRenderer->ChangeAnimation("Spawn");
 	MonsterRenderer->ChangeAnimation("Move");
 }
 
-void AFly::MoveStart()
+void ABossFly::MoveStart()
 {
 	MonsterRenderer->ChangeAnimation("Move");
 }
 
-void AFly::DieStart()
+void ABossFly::DieStart()
 {
 	MonsterCollision->SetActive(false);
 	MonsterRenderer->ChangeAnimation("Die");
 }
 
-void AFly::MonsterTouchWall(float _DeltaTime, EActorDir _Dir)
+void ABossFly::MonsterTouchWall(float _DeltaTime, EActorDir _Dir)
 {
 	switch (_Dir)
 	{
