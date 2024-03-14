@@ -232,6 +232,7 @@ void UPlayLevel::Tick(float _DeltaTime)
 
 	if (UEngineInput::IsPress('R'))
 	{
+		IsEnd = false;
 		GEngine->DestroyLevel("PlayLevel");
 	}
 }
@@ -239,7 +240,7 @@ void UPlayLevel::Tick(float _DeltaTime)
 void UPlayLevel::End()
 {
 	GEngine->CreateLevel<UPlayLevel>("PlayLevel");
-	if (IsEnd = false)
+	if (IsEnd == false)
 	{
 		GEngine->ChangeLevel("PlayLevel");
 	}

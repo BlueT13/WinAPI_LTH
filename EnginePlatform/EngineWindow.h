@@ -18,7 +18,7 @@ public:
 	UEngineWindow& operator=(const UEngineWindow& _Other) = delete;
 	UEngineWindow& operator=(UEngineWindow&& _Other) noexcept = delete;
 
-	void Open(std::string_view _Title = "Title");
+	void Open(std::string_view _Title = "Title", std::string_view _IconPath = "");
 
 	static void Init(HINSTANCE _hInst);
 	static unsigned __int64 WindowMessageLoop(void(*_Update)(), void(*_End)());
@@ -50,13 +50,21 @@ public:
 		ClearColor = _Color;
 	}
 
+	void SetWindowTitle(std::string_view _Text)
+	{
+		SetWindowTextA(hWnd, _Text.data());
+	}
 	
+	void SetWindowSmallIcon();
+
 	FVector GetMousePosition();
 
 	void Off()
 	{
 		WindowLive = false;
 	}
+
+	void CursorOff();
 
 protected:
 
@@ -76,6 +84,5 @@ private:
 	UWindowImage* BackBufferImage = nullptr;
 	FVector Scale;
 	FVector Position;
-
 };
 
