@@ -168,7 +168,7 @@ void APooter::DieStart()
 	MonsterRenderer->ChangeAnimation("Die");
 }
 
-void APooter::MonsterTouchWall(float _DeltaTime, EActorDir _Dir)
+void APooter::MonsterTouchWall(EActorDir _Dir)
 {
 	switch (_Dir)
 	{

@@ -68,7 +68,7 @@ protected:
 	void CalLastMoveVector(float _DeltaTime);
 	void MoveLastMoveVector(float _DeltaTime);
 
-	virtual void MonsterTouchWall(float _DeltaTime, EActorDir _Dir) {};
+	virtual void MonsterTouchWall(EActorDir _Dir) {};
 
 private:
 

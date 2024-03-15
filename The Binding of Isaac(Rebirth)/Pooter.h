@@ -33,7 +33,7 @@ protected:
 	void AttackStart();
 	void DieStart();
 
-	void MonsterTouchWall(float _DeltaTime, EActorDir _Dir) override;
+	void MonsterTouchWall(EActorDir _Dir) override;
 
 	UCollision* PlayerCheckCollision = nullptr;
 	FTransform PlayerCheckCollisionTrans;

@@ -68,11 +68,12 @@ void AFly::Spawn(float _DeltaTime)
 	{
 		SpawnRenderer->SetActive(false);
 		MonsterCollision->SetActive(true);
-		if (nullptr == Boss)
+		if (Boss == nullptr)
 		{
 			MonsterStateChange(EMonsterState::Move);
 		}
-		else {
+		else
+		{
 			MonsterStateChange(EMonsterState::Idle);
 		}
 	}
@@ -80,22 +81,39 @@ void AFly::Spawn(float _DeltaTime)
 
 void AFly::Idle(float _DeltaTime)
 {
-	if (Boss->IsDestroy())
-	{
-		MonsterStateChange(EMonsterState::Move);
-		return;
-	}
-	FVector Dir = FVector::Right * 100.0f;
+	Angle = _DeltaTime * 100.0f;
 
-	Angle += _DeltaTime * 50.0f;
+	FlySpinDir.RotationZToDeg(Angle);
 
-	Dir.RotationZToDeg(Angle);
-
-	SetActorLocation(Boss->GetActorLocation() + Dir);
+	SetActorLocation(Boss->GetActorLocation() + FlySpinDir);
 }
 
 void AFly::Move(float _DeltaTime)
 {
+	UPlayLevel* Level = dynamic_cast<UPlayLevel*>(GetWorld());
+	FVector CurRoomPos = Level->GetCurRoom()->GetActorLocation();
+
+	FVector MonsterNextPos = GetActorLocation() + MonsterLastMoveVector * _DeltaTime;
+	if (MonsterNextPos.X < CurRoomPos.X - 320)
+	{
+		MonsterPos.X = CurRoomPos.X - 320;
+		SetActorLocation(MonsterPos);
+	}
+	if (MonsterNextPos.Y < CurRoomPos.Y - 170)
+	{
+		MonsterPos.Y = CurRoomPos.Y - 170;
+		SetActorLocation(MonsterPos);
+	}
+	if (MonsterNextPos.X > CurRoomPos.X + 320)
+	{
+		MonsterPos.X = CurRoomPos.X + 320;
+		SetActorLocation(MonsterPos);
+	}
+	if (MonsterNextPos.Y > CurRoomPos.Y + 170)
+	{
+		MonsterPos.Y = CurRoomPos.Y + 170;
+		SetActorLocation(MonsterPos);
+	}
 	MonsterMoveVector = MonsterToPlayerDirNormal * MonsterMoveSpeed;
 }
 
@@ -146,11 +164,13 @@ void AFly::DieStart()
 	MonsterRenderer->ChangeAnimation("Die");
 }
 
-void AFly::MonsterTouchWall(float _DeltaTime, EActorDir _Dir)
+void AFly::MonsterTouchWall(EActorDir _Dir)
 {
+
 	switch (_Dir)
 	{
 	case EActorDir::Left:
+
 		MonsterLastMoveVector.X = 0.0f;
 		break;
 	case EActorDir::Up:
@@ -165,4 +185,10 @@ void AFly::MonsterTouchWall(float _DeltaTime, EActorDir _Dir)
 	default:
 		break;
 	}
+}
+
+void AFly::SetBoss(AActor* _Boss)
+{
+	Boss = _Boss;
+	FlySpinDir = (GetActorLocation() - Boss->GetActorLocation()).Normalize2DReturn() * 80;
 }

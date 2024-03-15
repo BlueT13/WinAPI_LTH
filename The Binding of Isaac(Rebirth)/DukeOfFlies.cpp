@@ -13,7 +13,7 @@ void ADukeOfFlies::BeginPlay()
 {
 	AMonster::BeginPlay();
 
-	MonsterHp = 10;
+	MonsterHp = 1;
 	MonsterMoveSpeed = 100.f;
 	SpawnFlyCoolTime = 0.0f;
 
@@ -32,7 +32,7 @@ void ADukeOfFlies::BeginPlay()
 	MonsterRenderer->CreateAnimation("Die", "LargeBloodExplosion.png", 0, 9, 0.05f, false);
 
 	MonsterCollision = CreateCollision(IsaacCollisionOrder::Monster);
-	MonsterCollision->SetScale({ 150, 150 });
+	MonsterCollision->SetScale({ 100, 100 });
 	MonsterCollision->SetColType(ECollisionType::CirCle);
 
 	MonsterMoveVector = { -1,-1 };
@@ -95,10 +95,9 @@ void ADukeOfFlies::SpawnFly(float _DeltaTime)
 	{
 		ARoom* CurRoom = GetCurRoom();
 		AFly* Fly = GetWorld()->SpawnActor<AFly>(IsaacRenderOrder::Monster);
+		Fly->SetActorLocation(GetActorLocation() + MonsterToPlayerDirNormal * 80);
 		Fly->SetMonsterRoom(CurRoom);
 		Fly->SetBoss(this);
-		//Fly->SetActorLocation(GetActorLocation() + MonsterToPlayerDirNormal * 100);
-		Fly->SetActorLocation(GetActorLocation() + FVector::Right * 80);
 		Fly->MonsterStateChange(EMonsterState::Spawn);
 		CurRoom->PushBackMonster(Fly);
 		Flys.push_back(Fly);
@@ -121,6 +120,13 @@ void ADukeOfFlies::Die(float _DeltaTime)
 	{
 		Destroy();
 	}
+
+	for (size_t i = 0; i < Flys.size(); i++)
+	{
+		Flys[i]->MonsterStateChange(EMonsterState::Move);
+	}
+
+	return;
 }
 
 void ADukeOfFlies::MonsterStateChange(EMonsterState _State)
@@ -174,7 +180,7 @@ void ADukeOfFlies::DieStart()
 	MonsterRenderer->ChangeAnimation("Die");
 }
 
-void ADukeOfFlies::MonsterTouchWall(float _DeltaTime, EActorDir _Dir)
+void ADukeOfFlies::MonsterTouchWall(EActorDir _Dir)
 {
 	float Size = MonsterMoveVector.Size2D();
 	FVector Dir = MonsterMoveVector.Normalize2DReturn();

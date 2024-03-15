@@ -18,11 +18,8 @@ public:
 	AFly& operator=(const AFly& _Other) = delete;
 	AFly& operator=(AFly&& _Other) noexcept = delete;
 
-	void SetBoss(AActor* _Boss)
-	{
-		Boss = _Boss;
-	}
-	
+	void SetBoss(AActor* _Boss);
+
 	void SetFlySpawnDir(FVector _Dir)
 	{
 		FlySpawnDir = _Dir;
@@ -42,10 +39,11 @@ protected:
 	void MoveStart();
 	void DieStart();
 
-	void MonsterTouchWall(float _DeltaTime, EActorDir _Dir) override;
+	void MonsterTouchWall(EActorDir _Dir) override;
 private:
 	AActor* Boss = nullptr;
 	float Angle = 0.0f;
 	FVector FlySpawnDir = FVector::Zero;
+	FVector FlySpinDir = FVector::Zero;
 };
 

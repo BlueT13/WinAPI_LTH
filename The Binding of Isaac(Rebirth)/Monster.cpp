@@ -110,7 +110,6 @@ void AMonster::CalLastMoveVector(float _DeltaTime)
 void AMonster::MoveLastMoveVector(float _DeltaTime)
 {
 	UPlayLevel* Level = dynamic_cast<UPlayLevel*>(GetWorld());
-
 	FVector CurRoomPos = Level->GetCurRoom()->GetActorLocation();
 
 	FVector MonsterPos = GetActorLocation();
@@ -118,23 +117,35 @@ void AMonster::MoveLastMoveVector(float _DeltaTime)
 	bool OutCheck = false;
 	if (MonsterNextPos.X < CurRoomPos.X - 320)
 	{
+		//MonsterPos.X = CurRoomPos.X - 320;
+		//SetActorLocation(MonsterPos);
+
 		OutCheck = true;
-		MonsterTouchWall(_DeltaTime, EActorDir::Left);
+		MonsterTouchWall(EActorDir::Left);
 	}
 	if (MonsterNextPos.Y < CurRoomPos.Y - 170)
 	{
+		//MonsterPos.Y = CurRoomPos.Y - 170;
+		//SetActorLocation(MonsterPos);
+
 		OutCheck = true;
-		MonsterTouchWall(_DeltaTime, EActorDir::Up);
+		MonsterTouchWall(EActorDir::Up);
 	}
 	if (MonsterNextPos.X > CurRoomPos.X + 320)
 	{
+		//MonsterPos.X = CurRoomPos.X + 320;
+		//SetActorLocation(MonsterPos);
+
 		OutCheck = true;
-		MonsterTouchWall(_DeltaTime, EActorDir::Right);
+		MonsterTouchWall(EActorDir::Right);
 	}
 	if (MonsterNextPos.Y > CurRoomPos.Y + 170)
 	{
+		//MonsterPos.Y = CurRoomPos.Y + 170;
+		//SetActorLocation(MonsterPos);
+
 		OutCheck = true;
-		MonsterTouchWall(_DeltaTime, EActorDir::Down);
+		MonsterTouchWall(EActorDir::Down);
 	}
 
 	if (OutCheck == false)
