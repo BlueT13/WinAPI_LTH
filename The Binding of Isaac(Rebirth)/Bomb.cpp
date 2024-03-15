@@ -78,6 +78,10 @@ void ABomb::Explosion(float _DeltaTime)
 		{
 			AActor* MonsterPtr = Result->GetOwner();
 			AMonster* Monster = dynamic_cast<AMonster*>(MonsterPtr);
+			if (Monster == nullptr)
+			{
+				MsgBoxAssert("충돌된 Collision의 몬스터가 nullptr입니다.");
+			}
 
 			FVector Dir = (Monster->GetActorLocation() - GetActorLocation()).Normalize2DReturn();
 			Monster->HitPower = Dir * BombPower;
@@ -86,7 +90,7 @@ void ABomb::Explosion(float _DeltaTime)
 
 	if (ExplosionCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
 	{
-		/*Player = 
+		/*Player =
 
 		FVector Dir = (Player->GetActorLocation() - GetActorLocation()).Normalize2DReturn();
 		Player->HitPower = Dir * BombPower;*/

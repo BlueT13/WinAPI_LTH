@@ -56,6 +56,9 @@
     <ClInclude Include="UIManager.h">
       <Filter>Object\PlayLevel\Actor\UI</Filter>
     </ClInclude>
+    <ClInclude Include="MiniMap.h">
+      <Filter>Object\PlayLevel\Actor\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -111,6 +114,9 @@
       <Filter>Object\PlayLevel\Actor\Items</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
+      <Filter>Object\PlayLevel\Actor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMap.cpp">
       <Filter>Object\PlayLevel\Actor\UI</Filter>
     </ClCompile>
   </ItemGroup>

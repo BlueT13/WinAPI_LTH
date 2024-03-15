@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Room.h"
 #include "UIManager.h"
+#include "MiniMap.h"
 #include "Fly.h"
 #include "ContentsHelper.h"
 #include <EngineCore/EngineResourcesManager.h>
@@ -61,21 +62,23 @@ void UPlayLevel::BeginPlay()
 
 	SpawnActor<APlayer>(IsaacUpdateOrder::Player);
 	SpawnActor<UIManager>(IsaacUpdateOrder::UI);
+	SpawnActor<AMiniMap>(IsaacUpdateOrder::UI);
 
 	ARoom* Room_0 = CreateRoom(0, 0, "Room_01.png", ERoomType::Normal);
-	//ARoom* Room_1 = CreateRoom(-1, 0, "Room_02.png", ERoomType::GoldRoom);
-	//ARoom* Room_2 = CreateRoom(1, 0, "Room_01.png", ERoomType::Normal);
-	ARoom* Room_3 = CreateRoom(0, -1, "Room_02.png", ERoomType::Normal);
-	//ARoom* Room_4 = CreateRoom(0, 1, "Room_01.png", ERoomType::Normal);
-	//ARoom* Room_5 = CreateRoom(0, 2, "Room_02.png", ERoomType::Normal);
-	//ARoom* Room_6 = CreateRoom(1, 2, "Room_01.png", ERoomType::Normal);
-	ARoom* Room_7 = CreateRoom(0, -2, "Room_02.png", ERoomType::Normal);
-	ARoom* Room_8 = CreateRoom(-1, -2, "Room_03.png", ERoomType::BossRoom);
+	ARoom* Room_1 = CreateRoom(0, 1, "Room_01.png", ERoomType::GoldRoom);
+	ARoom* Room_2 = CreateRoom(-1, 0, "Room_02.png", ERoomType::Normal);
+	ARoom* Room_3 = CreateRoom(-2, 0, "Room_01.png", ERoomType::Normal);
+	ARoom* Room_4 = CreateRoom(1, 0, "Room_02.png", ERoomType::Normal);
+	ARoom* Room_5 = CreateRoom(2, 0, "Room_01.png", ERoomType::Normal);
+	ARoom* Room_6 = CreateRoom(0, -1, "Room_02.png", ERoomType::Normal);
+	ARoom* Room_7 = CreateRoom(0, -2, "Room_01.png", ERoomType::Normal);
+	ARoom* Room_8 = CreateRoom(-1, -2, "Room_02.png", ERoomType::Normal);
+	ARoom* Room_9 = CreateRoom(-2, -2, "Room_03.png", ERoomType::BossRoom);
 
-	//Room_3->CreateMonsters(EMonsterType::Fly, { -200, 0 });
-	//Room_7->CreateMonsters(EMonsterType::Pooter, { -100, -100 });
-	//Room_7->CreateMonsters(EMonsterType::Pooter, { 100, -100 });
-	Room_3->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
+	Room_6->CreateMonsters(EMonsterType::Fly, { -200, 0 });
+	Room_7->CreateMonsters(EMonsterType::Pooter, { -100, 0 });
+	Room_8->CreateMonsters(EMonsterType::Pooter, { -100, 0 });
+	Room_9->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
 
 
 	SetPrevRoom(0, 0);
@@ -201,6 +204,21 @@ void UPlayLevel::Tick(float _DeltaTime)
 			RoomMoveCameraTime = 0.0f;
 			PrevRoom = CurRoom;
 			CurRoom->RoomCameraFocus();
+		}
+	}
+
+	// 미니맵 확대 축소
+	if (UEngineInput::IsDown(VK_TAB))
+	{
+		if (AMiniMap::MiniMapS->IsActive())
+		{
+			AMiniMap::MiniMapS->SetActive(false);
+			AMiniMap::MiniMapL->SetActive(true);
+		}
+		else
+		{
+			AMiniMap::MiniMapS->SetActive(true);
+			AMiniMap::MiniMapL->SetActive(false);
 		}
 	}
 

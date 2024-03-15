@@ -193,6 +193,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="MiniMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Monster.h">
       <SubType>
       </SubType>
@@ -256,6 +260,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Item.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MiniMap.cpp">
       <SubType>
       </SubType>
     </ClCompile>
