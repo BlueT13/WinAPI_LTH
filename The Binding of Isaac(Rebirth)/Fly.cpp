@@ -90,6 +90,8 @@ void AFly::Idle(float _DeltaTime)
 
 void AFly::Move(float _DeltaTime)
 {
+	SpawnRenderer->SetActive(false);
+	MonsterCollision->SetActive(true);
 	UPlayLevel* Level = dynamic_cast<UPlayLevel*>(GetWorld());
 	FVector CurRoomPos = Level->GetCurRoom()->GetActorLocation();
 
