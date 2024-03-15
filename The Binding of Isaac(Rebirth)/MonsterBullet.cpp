@@ -31,8 +31,8 @@ void AMonsterBullet::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-	std::vector<UCollision*> Result;
-	if (true == MonsterBulletCollision->CollisionCheck(IsaacCollisionOrder::Player, Result))
+	std::vector<UCollision*> Results;
+	if (true == MonsterBulletCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
 	{
 		Player = APlayer::GetMainPlayer();
 		Player->SetHitPower(Dir * Speed);

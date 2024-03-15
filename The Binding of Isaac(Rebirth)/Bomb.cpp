@@ -36,6 +36,16 @@ void ABomb::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
+
+	std::vector<UCollision*> Results;
+	if (true == BombCollision->CollisionCheck(IsaacCollisionOrder::Bomb, Results))
+	{
+
+	}
+
+
+
+
 	BombStateUpdate(_DeltaTime);
 }
 

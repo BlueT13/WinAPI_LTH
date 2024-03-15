@@ -275,8 +275,8 @@ void ARoom::Tick(float _DeltaTime)
 
 		ERoomDir Dir = static_cast<ERoomDir>(i);
 
-		std::vector<UCollision*> Result;
-		if (true == DoorCollision[i]->CollisionCheck(IsaacCollisionOrder::Player, Result))
+		std::vector<UCollision*> Results;
+		if (true == DoorCollision[i]->CollisionCheck(IsaacCollisionOrder::Player, Results))
 		{
 			Player->BodyStateChange(EPlayerBodyState::Wait);
 

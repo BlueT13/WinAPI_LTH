@@ -69,8 +69,8 @@ void AMonster::Tick(float _DeltaTime)
 		Player->SetHitPower(MonsterToPlayerDirNormal * 400.0f);
 	}
 
-	std::vector<UCollision*> Result;
-	if (true == MonsterCollision->CollisionCheck(IsaacCollisionOrder::Player, Result))
+	std::vector<UCollision*> Results;
+	if (true == MonsterCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
 	{
 		Player->HeadStateChange(EPlayerHeadState::GetHit);
 	}
