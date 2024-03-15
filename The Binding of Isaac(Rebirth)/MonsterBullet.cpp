@@ -36,7 +36,10 @@ void AMonsterBullet::Tick(float _DeltaTime)
 	{
 		Player = APlayer::GetMainPlayer();
 		Player->SetHitPower(Dir * Speed);
-		Player->HeadStateChange(EPlayerHeadState::GetHit);
+		if (Player->PlayerCollision->IsActive())
+		{
+			Player->HeadStateChange(EPlayerHeadState::GetHit);
+		}
 
 		MonsterBulletStateChange(EBulletState::Crashed);
 	}
