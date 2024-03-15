@@ -1,5 +1,6 @@
 #include "Fly.h"
 #include "Bullet.h"
+#include "DukeOfFlies.h"
 
 AFly::AFly()
 {
@@ -123,6 +124,12 @@ void AFly::Die(float _DeltaTime)
 {
 	if (MonsterRenderer->IsCurAnimationEnd())
 	{
+		if (nullptr != Boss)
+		{
+			ADukeOfFlies* BossPtr = dynamic_cast<ADukeOfFlies*>(Boss);
+			BossPtr->Flys[Index] = nullptr;
+		}
+
 		Destroy();
 	}
 }
@@ -189,8 +196,11 @@ void AFly::MonsterTouchWall(EActorDir _Dir)
 	}
 }
 
-void AFly::SetBoss(AActor* _Boss)
+void AFly::SetBoss(ADukeOfFlies* _Boss)
 {
 	Boss = _Boss;
-	FlySpinDir = (GetActorLocation() - Boss->GetActorLocation()).Normalize2DReturn() * 80;
+	if (Boss != nullptr)
+	{
+		FlySpinDir = (GetActorLocation() - Boss->GetActorLocation()).Normalize2DReturn() * 80;
+	}
 }

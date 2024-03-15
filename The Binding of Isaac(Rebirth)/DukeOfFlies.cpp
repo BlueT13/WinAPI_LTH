@@ -13,7 +13,7 @@ void ADukeOfFlies::BeginPlay()
 {
 	AMonster::BeginPlay();
 
-	MonsterHp = 1;
+	MonsterHp = 10;
 	MonsterMoveSpeed = 100.f;
 	AttackCoolTime = 0.0f;
 
@@ -75,7 +75,7 @@ void ADukeOfFlies::Spawn(float _DeltaTime)
 	MonsterCollision->SetActive(false);
 	if (SpawnRenderer->IsCurAnimationEnd())
 	{
-		SpawnRenderer->Destroy();
+		SpawnRenderer->SetActive(false);
 		MonsterCollision->SetActive(true);
 		MonsterStateChange(EMonsterState::Move);
 	}
@@ -91,7 +91,7 @@ void ADukeOfFlies::Move(float _DeltaTime)
 
 void ADukeOfFlies::Attack(float _DeltaTime)
 {
-	if (SpawnCount < 2)
+	if (SpawnCount < 4)
 	{
 		SpawnFly(_DeltaTime);
 	}
@@ -110,7 +110,9 @@ void ADukeOfFlies::SpawnFly(float _DeltaTime)
 		Fly->SetActorLocation(GetActorLocation() + MonsterToPlayerDirNormal * 80);
 		Fly->SetMonsterRoom(CurRoom);
 		Fly->SetBoss(this);
+		Fly->Index = Flys.size();
 		Fly->MonsterStateChange(EMonsterState::Spawn);
+		CurRoom->PushBackMonster(Fly);
 		CurRoom->PushBackMonster(Fly);
 		Flys.push_back(Fly);
 		AttackCoolTime = AttackRate;
@@ -125,9 +127,17 @@ void ADukeOfFlies::SendFly(float _DeltaTime)
 	{
 		for (size_t i = 0; i < Flys.size(); i++)
 		{
-			Flys[i]->MonsterStateChange(EMonsterState::Move);
+			if (nullptr == Flys[i])
+			{
+				continue;
+			}
+
+			if (Flys[i]->IsActive())
+			{
+				Flys[i]->MonsterStateChange(EMonsterState::Move);
+			}
 		}
-		SpawnCount = 0; 
+		SpawnCount = 0;
 		MonsterStateChange(EMonsterState::Move);
 	}
 }
@@ -141,6 +151,12 @@ void ADukeOfFlies::Die(float _DeltaTime)
 
 	for (size_t i = 0; i < Flys.size(); i++)
 	{
+		if (nullptr == Flys[i])
+		{
+			continue;
+		}
+
+		Flys[i]->SetBoss(nullptr);
 		Flys[i]->MonsterStateChange(EMonsterState::Move);
 	}
 
@@ -184,7 +200,7 @@ void ADukeOfFlies::MoveStart()
 
 void ADukeOfFlies::AttackStart()
 {
-	if (SpawnCount < 2)
+	if (SpawnCount < 4)
 	{
 		MonsterRenderer->ChangeAnimation("SpawnFly");
 	}

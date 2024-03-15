@@ -7,6 +7,8 @@
 // Ό³Έν :
 class ADukeOfFlies : public AMonster
 {
+	friend class AFly;
+
 public:
 	// constrcuter destructer
 	ADukeOfFlies();
@@ -39,7 +41,7 @@ protected:
 
 private:
 	float AttackCoolTime = 0.0f;
-	float AttackRate = 2.0f;
+	float AttackRate = 1.0f;
 	std::vector<AFly*> Flys;
 	int SpawnCount = 0;
 };

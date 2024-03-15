@@ -18,12 +18,14 @@ public:
 	AFly& operator=(const AFly& _Other) = delete;
 	AFly& operator=(AFly&& _Other) noexcept = delete;
 
-	void SetBoss(AActor* _Boss);
+	void SetBoss(ADukeOfFlies* _Boss);
 
 	void SetFlySpawnDir(FVector _Dir)
 	{
 		FlySpawnDir = _Dir;
 	}
+
+	int Index = -1;
 
 protected:
 	void BeginPlay() override;
