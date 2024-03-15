@@ -78,9 +78,9 @@ void AMonster::Tick(float _DeltaTime)
 	MonsterMoveUpdate(_DeltaTime);
 }
 
-void AMonster::GetHit()
+void AMonster::GetHit(float _Damage)
 {
-	MonsterHp--;
+	MonsterHp -= _Damage;
 	if (MonsterHp <= 0)
 	{
 		MonsterStateChange(EMonsterState::Die);

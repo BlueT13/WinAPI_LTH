@@ -39,6 +39,7 @@ private:
 	EBulletState BulletState = EBulletState::None;
 	bool IsDestroy = false;
 
+	float BulletDamage = 1.0f;
 	float BulletLiveTime = 0.0f;
 	float BulletDestroyTime = 0.8f;
 
