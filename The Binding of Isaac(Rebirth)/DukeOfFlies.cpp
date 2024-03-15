@@ -15,7 +15,7 @@ void ADukeOfFlies::BeginPlay()
 
 	MonsterHp = 1;
 	MonsterMoveSpeed = 100.f;
-	SpawnFlyCoolTime = 0.0f;
+	AttackCoolTime = 0.0f;
 
 	SpawnRenderer = CreateImageRenderer(IsaacRenderOrder::SpawnEffect);
 	SpawnRenderer->SetImage("SpawnEffect_Small.png");
@@ -46,7 +46,7 @@ void ADukeOfFlies::Tick(float _DeltaTime)
 
 	AddActorLocation(MonsterMoveVector * _DeltaTime * MonsterMoveSpeed);
 
-	SpawnFlyCoolTime -= _DeltaTime;
+	AttackCoolTime -= _DeltaTime;
 }
 
 void ADukeOfFlies::MonsterStateUpdate(float _DeltaTime)
@@ -60,7 +60,7 @@ void ADukeOfFlies::MonsterStateUpdate(float _DeltaTime)
 		Move(_DeltaTime);
 		break;
 	case EMonsterState::Attack:
-		SpawnFly(_DeltaTime);
+		Attack(_DeltaTime);
 		break;
 	case EMonsterState::Die:
 		Die(_DeltaTime);
@@ -83,9 +83,21 @@ void ADukeOfFlies::Spawn(float _DeltaTime)
 
 void ADukeOfFlies::Move(float _DeltaTime)
 {
-	if (SpawnFlyCoolTime <= 0)
+	if (AttackCoolTime <= 0)
 	{
 		MonsterStateChange(EMonsterState::Attack);
+	}
+}
+
+void ADukeOfFlies::Attack(float _DeltaTime)
+{
+	if (SpawnCount < 2)
+	{
+		SpawnFly(_DeltaTime);
+	}
+	else
+	{
+		SendFly(_DeltaTime);
 	}
 }
 
@@ -101,16 +113,22 @@ void ADukeOfFlies::SpawnFly(float _DeltaTime)
 		Fly->MonsterStateChange(EMonsterState::Spawn);
 		CurRoom->PushBackMonster(Fly);
 		Flys.push_back(Fly);
-		SpawnFlyCoolTime = SpawnFlyRate;
+		AttackCoolTime = AttackRate;
 		MonsterStateChange(EMonsterState::Move);
+		SpawnCount++;
 	}
 }
 
 void ADukeOfFlies::SendFly(float _DeltaTime)
 {
-	for (size_t i = 0; i < Flys.size(); i++)
+	if (MonsterRenderer->IsCurAnimationEnd())
 	{
-		//	Flys[i];
+		for (size_t i = 0; i < Flys.size(); i++)
+		{
+			Flys[i]->MonsterStateChange(EMonsterState::Move);
+		}
+		SpawnCount = 0; 
+		MonsterStateChange(EMonsterState::Move);
 	}
 }
 
@@ -142,7 +160,7 @@ void ADukeOfFlies::MonsterStateChange(EMonsterState _State)
 			MoveStart();
 			break;
 		case EMonsterState::Attack:
-			SpawnFlyStart();
+			AttackStart();
 			break;
 		case EMonsterState::Die:
 			DieStart();
@@ -164,14 +182,16 @@ void ADukeOfFlies::MoveStart()
 	MonsterRenderer->ChangeAnimation("Move");
 }
 
-void ADukeOfFlies::SpawnFlyStart()
+void ADukeOfFlies::AttackStart()
 {
-	MonsterRenderer->ChangeAnimation("SpawnFly");
-}
-
-void ADukeOfFlies::SendFlyStart()
-{
-	MonsterRenderer->ChangeAnimation("SendFly");
+	if (SpawnCount < 2)
+	{
+		MonsterRenderer->ChangeAnimation("SpawnFly");
+	}
+	else
+	{
+		MonsterRenderer->ChangeAnimation("SendFly");
+	}
 }
 
 void ADukeOfFlies::DieStart()
