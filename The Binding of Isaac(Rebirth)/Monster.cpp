@@ -67,7 +67,10 @@ void AMonster::Tick(float _DeltaTime)
 		AddActorLocation((-MonsterToPlayerDirNormal) * _DeltaTime * PlayerMoveMaxSpeed);
 
 		Player->SetHitPower(MonsterToPlayerDirNormal * 400.0f);
-		Player->HeadStateChange(EPlayerHeadState::GetHit);
+		if (Player->PlayerCollision->IsActive())
+		{
+			Player->HeadStateChange(EPlayerHeadState::GetHit);
+		}
 	}
 
 	MonsterStateUpdate(_DeltaTime);

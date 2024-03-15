@@ -95,7 +95,14 @@ void APlayer::Tick(float _DeltaTime)
 
 	if (UEngineInput::IsDown('Q'))
 	{
-		PlayerCollision->SetActive(false);
+		if (PlayerCollision->IsActive())
+		{
+			PlayerCollision->SetActive(false);
+		}
+		else
+		{
+			PlayerCollision->SetActive(true);
+		}
 	}
 
 	if (UEngineInput::IsDown('F'))
