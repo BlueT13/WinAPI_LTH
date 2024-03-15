@@ -25,7 +25,7 @@ void ABomb::BeginPlay()
 	BombCollision->SetColType(ECollisionType::CirCle);
 
 	ExplosionCollision = CreateCollision(IsaacCollisionOrder::Bomb);
-	ExplosionCollision->SetScale({ 100, 100 });
+	ExplosionCollision->SetScale({ 150, 150 });
 	ExplosionCollision->SetColType(ECollisionType::CirCle);
 	ExplosionCollision->SetActive(false);
 
@@ -85,16 +85,22 @@ void ABomb::Explosion(float _DeltaTime)
 
 			FVector Dir = (Monster->GetActorLocation() - GetActorLocation()).Normalize2DReturn();
 			Monster->HitPower = Dir * BombPower;
+			Monster->GetHit(BombDamage);
 		}
 	}
 
 	if (ExplosionCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
 	{
-		/*Player =
+		AActor* Playertr = Results[0]->GetOwner();
+		APlayer* Player = dynamic_cast<APlayer*>(Playertr);
+		if (Player == nullptr)
+		{
+			MsgBoxAssert("충돌된 Collision의 Player가 nullptr입니다.");
+		}
 
 		FVector Dir = (Player->GetActorLocation() - GetActorLocation()).Normalize2DReturn();
-		Player->HitPower = Dir * BombPower;*/
-
+		Player->HitPower = Dir * BombPower;
+		Player->HeadStateChange(EPlayerHeadState::GetHit);
 	}
 
 	BombStateChange(EBombState::Destroy);
