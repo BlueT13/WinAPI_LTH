@@ -27,7 +27,6 @@ void APooter::BeginPlay()
 	MonsterRenderer->AutoImageScale();
 	MonsterRenderer->CreateAnimation("Move", "Pooter.png", 0, 1, 0.05f, true);
 	MonsterRenderer->CreateAnimation("Attack", "Pooter.png", 0, 15, 0.03f, false);
-	//MonsterRenderer->CreateAnimation("GetHit", "Pooter.png", 0, 3, 0.05f, true);
 	MonsterRenderer->CreateAnimation("Die", "Fly.png", 4, 14, 0.03f, false);
 
 	MonsterCollision = CreateCollision(IsaacCollisionOrder::Monster);

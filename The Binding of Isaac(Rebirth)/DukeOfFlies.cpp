@@ -19,7 +19,7 @@ void ADukeOfFlies::BeginPlay()
 	AttackCoolTime = 0.0f;
 
 	SpawnRenderer = CreateImageRenderer(IsaacRenderOrder::SpawnEffect);
-	SpawnRenderer->SetImage("SpawnEffect_Small.png");
+	SpawnRenderer->SetImage("SpawnEffect_Large.png");
 	SpawnRenderer->AutoImageScale();
 	SpawnRenderer->CreateAnimation("Spawn", "SpawnEffect_Large.png", 0, 14, 0.03f, false);
 
@@ -29,7 +29,6 @@ void ADukeOfFlies::BeginPlay()
 	MonsterRenderer->CreateAnimation("Move", "DukeOfFlies_SpawnFly.png", 0, 0, 1.0f, true);
 	MonsterRenderer->CreateAnimation("SpawnFly", "DukeOfFlies_SpawnFly.png", 0, 2, 0.5f, false);
 	MonsterRenderer->CreateAnimation("SendFly", "DukeOfFlies_SendFly.png", 0, 2, 0.5f, false);
-	//MonsterRenderer->CreateAnimation("GetHit", ".png", 0, 3, 0.05f, true);
 	MonsterRenderer->CreateAnimation("Die", "LargeBloodExplosion.png", 0, 9, 0.05f, false);
 
 	MonsterCollision = CreateCollision(IsaacCollisionOrder::Monster);

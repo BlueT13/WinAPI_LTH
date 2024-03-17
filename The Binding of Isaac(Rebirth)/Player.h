@@ -9,6 +9,7 @@ class APlayer : public AActor
 {
 	friend class ARoom;
 	friend class AMonster;
+	friend class ABoomfly;
 	friend class AMonsterBullet;
 	friend class ABomb;
 	friend class AItem;

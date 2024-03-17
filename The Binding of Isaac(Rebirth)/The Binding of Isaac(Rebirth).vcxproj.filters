@@ -59,6 +59,9 @@
     <ClInclude Include="MiniMap.h">
       <Filter>Object\PlayLevel\Actor\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Boomfly.h">
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -118,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="MiniMap.cpp">
       <Filter>Object\PlayLevel\Actor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Boomfly.cpp">
+      <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -27,7 +27,6 @@ void AFly::BeginPlay()
 	MonsterRenderer->SetImage("Fly.png");
 	MonsterRenderer->AutoImageScale();
 	MonsterRenderer->CreateAnimation("Move", "Fly.png", 0, 3, 0.05f, true);
-	//MonsterRenderer->CreateAnimation("GetHit", "Fly.png", 0, 3, 0.05f, true);
 	MonsterRenderer->CreateAnimation("Die", "Fly.png", 4, 14, 0.03f, false);
 
 	MonsterCollision = CreateCollision(IsaacCollisionOrder::Monster);

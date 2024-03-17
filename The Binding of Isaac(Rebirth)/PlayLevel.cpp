@@ -59,9 +59,10 @@ void UPlayLevel::BeginPlay()
 
 		UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
 		UEngineResourcesManager::GetInst().CuttingImage("Pooter.png", 5, 4);
+		UEngineResourcesManager::GetInst().CuttingImage("Boomfly.png", 2, 1);
+
 		UEngineResourcesManager::GetInst().CuttingImage("DukeOfFlies_SpawnFly.png", 3, 1);
 		UEngineResourcesManager::GetInst().CuttingImage("DukeOfFlies_SendFly.png", 3, 1);
-
 	}
 
 	SpawnActor<APlayer>(IsaacUpdateOrder::Player);
@@ -79,10 +80,10 @@ void UPlayLevel::BeginPlay()
 	ARoom* Room_8 = CreateRoom(-1, -2, "Room_02.png", ERoomType::Normal);
 	ARoom* Room_9 = CreateRoom(-2, -2, "Room_03.png", ERoomType::BossRoom);
 
-	Room_1->CreateMonsters(EMonsterType::Fly, { -200, 0 });
-	//Room_1->CreateMonsters(EMonsterType::Pooter, { -100, 0 });
-	Room_1->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
-
+	//Room_1->CreateMonsters(EMonsterType::Fly, { -200, 0 });
+	//Room_2->CreateMonsters(EMonsterType::Pooter, { -100, 0 });
+	//Room_3->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
+	Room_0->CreateMonsters(EMonsterType::Boomfly, { -200, 0 });
 
 	SetPrevRoom(0, 0);
 	SetCurRoom(0, 0);

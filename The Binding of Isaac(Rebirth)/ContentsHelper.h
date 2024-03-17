@@ -98,6 +98,7 @@ enum class EMonsterType
 	None,
 	Fly,
 	Pooter,
+	Boomfly,
 	DukeOfFlies,
 };
 
