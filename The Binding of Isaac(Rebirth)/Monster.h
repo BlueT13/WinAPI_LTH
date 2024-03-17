@@ -27,7 +27,7 @@ public:
 	}
 
 	// R = P + 2n(-P¡¤n)
-	FVector Ref(FVector _Dir, FVector _Nor);
+	FVector Reflect(FVector _Dir, FVector _Nor);
 
 protected:
 	void BeginPlay() override;

@@ -13,8 +13,8 @@ void APooter::BeginPlay()
 {
 	AMonster::BeginPlay();
 
-	MonsterHp = 2;
-	MonsterMoveSpeed = 30.f;
+	MonsterHp = 2.0f;
+	MonsterMoveSpeed = 30.0f;
 	MonsterBulletCoolTime = 0.0f;
 
 	SpawnRenderer = CreateImageRenderer(IsaacRenderOrder::SpawnEffect);
@@ -108,7 +108,7 @@ void APooter::CreateMonsterBullet(FVector _Dir)
 	AttackSound = UEngineSound::SoundPlay("tear fire 4.wav");
 	AMonsterBullet* MonsterBullet = GetWorld()->SpawnActor<AMonsterBullet>(IsaacRenderOrder::Bullet);
 	MonsterBullet->SetActorLocation(GetActorLocation());
-	MonsterBullet->SetDir(MonsterToPlayerDirNormal);
+	MonsterBullet->SetDir(_Dir);
 }
 
 void APooter::Die(float _DeltaTime)

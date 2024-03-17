@@ -5,6 +5,7 @@
 #include "Fly.h"
 #include "Pooter.h"
 #include "Boomfly.h"
+#include "RedBoomfly.h"
 #include "DukeOfFlies.h"
 #include <EngineBase/EngineMath.h>
 
@@ -325,6 +326,9 @@ void ARoom::CreateMonsters(EMonsterType _Type, FVector _Pos)
 		break;
 	case EMonsterType::Boomfly:
 		Monster = GetWorld()->SpawnActor<ABoomfly>(IsaacUpdateOrder::Monster);
+		break;
+	case EMonsterType::RedBoomfly:
+		Monster = GetWorld()->SpawnActor<ARedBoomfly>(IsaacUpdateOrder::Monster);
 		break;
 	case EMonsterType::DukeOfFlies:
 		Monster = GetWorld()->SpawnActor<ADukeOfFlies>(IsaacUpdateOrder::Monster);

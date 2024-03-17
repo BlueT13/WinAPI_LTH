@@ -16,7 +16,7 @@ void AFly::BeginPlay()
 	AMonster::BeginPlay();
 
 	MonsterHp = 2.0f;
-	MonsterMoveSpeed = 80.f;
+	MonsterMoveSpeed = 80.0f;
 
 	SpawnRenderer = CreateImageRenderer(IsaacRenderOrder::SpawnEffect);
 	SpawnRenderer->SetImage("SpawnEffect_Small.png");

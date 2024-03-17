@@ -1,15 +1,16 @@
-#include "Boomfly.h"
+#include "RedBoomfly.h"
+#include "MonsterBullet.h"
 
-ABoomfly::ABoomfly()
+ARedBoomfly::ARedBoomfly()
 {
 }
 
-ABoomfly::~ABoomfly()
+ARedBoomfly::~ARedBoomfly()
 {
 
 }
 
-void ABoomfly::BeginPlay()
+void ARedBoomfly::BeginPlay()
 {
 	AMonster::BeginPlay();
 
@@ -22,31 +23,25 @@ void ABoomfly::BeginPlay()
 	SpawnRenderer->CreateAnimation("Spawn", "SpawnEffect_Small.png", 0, 14, 0.03f, false);
 
 	MonsterRenderer = CreateImageRenderer(IsaacRenderOrder::Monster);
-	MonsterRenderer->SetImage("Boomfly.png");
+	MonsterRenderer->SetImage("RedBoomfly.png");
 	MonsterRenderer->AutoImageScale();
-	MonsterRenderer->CreateAnimation("Move", "Boomfly.png", 0, 1, 0.05f, true);
-	MonsterRenderer->CreateAnimation("Die", "Explosion.png", 0, 10, 0.03f, false);
+	MonsterRenderer->CreateAnimation("Move", "RedBoomfly.png", 0, 1, 0.05f, true);
 
 	MonsterCollision = CreateCollision(IsaacCollisionOrder::Monster);
 	MonsterCollision->SetScale({ 50, 50 });
 	MonsterCollision->SetColType(ECollisionType::CirCle);
 
-	ExplosionCollision = CreateCollision(IsaacCollisionOrder::Bomb);
-	ExplosionCollision->SetScale({ 250, 250 });
-	ExplosionCollision->SetColType(ECollisionType::CirCle);
-	ExplosionCollision->SetActive(false);
-
-	MonsterMoveVector = { 1, 1 };
+	MonsterMoveVector = { 1, -1 };
 }
 
-void ABoomfly::Tick(float _DeltaTime)
+void ARedBoomfly::Tick(float _DeltaTime)
 {
 	// Player, PlayerLocation, MonsterPos, MonsterDir, MonsterDirNormal 받아온다.
 	// MonsterStateUpdate(_DeltaTime);을 실행
 	AMonster::Tick(_DeltaTime);
 }
 
-void ABoomfly::MonsterStateUpdate(float _DeltaTime)
+void ARedBoomfly::MonsterStateUpdate(float _DeltaTime)
 {
 	switch (MonsterState)
 	{
@@ -64,7 +59,7 @@ void ABoomfly::MonsterStateUpdate(float _DeltaTime)
 	}
 }
 
-void ABoomfly::Spawn(float _DeltaTime)
+void ARedBoomfly::Spawn(float _DeltaTime)
 {
 	MonsterCollision->SetActive(false);
 	if (SpawnRenderer->IsCurAnimationEnd())
@@ -75,29 +70,34 @@ void ABoomfly::Spawn(float _DeltaTime)
 	}
 }
 
-void ABoomfly::Move(float _DeltaTime)
+void ARedBoomfly::Move(float _DeltaTime)
 {
 	AddActorLocation(MonsterMoveVector * _DeltaTime * MonsterMoveSpeed);
 }
 
-void ABoomfly::Die(float _DeltaTime)
+void ARedBoomfly::Die(float _DeltaTime)
 {
 	//폭발
-	std::vector<UCollision*> Results;
-	if (ExplosionCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
-	{
-		FVector Dir = (PlayerLocation - GetActorLocation()).Normalize2DReturn();
-		Player->SetHitPower(Dir * BombPower);
-		Player->HeadStateChange(EPlayerHeadState::GetHit);
-	}
+	CreateMonsterBullet({ -1,0 });
+	CreateMonsterBullet({ -1,-1 });
+	CreateMonsterBullet({ 0,-1 });
+	CreateMonsterBullet({ 1,-1 });
+	CreateMonsterBullet({ 1,0 });
+	CreateMonsterBullet({ 1,1 });
+	CreateMonsterBullet({ 0,1 });
+	CreateMonsterBullet({ -1,1 });
 
-	if (MonsterRenderer->IsCurAnimationEnd())
-	{
-		Destroy();
-	}
+	Destroy();
 }
 
-void ABoomfly::MonsterStateChange(EMonsterState _State)
+void ARedBoomfly::CreateMonsterBullet(FVector _Dir)
+{
+	AMonsterBullet* MonsterBullet = GetWorld()->SpawnActor<AMonsterBullet>(IsaacRenderOrder::Bullet);
+	MonsterBullet->SetActorLocation(GetActorLocation());
+	MonsterBullet->SetDir(_Dir);
+}
+
+void ARedBoomfly::MonsterStateChange(EMonsterState _State)
 {
 	if (MonsterState != _State)
 	{
@@ -119,26 +119,25 @@ void ABoomfly::MonsterStateChange(EMonsterState _State)
 	MonsterState = _State;
 }
 
-void ABoomfly::SpawnStart()
+void ARedBoomfly::SpawnStart()
 {
 	SpawnRenderer->ChangeAnimation("Spawn");
 	MonsterRenderer->ChangeAnimation("Move");
 }
 
-void ABoomfly::MoveStart()
+void ARedBoomfly::MoveStart()
 {
 	MonsterRenderer->ChangeAnimation("Move");
 }
 
-void ABoomfly::DieStart()
+void ARedBoomfly::DieStart()
 {
-	MonsterRenderer->ChangeAnimation("Die");
+	MonsterRenderer->SetActive(false);
 	MonsterCollision->SetActive(false);
-	ExplosionCollision->SetActive(true);
-	DeathSound = UEngineSound::SoundPlay("explosion_weak1.wav");
+	DeathSound = UEngineSound::SoundPlay("tear fire 4.wav");
 }
 
-void ABoomfly::MonsterTouchWall(EActorDir _Dir)
+void ARedBoomfly::MonsterTouchWall(EActorDir _Dir)
 {
 	float Size = MonsterMoveVector.Size2D();
 	FVector Dir = MonsterMoveVector.Normalize2DReturn();

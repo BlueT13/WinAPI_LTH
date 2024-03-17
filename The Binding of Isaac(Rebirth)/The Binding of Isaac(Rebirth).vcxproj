@@ -226,6 +226,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="RedBoomfly.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="StartImage.h">
       <SubType>
@@ -297,6 +298,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="RedBoomfly.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="StartImage.cpp">
       <SubType>

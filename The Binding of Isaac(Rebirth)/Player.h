@@ -10,6 +10,7 @@ class APlayer : public AActor
 	friend class ARoom;
 	friend class AMonster;
 	friend class ABoomfly;
+	friend class ARedBoomfly;
 	friend class AMonsterBullet;
 	friend class ABomb;
 	friend class AItem;

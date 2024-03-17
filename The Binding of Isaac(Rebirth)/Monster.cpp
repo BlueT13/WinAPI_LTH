@@ -161,7 +161,7 @@ void AMonster::MoveLastMoveVector(float _DeltaTime)
 	}
 }
 
-FVector AMonster::Ref(FVector _Dir, FVector _Nor)
+FVector AMonster::Reflect(FVector _Dir, FVector _Nor)
 {
 	float Dot = (_Dir.X * _Nor.X) + (_Dir.Y * _Nor.Y);
 

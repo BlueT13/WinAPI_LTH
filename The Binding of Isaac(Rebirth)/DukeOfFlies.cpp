@@ -228,16 +228,16 @@ void ADukeOfFlies::MonsterTouchWall(EActorDir _Dir)
 	switch (_Dir)
 	{
 	case EActorDir::Left:
-		Dir = Ref(Dir, FVector::Right);
+		Dir = Reflect(Dir, FVector::Right);
 		break;
 	case EActorDir::Up:
-		Dir = Ref(Dir, FVector::Down);
+		Dir = Reflect(Dir, FVector::Down);
 		break;
 	case EActorDir::Right:
-		Dir = Ref(Dir, FVector::Left);
+		Dir = Reflect(Dir, FVector::Left);
 		break;
 	case EActorDir::Down:
-		Dir = Ref(Dir, FVector::Up);
+		Dir = Reflect(Dir, FVector::Up);
 		break;
 	default:
 		break;
