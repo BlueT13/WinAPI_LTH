@@ -15,7 +15,7 @@ void ADukeOfFlies::BeginPlay()
 	AMonster::BeginPlay();
 
 	MonsterHp = 1.0f;
-	MonsterMoveSpeed = 100.f;
+	MonsterMoveSpeed = 100.0f;
 	AttackCoolTime = 0.0f;
 
 	SpawnRenderer = CreateImageRenderer(IsaacRenderOrder::SpawnEffect);

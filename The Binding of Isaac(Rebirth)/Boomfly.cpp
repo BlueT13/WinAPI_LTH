@@ -14,8 +14,8 @@ void ABoomfly::BeginPlay()
 {
 	AMonster::BeginPlay();
 
-	MonsterHp = 1.0f;
-	MonsterMoveSpeed = 100.f;
+	MonsterHp = 2.0f;
+	MonsterMoveSpeed = 100.0f;
 
 	SpawnRenderer = CreateImageRenderer(IsaacRenderOrder::SpawnEffect);
 	SpawnRenderer->SetImage("SpawnEffect_Small.png");
