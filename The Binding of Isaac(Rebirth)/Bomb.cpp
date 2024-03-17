@@ -25,7 +25,7 @@ void ABomb::BeginPlay()
 	BombCollision->SetColType(ECollisionType::Rect);
 
 	ExplosionCollision = CreateCollision(IsaacCollisionOrder::Bomb);
-	ExplosionCollision->SetScale({ 200, 200 });
+	ExplosionCollision->SetScale({ 250, 250 });
 	ExplosionCollision->SetColType(ECollisionType::CirCle);
 	ExplosionCollision->SetActive(false);
 
