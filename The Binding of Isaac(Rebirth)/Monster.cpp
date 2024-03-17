@@ -60,6 +60,12 @@ void AMonster::Tick(float _DeltaTime)
 	}
 
 	// 플레이어와 몬스터가 직접 충돌
+	std::vector<UCollision*> Results;
+	if (true == MonsterCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
+	{
+		Player->HeadStateChange(EPlayerHeadState::GetHit);
+	}
+
 	PlayerCollisionTrans = Player->GetPlayerCollision()->GetActorBaseTransform();
 	MonsterCollisionTrans = MonsterCollision->GetActorBaseTransform();
 	if (true == FTransform::CircleToCircle(PlayerCollisionTrans, MonsterCollisionTrans))
@@ -69,11 +75,6 @@ void AMonster::Tick(float _DeltaTime)
 		Player->SetHitPower(MonsterToPlayerDirNormal * 400.0f);
 	}
 
-	std::vector<UCollision*> Results;
-	if (true == MonsterCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
-	{
-		Player->HeadStateChange(EPlayerHeadState::GetHit);
-	}
 
 	MonsterStateUpdate(_DeltaTime);
 

@@ -28,7 +28,7 @@ void UIsaacCore::BeginPlay()
 	CreateLevel<UTitleLevel>("TitleLevel");
 	CreateLevel<UPlayLevel>("PlayLevel");
 
-	ChangeLevel("PlayLevel");
+	ChangeLevel("IntroLevel");
 }
 
 void UIsaacCore::Tick(float _DeltaTime)
