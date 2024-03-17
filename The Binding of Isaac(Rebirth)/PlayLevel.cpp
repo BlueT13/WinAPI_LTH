@@ -82,7 +82,7 @@ void UPlayLevel::BeginPlay()
 
 	Room_2->CreateMonsters(EMonsterType::Fly, { -200, 0 });
 	Room_3->CreateMonsters(EMonsterType::Pooter, { -100, 0 });
-	Room_4->CreateMonsters(EMonsterType::Boomfly, { -200, 0 });
+	Room_4->CreateMonsters(EMonsterType::Boomfly, { 200, 0 });
 
 	Room_9->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
 

@@ -37,7 +37,7 @@ void ABoomfly::BeginPlay()
 	ExplosionCollision->SetColType(ECollisionType::CirCle);
 	ExplosionCollision->SetActive(false);
 
-	MonsterMoveVector = { -1, 1 };
+	MonsterMoveVector = { 1, 1 };
 }
 
 void ABoomfly::Tick(float _DeltaTime)
