@@ -75,6 +75,7 @@ void ADukeOfFlies::Spawn(float _DeltaTime)
 	MonsterCollision->SetActive(false);
 	if (SpawnRenderer->IsCurAnimationEnd())
 	{
+		SpawnSound = UEngineSound::SoundPlay("summonsound.wav");
 		SpawnRenderer->SetActive(false);
 		MonsterCollision->SetActive(true);
 		MonsterStateChange(EMonsterState::Move);
@@ -91,7 +92,7 @@ void ADukeOfFlies::Move(float _DeltaTime)
 
 void ADukeOfFlies::Attack(float _DeltaTime)
 {
-	if (SpawnCount < 4)
+	if (SpawnCount < 3)
 	{
 		SpawnFly(_DeltaTime);
 	}
@@ -126,7 +127,7 @@ void ADukeOfFlies::SendFly(float _DeltaTime)
 {
 	if (MonsterRenderer->IsCurAnimationEnd())
 	{
-		SendFlySound = UEngineSound::SoundPlay("fly cough 2.wav");
+		SendFlySound = UEngineSound::SoundPlay("fart 2.wav");
 		for (size_t i = 0; i < Flys.size(); i++)
 		{
 			if (nullptr == Flys[i])
@@ -202,7 +203,7 @@ void ADukeOfFlies::MoveStart()
 
 void ADukeOfFlies::AttackStart()
 {
-	if (SpawnCount < 4)
+	if (SpawnCount < 3)
 	{
 		MonsterRenderer->ChangeAnimation("SpawnFly");
 	}
@@ -216,6 +217,7 @@ void ADukeOfFlies::DieStart()
 {
 	MonsterCollision->SetActive(false);
 	MonsterRenderer->ChangeAnimation("Die");
+	DeathSound = UEngineSound::SoundPlay("death_burst_large_0.wav");
 }
 
 void ADukeOfFlies::MonsterTouchWall(EActorDir _Dir)

@@ -35,7 +35,7 @@ private:
 	EBombState BombState = EBombState::None;
 	APlayer* Player = nullptr;
 
-	float BombPower = 1000.0f;
+	float BombPower = 800.0f;
 	float BombDamage = 5.0f;
 	float BoomTime = 1.5f;
 

@@ -1,7 +1,8 @@
 #pragma once
 #include "Monster.h"
-#include <EngineCore/Actor.h>
 #include "ContentsHelper.h"
+#include <EngineCore/Actor.h>
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class APooter : public AMonster
@@ -41,5 +42,8 @@ protected:
 private:
 	float MonsterBulletCoolTime = 0.0f;
 	float MonsterFireRate = 1.0f;
+
+	UEngineSoundPlayer AttackSound;
+	UEngineSoundPlayer DeathSound;
 };
 

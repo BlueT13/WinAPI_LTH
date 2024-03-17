@@ -8,6 +8,7 @@ AFly::AFly()
 
 AFly::~AFly()
 {
+	FlyingSound.Off();
 }
 
 void AFly::BeginPlay()
@@ -39,6 +40,7 @@ void AFly::Tick(float _DeltaTime)
 	// Player, PlayerLocation, MonsterPos, MonsterDir, MonsterDirNormal 받아온다.
 	// MonsterStateUpdate(_DeltaTime), MonsterMoveUpdate(_DeltaTime)를 실행
 	AMonster::Tick(_DeltaTime);
+
 }
 
 void AFly::MonsterStateUpdate(float _DeltaTime)
@@ -160,21 +162,20 @@ void AFly::SpawnStart()
 {
 	SpawnRenderer->ChangeAnimation("Spawn");
 	MonsterRenderer->ChangeAnimation("Move");
-	FlyingSound = UEngineSound::SoundPlay("insect swarm.wav");
-	FlyingSound.SetVolume(0.2f);
-	FlyingSound.Loop();
 }
 
 void AFly::MoveStart()
 {
 	MonsterRenderer->ChangeAnimation("Move");
+	FlyingSound = UEngineSound::SoundPlay("insect swarm.wav");
+	FlyingSound.SetVolume(0.1f);
+	FlyingSound.Loop();
 }
 
 void AFly::DieStart()
 {
 	MonsterCollision->SetActive(false);
 	MonsterRenderer->ChangeAnimation("Die");
-	FlyingSound.Off();
 	DeathSound = UEngineSound::SoundPlay("death burst small.wav");
 }
 

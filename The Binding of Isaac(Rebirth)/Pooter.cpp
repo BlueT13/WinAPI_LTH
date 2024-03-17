@@ -106,6 +106,7 @@ void APooter::Attack(float _DeltaTime)
 
 void APooter::CreateMonsterBullet(FVector _Dir)
 {
+	AttackSound = UEngineSound::SoundPlay("tear fire 4.wav");
 	AMonsterBullet* MonsterBullet = GetWorld()->SpawnActor<AMonsterBullet>(IsaacRenderOrder::Bullet);
 	MonsterBullet->SetActorLocation(GetActorLocation());
 	MonsterBullet->SetDir(MonsterToPlayerDirNormal);
@@ -164,6 +165,7 @@ void APooter::DieStart()
 {
 	MonsterCollision->SetActive(false);
 	MonsterRenderer->ChangeAnimation("Die");
+	DeathSound = UEngineSound::SoundPlay("death burst small.wav");
 }
 
 void APooter::MonsterTouchWall(EActorDir _Dir)

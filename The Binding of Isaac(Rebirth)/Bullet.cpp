@@ -99,8 +99,8 @@ void ABullet::BulletMove(float _DeltaTime)
 	IsCrashed();
 	if (IsDestroy)
 	{
-		BulletStateChange(EBulletState::Crashed);
 		TearBlockSound = UEngineSound::SoundPlay("tear block.wav");
+		BulletStateChange(EBulletState::Crashed);
 	}
 
 	AddActorLocation(Dir * BulletSpeed * _DeltaTime);

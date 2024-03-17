@@ -46,6 +46,7 @@ private:
 	std::vector<AFly*> Flys;
 	int SpawnCount = 0;
 
+	UEngineSoundPlayer SpawnSound;
 	UEngineSoundPlayer SpawnFlySound;
 	UEngineSoundPlayer SendFlySound;
 	UEngineSoundPlayer DeathSound;

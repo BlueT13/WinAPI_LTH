@@ -22,7 +22,7 @@ void ABomb::BeginPlay()
 
 	BombCollision = CreateCollision(IsaacCollisionOrder::Bomb);
 	BombCollision->SetScale({ 30, 30 });
-	BombCollision->SetColType(ECollisionType::CirCle);
+	BombCollision->SetColType(ECollisionType::Rect);
 
 	ExplosionCollision = CreateCollision(IsaacCollisionOrder::Bomb);
 	ExplosionCollision->SetScale({ 150, 150 });
@@ -48,7 +48,7 @@ void ABomb::Tick(float _DeltaTime)
 			FVector OtherToThisDirNormal = OtherToThisDir.Normalize2DReturn();
 			FTransform OtherCollisionTrans = OtherBomb->BombCollision->GetActorBaseTransform();
 			FTransform ThisCollisionTrans = BombCollision->GetActorBaseTransform();
-			if (FTransform::CircleToCircle(OtherCollisionTrans, ThisCollisionTrans))
+			if (FTransform::RectToRect(OtherCollisionTrans, ThisCollisionTrans))
 			{
 				AddActorLocation(OtherToThisDirNormal * _DeltaTime * 100);
 			}
@@ -66,7 +66,7 @@ void ABomb::Tick(float _DeltaTime)
 			FVector OtherToThisDirNormal = OtherToThisDir.Normalize2DReturn();
 			FTransform OtherCollisionTrans = Monster->MonsterCollision->GetActorBaseTransform();
 			FTransform ThisCollisionTrans = BombCollision->GetActorBaseTransform();
-			if (FTransform::CircleToCircle(OtherCollisionTrans, ThisCollisionTrans))
+			if (FTransform::CircleToRect(OtherCollisionTrans, ThisCollisionTrans))
 			{
 				AddActorLocation(OtherToThisDirNormal * _DeltaTime * Monster->MonsterMoveSpeed);
 			}
@@ -82,7 +82,7 @@ void ABomb::Tick(float _DeltaTime)
 		FVector OtherToThisDirNormal = OtherToThisDir.Normalize2DReturn();
 		FTransform OtherCollisionTrans = Player->PlayerCollision->GetActorBaseTransform();
 		FTransform ThisCollisionTrans = BombCollision->GetActorBaseTransform();
-		if (FTransform::CircleToCircle(OtherCollisionTrans, ThisCollisionTrans) && false == PlayerCheck)
+		if (FTransform::CircleToRect(OtherCollisionTrans, ThisCollisionTrans) && false == PlayerCheck)
 		{
 			AddActorLocation(OtherToThisDirNormal * _DeltaTime * Player->GetPlayerMaxSpeed());
 		}
@@ -145,7 +145,7 @@ void ABomb::Explosion(float _DeltaTime)
 			Monster->GetHit(BombDamage);
 		}
 	}
-
+	
 	if (ExplosionCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
 	{
 		AActor* Playertr = Results[0]->GetOwner();
