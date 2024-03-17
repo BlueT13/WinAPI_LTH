@@ -117,4 +117,6 @@ private:
 	float ChangeRoomTime = 0.3f;
 
 	UEngineSoundPlayer GetHitSound;
+	UEngineSoundPlayer TearFireSound;
+	UEngineSoundPlayer DeathSound;
 };

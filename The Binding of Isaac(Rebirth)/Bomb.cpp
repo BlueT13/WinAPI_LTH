@@ -126,6 +126,7 @@ void ABomb::Explosion(float _DeltaTime)
 	BombRenderer->ChangeAnimation("Explosion");
 	BombCollision->SetActive(false);
 	ExplosionCollision->SetActive(true);
+	ExplosionSound = UEngineSound::SoundPlay("explosion_weak1.wav");
 
 	std::vector<UCollision*> Results;
 	if (ExplosionCollision->CollisionCheck(IsaacCollisionOrder::Monster, Results))
@@ -173,9 +174,4 @@ void ABomb::BombDestroy(float _DeltaTime)
 void ABomb::BombStateChange(EBombState _State)
 {
 	BombState = _State;
-}
-
-void ABomb::BombCollisionCheck(float _DeltaTime)
-{
-
 }

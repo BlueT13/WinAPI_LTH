@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include <EnginePlatform/EngineSound.h>
 #include "ContentsHelper.h"
 
 // Ό³Έν :
@@ -25,7 +26,6 @@ protected:
 	void Explosion(float _DeltaTime);
 	void BombDestroy(float _DeltaTime);
 	void BombStateChange(EBombState _State);
-	void BombCollisionCheck(float _DeltaTime);
 
 private:
 	UImageRenderer* BombRenderer = nullptr;
@@ -40,5 +40,7 @@ private:
 	float BoomTime = 1.5f;
 
 	float PlayerCheck = true;
+
+	UEngineSoundPlayer ExplosionSound;
 };
 

@@ -238,6 +238,8 @@ void APlayer::CreateBullet(FVector _Dir)
 	ABullet* Tear = GetWorld()->SpawnActor<ABullet>(IsaacUpdateOrder::Bullet);
 	Tear->SetActorLocation(GetActorLocation());
 	Tear->SetDir(_Dir);
+
+	TearFireSound = UEngineSound::SoundPlay("tear fire 5.wav");
 }
 
 void APlayer::GetHit(float _DeltaTime)
@@ -497,6 +499,8 @@ void APlayer::DieStart()
 	BodyRenderer->SetActive(false);
 	PlayerStateRenderer->SetActive(true);
 	PlayerStateRenderer->ChangeAnimation("Die");
+
+	DeathSound = UEngineSound::SoundPlay("isaac dies new 1.wav");
 }
 
 void APlayer::BodyDirCheck()

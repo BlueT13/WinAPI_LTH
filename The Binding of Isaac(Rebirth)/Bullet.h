@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include "ContentsHelper.h"
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class ABullet : public AActor
@@ -45,5 +46,7 @@ private:
 
 	FVector Dir = FVector::Zero;
 	float BulletSpeed = 500.0f;
+
+	UEngineSoundPlayer TearBlockSound;
 };
 

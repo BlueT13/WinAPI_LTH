@@ -50,5 +50,6 @@ private:
 	FVector FlySpinDir = FVector::Zero;
 
 	UEngineSoundPlayer FlyingSound;
+	UEngineSoundPlayer DeathSound;
 };
 

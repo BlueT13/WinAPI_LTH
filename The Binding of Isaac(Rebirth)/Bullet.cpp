@@ -44,6 +44,7 @@ void ABullet::Tick(float _DeltaTime)
 		Monster->HitPower = Dir * BulletSpeed;
 		Monster->GetHit(BulletDamage);
 
+		TearBlockSound = UEngineSound::SoundPlay("tear block.wav");
 		BulletStateChange(EBulletState::Crashed);
 	}
 
@@ -99,6 +100,7 @@ void ABullet::BulletMove(float _DeltaTime)
 	if (IsDestroy)
 	{
 		BulletStateChange(EBulletState::Crashed);
+		TearBlockSound = UEngineSound::SoundPlay("tear block.wav");
 	}
 
 	AddActorLocation(Dir * BulletSpeed * _DeltaTime);

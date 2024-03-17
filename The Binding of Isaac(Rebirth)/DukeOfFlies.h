@@ -1,8 +1,9 @@
 #pragma once
 #include "Monster.h"
-#include <EngineCore/Actor.h>
-#include "ContentsHelper.h"
 #include "Fly.h"
+#include "ContentsHelper.h"
+#include <EngineCore/Actor.h>
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class ADukeOfFlies : public AMonster
@@ -44,5 +45,9 @@ private:
 	float AttackRate = 1.0f;
 	std::vector<AFly*> Flys;
 	int SpawnCount = 0;
+
+	UEngineSoundPlayer SpawnFlySound;
+	UEngineSoundPlayer SendFlySound;
+	UEngineSoundPlayer DeathSound;
 };
 

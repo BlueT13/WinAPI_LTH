@@ -79,10 +79,10 @@ void UPlayLevel::BeginPlay()
 	ARoom* Room_8 = CreateRoom(-1, -2, "Room_02.png", ERoomType::Normal);
 	ARoom* Room_9 = CreateRoom(-2, -2, "Room_03.png", ERoomType::BossRoom);
 
-	Room_0->CreateMonsters(EMonsterType::Fly, { -200, 0 });
+	//Room_0->CreateMonsters(EMonsterType::Fly, { -200, 0 });
 	//Room_7->CreateMonsters(EMonsterType::Pooter, { -100, 0 });
 	//Room_8->CreateMonsters(EMonsterType::Pooter, { -100, 0 });
-	//Room_0->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
+	Room_0->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
 
 
 	SetPrevRoom(0, 0);

@@ -105,6 +105,7 @@ void ADukeOfFlies::SpawnFly(float _DeltaTime)
 {
 	if (MonsterRenderer->IsCurAnimationEnd())
 	{
+		SpawnFlySound = UEngineSound::SoundPlay("fly cough 2.wav");
 		ARoom* CurRoom = GetCurRoom();
 		AFly* Fly = GetWorld()->SpawnActor<AFly>(IsaacRenderOrder::Monster);
 		Fly->SetActorLocation(GetActorLocation() + MonsterToPlayerDirNormal * 80);
@@ -125,6 +126,7 @@ void ADukeOfFlies::SendFly(float _DeltaTime)
 {
 	if (MonsterRenderer->IsCurAnimationEnd())
 	{
+		SendFlySound = UEngineSound::SoundPlay("fly cough 2.wav");
 		for (size_t i = 0; i < Flys.size(); i++)
 		{
 			if (nullptr == Flys[i])

@@ -160,14 +160,14 @@ void AFly::SpawnStart()
 {
 	SpawnRenderer->ChangeAnimation("Spawn");
 	MonsterRenderer->ChangeAnimation("Move");
+	FlyingSound = UEngineSound::SoundPlay("insect swarm.wav");
+	FlyingSound.SetVolume(0.2f);
+	FlyingSound.Loop();
 }
 
 void AFly::MoveStart()
 {
 	MonsterRenderer->ChangeAnimation("Move");
-	FlyingSound = UEngineSound::SoundPlay("insect swarm.wav");
-	FlyingSound.SetVolume(0.2f);
-	FlyingSound.Loop();
 }
 
 void AFly::DieStart()
@@ -175,6 +175,7 @@ void AFly::DieStart()
 	MonsterCollision->SetActive(false);
 	MonsterRenderer->ChangeAnimation("Die");
 	FlyingSound.Off();
+	DeathSound = UEngineSound::SoundPlay("death burst small.wav");
 }
 
 void AFly::MonsterTouchWall(EActorDir _Dir)
