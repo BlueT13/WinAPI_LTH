@@ -1,7 +1,8 @@
 #pragma once
 #include "Monster.h"
-#include <EngineCore/Actor.h>
 #include "ContentsHelper.h"
+#include <EngineCore/Actor.h>
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class AFly : public AMonster
@@ -47,5 +48,7 @@ private:
 	float Angle = 0.0f;
 	FVector FlySpawnDir = FVector::Zero;
 	FVector FlySpinDir = FVector::Zero;
+
+	UEngineSoundPlayer FlyingSound;
 };
 
