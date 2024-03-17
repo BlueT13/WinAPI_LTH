@@ -41,7 +41,7 @@ void ABullet::Tick(float _DeltaTime)
 		AActor* MonsterPtr = Collision->GetOwner();
 		AMonster* Monster = dynamic_cast<AMonster*>(MonsterPtr);
 
-		Monster->HitPower = Dir * Speed;
+		Monster->HitPower = Dir * BulletSpeed;
 		Monster->GetHit(BulletDamage);
 
 		BulletStateChange(EBulletState::Crashed);
@@ -101,12 +101,12 @@ void ABullet::BulletMove(float _DeltaTime)
 		BulletStateChange(EBulletState::Crashed);
 	}
 
-	AddActorLocation(Dir * Speed * _DeltaTime);
+	AddActorLocation(Dir * BulletSpeed * _DeltaTime);
 }
 
 void ABullet::BulletCrashed(float _DeltaTime)
 {
-	Speed = 0.0f;
+	BulletSpeed = 0.0f;
 	BulletRenderer->ChangeAnimation("DestroyBullet");
 	BulletCollision->SetActive(false);
 	if (BulletRenderer->IsCurAnimationEnd())

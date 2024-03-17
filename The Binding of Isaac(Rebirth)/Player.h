@@ -25,7 +25,7 @@ public:
 
 	static APlayer* GetMainPlayer();
 	UCollision* GetPlayerCollision();
-	float GetPlayerMoveMaxSpeed();
+	float GetPlayerMaxSpeed();
 	void SetHitPower(const FVector& _Vector)
 	{
 		HitPower = _Vector;
@@ -104,7 +104,7 @@ private:
 	FVector MoveVector = FVector::Zero;
 	FVector MoveAcc = { 2500.0f, 2500.0f };
 	FVector StopAcc = { 2000.0f, 2000.0f };
-	float MoveMaxSpeed = 330.0f;
+	float PlayerMaxSpeed = 330.0f;
 	FVector LastMoveVector = FVector::Zero;
 
 	void AddMoveVector(const FVector& _DirDelta);

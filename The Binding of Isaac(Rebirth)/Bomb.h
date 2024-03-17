@@ -38,5 +38,7 @@ private:
 	float BombPower = 1000.0f;
 	float BombDamage = 5.0f;
 	float BoomTime = 1.5f;
+
+	float PlayerCheck = true;
 };
 

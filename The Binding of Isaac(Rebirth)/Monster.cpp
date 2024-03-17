@@ -24,11 +24,14 @@ void AMonster::Tick(float _DeltaTime)
 	Player = APlayer::GetMainPlayer();
 	PlayerLocation = Player->GetActorLocation();
 	PlayerCollision = Player->GetPlayerCollision();
-	PlayerMoveMaxSpeed = Player->GetPlayerMoveMaxSpeed();
+	PlayerMoveMaxSpeed = Player->GetPlayerMaxSpeed();
 
 	MonsterPos = GetActorLocation();
 	MonsterToPlayerDir = PlayerLocation - MonsterPos;
 	MonsterToPlayerDirNormal = MonsterToPlayerDir.Normalize2DReturn();
+
+	PlayerCollisionTrans = Player->GetPlayerCollision()->GetActorBaseTransform();
+	MonsterCollisionTrans = MonsterCollision->GetActorBaseTransform();
 
 	if (nullptr == Player)
 	{
@@ -49,13 +52,13 @@ void AMonster::Tick(float _DeltaTime)
 
 		FVector OtherMonsterPos = OtherMonster->MonsterPos;
 		FVector ThisPos = MonsterPos;
-		FVector MonsterToMonsterDir = OtherMonsterPos - ThisPos;
+		FVector MonsterToMonsterDir = ThisPos - OtherMonsterPos;
 		FVector MonsterToMonsterDirNormal = MonsterToMonsterDir.Normalize2DReturn();
-		FTransform OtherMonsterTrans = OtherMonster->MonsterCollisionTrans;
+		FTransform OtherMonsterCollisionTrans = OtherMonster->MonsterCollisionTrans;
 		FTransform ThisTrans = MonsterCollision->GetActorBaseTransform();
-		if (FTransform::CircleToCircle(OtherMonsterTrans, MonsterCollisionTrans))
+		if (FTransform::CircleToCircle(OtherMonsterCollisionTrans, MonsterCollisionTrans))
 		{
-			AddActorLocation((-MonsterToMonsterDirNormal) * _DeltaTime * MonsterMoveSpeed);
+			AddActorLocation(MonsterToMonsterDirNormal * _DeltaTime * MonsterMoveSpeed);
 		}
 	}
 
@@ -66,8 +69,6 @@ void AMonster::Tick(float _DeltaTime)
 		Player->HeadStateChange(EPlayerHeadState::GetHit);
 	}
 
-	PlayerCollisionTrans = Player->GetPlayerCollision()->GetActorBaseTransform();
-	MonsterCollisionTrans = MonsterCollision->GetActorBaseTransform();
 	if (true == FTransform::CircleToCircle(PlayerCollisionTrans, MonsterCollisionTrans))
 	{
 		AddActorLocation((-MonsterToPlayerDirNormal) * _DeltaTime * PlayerMoveMaxSpeed);

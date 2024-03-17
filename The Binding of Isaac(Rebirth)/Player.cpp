@@ -27,9 +27,9 @@ UCollision* APlayer::GetPlayerCollision()
 	return PlayerCollision;
 }
 
-float APlayer::GetPlayerMoveMaxSpeed()
+float APlayer::GetPlayerMaxSpeed()
 {
-	return MoveMaxSpeed;
+	return PlayerMaxSpeed;
 }
 
 void APlayer::BeginPlay()
@@ -619,9 +619,9 @@ void APlayer::CalMoveVector(float _DeltaTime)
 		}
 	}
 
-	if (MoveMaxSpeed <= MoveVector.Size2D())
+	if (PlayerMaxSpeed <= MoveVector.Size2D())
 	{
-		MoveVector = MoveVector.Normalize2DReturn() * MoveMaxSpeed;
+		MoveVector = MoveVector.Normalize2DReturn() * PlayerMaxSpeed;
 	}
 }
 

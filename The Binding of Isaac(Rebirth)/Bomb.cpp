@@ -36,15 +36,61 @@ void ABomb::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-
 	std::vector<UCollision*> Results;
 	if (true == BombCollision->CollisionCheck(IsaacCollisionOrder::Bomb, Results))
 	{
-
+		for (UCollision* Result : Results)
+		{
+			AActor* OtherBombPtr = Result->GetOwner();
+			ABomb* OtherBomb = dynamic_cast<ABomb*>(OtherBombPtr);
+			FVector OtherPos = OtherBomb->GetActorLocation();
+			FVector OtherToThisDir = GetActorLocation() - OtherPos;
+			FVector OtherToThisDirNormal = OtherToThisDir.Normalize2DReturn();
+			FTransform OtherCollisionTrans = OtherBomb->BombCollision->GetActorBaseTransform();
+			FTransform ThisCollisionTrans = BombCollision->GetActorBaseTransform();
+			if (FTransform::CircleToCircle(OtherCollisionTrans, ThisCollisionTrans))
+			{
+				AddActorLocation(OtherToThisDirNormal * _DeltaTime * 100);
+			}
+		}
 	}
 
+	if (true == BombCollision->CollisionCheck(IsaacCollisionOrder::Monster, Results))
+	{
+		for (UCollision* Result : Results)
+		{
+			AActor* MonsterPtr = Result->GetOwner();
+			AMonster* Monster = dynamic_cast<AMonster*>(MonsterPtr);
+			FVector OtherPos = Monster->GetActorLocation();
+			FVector OtherToThisDir = GetActorLocation() - OtherPos;
+			FVector OtherToThisDirNormal = OtherToThisDir.Normalize2DReturn();
+			FTransform OtherCollisionTrans = Monster->MonsterCollision->GetActorBaseTransform();
+			FTransform ThisCollisionTrans = BombCollision->GetActorBaseTransform();
+			if (FTransform::CircleToCircle(OtherCollisionTrans, ThisCollisionTrans))
+			{
+				AddActorLocation(OtherToThisDirNormal * _DeltaTime * Monster->MonsterMoveSpeed);
+			}
+		}
+	}
 
-
+	if (true == BombCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
+	{
+		AActor* PlayerPtr = Results[0]->GetOwner();
+		APlayer* Player = APlayer::GetMainPlayer();
+		FVector OtherPos = Player->GetActorLocation();
+		FVector OtherToThisDir = GetActorLocation() - OtherPos;
+		FVector OtherToThisDirNormal = OtherToThisDir.Normalize2DReturn();
+		FTransform OtherCollisionTrans = Player->PlayerCollision->GetActorBaseTransform();
+		FTransform ThisCollisionTrans = BombCollision->GetActorBaseTransform();
+		if (FTransform::CircleToCircle(OtherCollisionTrans, ThisCollisionTrans) && false == PlayerCheck)
+		{
+			AddActorLocation(OtherToThisDirNormal * _DeltaTime * Player->GetPlayerMaxSpeed());
+		}
+	}
+	else
+	{
+		PlayerCheck = false;
+	}
 
 	BombStateUpdate(_DeltaTime);
 }
@@ -102,7 +148,7 @@ void ABomb::Explosion(float _DeltaTime)
 	if (ExplosionCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
 	{
 		AActor* Playertr = Results[0]->GetOwner();
-		APlayer* Player = dynamic_cast<APlayer*>(Playertr);
+		APlayer* Player = APlayer::GetMainPlayer();
 		if (Player == nullptr)
 		{
 			MsgBoxAssert("충돌된 Collision의 Player가 nullptr입니다.");

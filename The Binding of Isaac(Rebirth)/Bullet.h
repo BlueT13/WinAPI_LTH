@@ -44,6 +44,6 @@ private:
 	float BulletDestroyTime = 0.8f;
 
 	FVector Dir = FVector::Zero;
-	float Speed = 500.0f;
+	float BulletSpeed = 500.0f;
 };
 
