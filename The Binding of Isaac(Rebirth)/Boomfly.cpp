@@ -33,7 +33,7 @@ void ABoomfly::BeginPlay()
 	MonsterCollision->SetColType(ECollisionType::CirCle);
 
 	ExplosionCollision = CreateCollision(IsaacCollisionOrder::Bomb);
-	ExplosionCollision->SetScale({ 150, 150 });
+	ExplosionCollision->SetScale({ 200, 200 });
 	ExplosionCollision->SetColType(ECollisionType::CirCle);
 	ExplosionCollision->SetActive(false);
 
