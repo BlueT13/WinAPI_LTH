@@ -2,6 +2,7 @@
 #include <EngineCore/Actor.h>
 #include "ContentsHelper.h"
 #include "PlayLevel.h"
+#include <EnginePlatform/EngineSound.h>
 
 // ¼³¸í :
 class APlayer : public AActor
@@ -30,8 +31,6 @@ public:
 	{
 		HitPower = _Vector;
 	}
-
-
 
 protected:
 	void BeginPlay() override;
@@ -116,4 +115,6 @@ private:
 
 	float HitTime = 0.3f;
 	float ChangeRoomTime = 0.3f;
+
+	UEngineSoundPlayer GetHitSound;
 };

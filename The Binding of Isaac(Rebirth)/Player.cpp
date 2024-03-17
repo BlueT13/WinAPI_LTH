@@ -312,6 +312,7 @@ void APlayer::GetHitStart()
 	BodyRenderer->SetActive(false);
 	PlayerStateRenderer->SetActive(true);
 	PlayerStateRenderer->ChangeAnimation("GetHit");
+	GetHitSound = UEngineSound::SoundPlay("hurt grunt .wav");
 }
 
 void APlayer::HeadDirCheck()

@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/Level.h>
 #include <EngineCore/EngineCore.h>
+#include <EngineBase/EngineFile.h>
 #include "Room.h"
 #include "Monster.h"
 
@@ -39,5 +40,8 @@ private:
 	float RoomMoveCameraTime = 0.0f;
 	bool IsEnd = false;
 	bool IsEscape = false;
+
+	std::list<UEngineFile> AllFileList;
+	std::list<UEngineFile> SoundFileList;
 };
 
