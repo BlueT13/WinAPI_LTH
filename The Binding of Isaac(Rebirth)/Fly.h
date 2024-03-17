@@ -38,6 +38,7 @@ protected:
 	void Move(float _DeltaTime);
 	void Die(float _DeltaTime);
 	void MonsterStateChange(EMonsterState _State) override;
+	void IdleStart();
 	void SpawnStart();
 	void MoveStart();
 	void DieStart();
@@ -51,5 +52,6 @@ private:
 
 	UEngineSoundPlayer FlyingSound;
 	UEngineSoundPlayer DeathSound;
+	bool IsFlyingSoundOn = false;
 };
 

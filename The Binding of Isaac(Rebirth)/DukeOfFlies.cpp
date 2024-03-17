@@ -7,13 +7,14 @@ ADukeOfFlies::ADukeOfFlies()
 
 ADukeOfFlies::~ADukeOfFlies()
 {
+	
 }
 
 void ADukeOfFlies::BeginPlay()
 {
 	AMonster::BeginPlay();
 
-	MonsterHp = 10.0f;
+	MonsterHp = 1.0f;
 	MonsterMoveSpeed = 100.f;
 	AttackCoolTime = 0.0f;
 

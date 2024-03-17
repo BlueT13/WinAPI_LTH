@@ -85,9 +85,7 @@ void AFly::Spawn(float _DeltaTime)
 void AFly::Idle(float _DeltaTime)
 {
 	Angle = _DeltaTime * 100.0f;
-
 	FlySpinDir.RotationZToDeg(Angle);
-
 	SetActorLocation(Boss->GetActorLocation() + FlySpinDir);
 }
 
@@ -142,6 +140,9 @@ void AFly::MonsterStateChange(EMonsterState _State)
 	{
 		switch (_State)
 		{
+		case EMonsterState::Idle:
+			IdleStart();
+			break;
 		case EMonsterState::Spawn:
 			SpawnStart();
 			break;
@@ -158,6 +159,14 @@ void AFly::MonsterStateChange(EMonsterState _State)
 	MonsterState = _State;
 }
 
+void AFly::IdleStart()
+{
+	FlyingSound = UEngineSound::SoundPlay("insect swarm.wav");
+	FlyingSound.SetVolume(0.1f);
+	FlyingSound.Loop();
+	IsFlyingSoundOn = true;
+}
+
 void AFly::SpawnStart()
 {
 	SpawnRenderer->ChangeAnimation("Spawn");
@@ -167,9 +176,12 @@ void AFly::SpawnStart()
 void AFly::MoveStart()
 {
 	MonsterRenderer->ChangeAnimation("Move");
-	FlyingSound = UEngineSound::SoundPlay("insect swarm.wav");
-	FlyingSound.SetVolume(0.1f);
-	FlyingSound.Loop();
+	if (false == IsFlyingSoundOn)
+	{
+		FlyingSound = UEngineSound::SoundPlay("insect swarm.wav");
+		FlyingSound.SetVolume(0.1f);
+		FlyingSound.Loop();
+	}
 }
 
 void AFly::DieStart()
@@ -181,7 +193,6 @@ void AFly::DieStart()
 
 void AFly::MonsterTouchWall(EActorDir _Dir)
 {
-
 	switch (_Dir)
 	{
 	case EActorDir::Left:
