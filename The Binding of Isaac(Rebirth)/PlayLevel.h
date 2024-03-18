@@ -25,6 +25,8 @@ public:
 	ARoom* GetCurRoom();
 	ARoom* GetPrevRoom();
 
+	static bool IsEnd;
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -38,7 +40,6 @@ private:
 	ARoom* PrevRoom = nullptr;
 	bool IsFreeCamera = false;
 	float RoomMoveCameraTime = 0.0f;
-	bool IsEnd = false;
 	bool IsEscape = false;
 
 	std::list<UEngineFile> AllFileList;

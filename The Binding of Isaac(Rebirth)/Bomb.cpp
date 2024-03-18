@@ -148,7 +148,6 @@ void ABomb::Explosion(float _DeltaTime)
 	
 	if (ExplosionCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
 	{
-		AActor* Playertr = Results[0]->GetOwner();
 		APlayer* Player = APlayer::GetMainPlayer();
 		if (Player == nullptr)
 		{

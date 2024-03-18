@@ -1,5 +1,6 @@
 #include "DukeOfFlies.h"
 #include "Fly.h"
+#include "Trophy.h"
 
 ADukeOfFlies::ADukeOfFlies()
 {
@@ -7,7 +8,7 @@ ADukeOfFlies::ADukeOfFlies()
 
 ADukeOfFlies::~ADukeOfFlies()
 {
-	
+
 }
 
 void ADukeOfFlies::BeginPlay()
@@ -150,6 +151,8 @@ void ADukeOfFlies::Die(float _DeltaTime)
 	if (MonsterRenderer->IsCurAnimationEnd())
 	{
 		Destroy();
+		ATrophy* Trophy = GetWorld()->SpawnActor<ATrophy>(IsaacRenderOrder::Room);
+		Trophy->SetActorLocation(CurRoom->GetActorLocation());
 	}
 
 	for (size_t i = 0; i < Flys.size(); i++)

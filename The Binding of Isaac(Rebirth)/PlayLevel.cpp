@@ -8,6 +8,8 @@
 #include <EngineCore/EngineResourcesManager.h>
 #include <EngineBase/EngineDirectory.h>
 
+bool UPlayLevel::IsEnd = false;
+
 UPlayLevel::UPlayLevel()
 {
 }
@@ -81,12 +83,12 @@ void UPlayLevel::BeginPlay()
 	ARoom* Room_8 = CreateRoom(-1, -2, "Room_02.png", ERoomType::Normal);
 	ARoom* Room_9 = CreateRoom(-2, -2, "Room_03.png", ERoomType::BossRoom);
 
-	//Room_0->CreateMonsters(EMonsterType::Fly, { -200, 0 });
+	//Room_2->CreateMonsters(EMonsterType::Fly, { -200, 0 });
 	//Room_3->CreateMonsters(EMonsterType::Pooter, { -100, 0 });
 	//Room_4->CreateMonsters(EMonsterType::Boomfly, { 200, 0 });
-	Room_0->CreateMonsters(EMonsterType::RedBoomfly, { 200, 0 });
+	//Room_5->CreateMonsters(EMonsterType::RedBoomfly, { 200, 0 });
 
-	//Room_2->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
+	Room_1->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
 
 	SetPrevRoom(0, 0);
 	SetCurRoom(0, 0);

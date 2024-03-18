@@ -27,12 +27,14 @@ enum class IsaacRenderOrder
 	Bullet,
 	PlayerHead,
 	PlayerState,
+	Item,
 	UI,
 };
 
 enum class IsaacCollisionOrder
 {
 	Door,
+	Item,
 	Bullet,
 	Bomb,
 	Monster,
