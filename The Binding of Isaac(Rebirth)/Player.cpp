@@ -8,6 +8,7 @@
 #include "PlayLevel.h"
 
 bool APlayer::IsFreeCamera = false;
+int APlayer::PlayerHp = 6;
 
 APlayer::APlayer()
 {

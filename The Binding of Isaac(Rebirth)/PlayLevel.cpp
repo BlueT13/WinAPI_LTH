@@ -3,6 +3,7 @@
 #include "Room.h"
 #include "UIManager.h"
 #include "MiniMap.h"
+#include "HpUI.h"
 #include "Fly.h"
 #include "DukeOfFlies.h"
 #include "ContentsHelper.h"
@@ -72,6 +73,7 @@ void UPlayLevel::BeginPlay()
 	SpawnActor<APlayer>(IsaacUpdateOrder::Player);
 	SpawnActor<UIManager>(IsaacUpdateOrder::UI);
 	SpawnActor<AMiniMap>(IsaacUpdateOrder::UI);
+	SpawnActor<AHpUI>(IsaacUpdateOrder::UI);
 
 	ARoom* Room_0 = CreateRoom(0, 0, "Room_01.png", ERoomType::Normal);
 	ARoom* Room_1 = CreateRoom(0, 1, "Room_01.png", ERoomType::GoldRoom);
@@ -282,6 +284,7 @@ void UPlayLevel::Tick(float _DeltaTime)
 
 void UPlayLevel::End()
 {
+	APlayer::PlayerHp = 6;
 	GEngine->CreateLevel<UPlayLevel>("PlayLevel");
 	if (IsEnd == false)
 	{

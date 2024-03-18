@@ -68,6 +68,9 @@
     <ClInclude Include="Chest.h">
       <Filter>Object\PlayLevel\Actor\Items</Filter>
     </ClInclude>
+    <ClInclude Include="HpUI.h">
+      <Filter>Object\PlayLevel\Actor\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="Chest.cpp">
       <Filter>Object\PlayLevel\Actor\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="HpUI.cpp">
+      <Filter>Object\PlayLevel\Actor\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

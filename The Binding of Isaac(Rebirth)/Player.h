@@ -34,6 +34,8 @@ public:
 		HitPower = _Vector;
 	}
 
+	static int PlayerHp;
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -76,8 +78,6 @@ protected:
 
 private:
 	static APlayer* MainPlayer;
-
-	int PlayerHp = 6;
 	float FireRate = 0.0f;
 	float BlinkTime = 0.0f;
 	float BulletCoolTime = 0.0f;
