@@ -34,7 +34,7 @@ void APooter::BeginPlay()
 	MonsterCollision->SetColType(ECollisionType::CirCle);
 
 	PlayerCheckCollision = CreateCollision(IsaacCollisionOrder::PlayerCheckCollision);
-	PlayerCheckCollision->SetScale({ 400,400 });
+	PlayerCheckCollision->SetScale({ 500, 500 });
 	PlayerCheckCollision->SetColType(ECollisionType::CirCle);
 }
 
