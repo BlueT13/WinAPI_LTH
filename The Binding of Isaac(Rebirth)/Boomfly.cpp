@@ -31,12 +31,12 @@ void ABoomfly::BeginPlay()
 	MonsterCollision->SetScale({ 50, 50 });
 	MonsterCollision->SetColType(ECollisionType::CirCle);
 
-	ExplosionCollision = CreateCollision(IsaacCollisionOrder::Bomb);
+	ExplosionCollision = CreateCollision(IsaacCollisionOrder::Monster);
 	ExplosionCollision->SetScale({ 250, 250 });
 	ExplosionCollision->SetColType(ECollisionType::CirCle);
 	ExplosionCollision->SetActive(false);
 
-	MonsterMoveVector = { 1, 1 };
+	MonsterMoveVector = { -1, -1 };
 }
 
 void ABoomfly::Tick(float _DeltaTime)
