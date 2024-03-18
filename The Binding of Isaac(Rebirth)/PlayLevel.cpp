@@ -63,7 +63,7 @@ void UPlayLevel::BeginPlay()
 		UEngineResourcesManager::GetInst().CuttingImage("Fly.png", 5, 3);
 		UEngineResourcesManager::GetInst().CuttingImage("Pooter.png", 5, 4);
 		UEngineResourcesManager::GetInst().CuttingImage("Boomfly.png", 2, 1);
-		UEngineResourcesManager::GetInst().CuttingImage("RedBoomfly.png", 2, 2);
+		UEngineResourcesManager::GetInst().CuttingImage("RedBoomfly.png", 2, 1);
 
 		UEngineResourcesManager::GetInst().CuttingImage("DukeOfFlies_SpawnFly.png", 3, 1);
 		UEngineResourcesManager::GetInst().CuttingImage("DukeOfFlies_SendFly.png", 3, 1);
@@ -84,12 +84,26 @@ void UPlayLevel::BeginPlay()
 	ARoom* Room_8 = CreateRoom(-1, -2, "Room_02.png", ERoomType::Normal);
 	ARoom* Room_9 = CreateRoom(-2, -2, "Room_03.png", ERoomType::BossRoom);
 
-	//Room_2->CreateMonsters(EMonsterType::Fly, { -200, 0 });
-	//Room_3->CreateMonsters(EMonsterType::Pooter, { -100, 0 });
-	//Room_4->CreateMonsters(EMonsterType::Boomfly, { 200, 0 });
-	//Room_5->CreateMonsters(EMonsterType::RedBoomfly, { 200, 0 });
+	//Room_1->CreateItem(EItemType::Passive, {0, 0});
+	Room_2->CreateMonsters(EMonsterType::Boomfly, { -200, 0 });
+	Room_3->CreateMonsters(EMonsterType::RedBoomfly, { -100, 0 });
+	Room_4->CreateMonsters(EMonsterType::Fly, { 200, 0 });
+	Room_5->CreateMonsters(EMonsterType::Pooter, { 200, 0 });
 
-	Room_1->CreateMonsters(EMonsterType::DukeOfFlies, { -200, 0 });
+	Room_6->CreateMonsters(EMonsterType::Fly, { -200, 0 });
+	Room_6->CreateMonsters(EMonsterType::Fly, { 200, 0 });
+	Room_6->CreateMonsters(EMonsterType::Pooter, { -200, -100 });
+	Room_6->CreateMonsters(EMonsterType::Pooter, { 200, -100 });
+
+	Room_7->CreateMonsters(EMonsterType::Boomfly, { -200, 0 });
+	Room_7->CreateMonsters(EMonsterType::RedBoomfly, { 200, 0 });
+
+	Room_8->CreateMonsters(EMonsterType::Fly, { -200, 100 });
+	Room_8->CreateMonsters(EMonsterType::Pooter, { 200, 100 });
+	Room_8->CreateMonsters(EMonsterType::Boomfly, { -50, 0 });
+	Room_8->CreateMonsters(EMonsterType::RedBoomfly, { 50, 0 });
+
+	Room_9->CreateMonsters(EMonsterType::DukeOfFlies, { 0, 0 });
 
 	SetPrevRoom(0, 0);
 	SetCurRoom(0, 0);
