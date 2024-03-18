@@ -65,7 +65,7 @@
     <ClInclude Include="RedBoomfly.h">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="Trophy.h">
+    <ClInclude Include="Chest.h">
       <Filter>Object\PlayLevel\Actor\Items</Filter>
     </ClInclude>
   </ItemGroup>
@@ -134,7 +134,7 @@
     <ClCompile Include="RedBoomfly.cpp">
       <Filter>Object\PlayLevel\Actor\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="Trophy.cpp">
+    <ClCompile Include="Chest.cpp">
       <Filter>Object\PlayLevel\Actor\Items</Filter>
     </ClCompile>
   </ItemGroup>

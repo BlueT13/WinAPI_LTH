@@ -9,6 +9,7 @@ enum class IsaacUpdateOrder
 	Monster,
 	Bullet,
 	Bomb,
+	Item,
 	Door,
 	Room,
 	UI,

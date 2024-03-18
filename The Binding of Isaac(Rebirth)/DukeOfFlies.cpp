@@ -1,7 +1,7 @@
 #include "DukeOfFlies.h"
 #include "Fly.h"
-#include "Trophy.h"
 
+bool ADukeOfFlies::IsBossDeath = false;
 ADukeOfFlies::ADukeOfFlies()
 {
 }
@@ -151,8 +151,7 @@ void ADukeOfFlies::Die(float _DeltaTime)
 	if (MonsterRenderer->IsCurAnimationEnd())
 	{
 		Destroy();
-		ATrophy* Trophy = GetWorld()->SpawnActor<ATrophy>(IsaacRenderOrder::Room);
-		Trophy->SetActorLocation(CurRoom->GetActorLocation());
+		ADukeOfFlies::IsBossDeath = true;
 	}
 
 	for (size_t i = 0; i < Flys.size(); i++)

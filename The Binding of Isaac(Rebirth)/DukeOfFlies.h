@@ -21,6 +21,8 @@ public:
 	ADukeOfFlies& operator=(const ADukeOfFlies& _Other) = delete;
 	ADukeOfFlies& operator=(ADukeOfFlies&& _Other) noexcept = delete;
 
+	static bool IsBossDeath;
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

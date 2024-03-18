@@ -4,6 +4,7 @@
 #include "UIManager.h"
 #include "MiniMap.h"
 #include "Fly.h"
+#include "DukeOfFlies.h"
 #include "ContentsHelper.h"
 #include <EngineCore/EngineResourcesManager.h>
 #include <EngineBase/EngineDirectory.h>
@@ -260,6 +261,7 @@ void UPlayLevel::Tick(float _DeltaTime)
 	if (UEngineInput::IsPress('R'))
 	{
 		IsEnd = false;
+		ADukeOfFlies::IsBossDeath = false;
 		GEngine->DestroyLevel("PlayLevel");
 	}
 }

@@ -7,6 +7,7 @@
 #include "Boomfly.h"
 #include "RedBoomfly.h"
 #include "DukeOfFlies.h"
+#include "Chest.h"
 #include <EngineBase/EngineMath.h>
 
 FRoomIndex FRoomIndex::Left = { -1, 0 };
@@ -255,6 +256,13 @@ void ARoom::Tick(float _DeltaTime)
 			DoorRenderer[i]->SetImage(DoorName[i], i);
 			DoorCollision[i]->SetActive(true);
 		}
+
+		// º¸½º »ç¸Á ½Ã Chest Spawn
+		if (true == ADukeOfFlies::IsBossDeath)
+		{
+			AChest* Chest = GetWorld()->SpawnActor<AChest>(IsaacUpdateOrder::Item);
+			Chest->SetActorLocation(GetActorLocation());
+		}
 	}
 	else
 	{
@@ -310,7 +318,6 @@ void ARoom::Tick(float _DeltaTime)
 			}
 		}
 	}
-
 }
 
 void ARoom::CreateMonsters(EMonsterType _Type, FVector _Pos)

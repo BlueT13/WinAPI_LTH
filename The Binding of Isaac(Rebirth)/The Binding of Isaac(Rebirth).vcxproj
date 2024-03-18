@@ -236,7 +236,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Trophy.h" />
+    <ClInclude Include="Chest.h" />
     <ClInclude Include="UIManager.h">
       <SubType>
       </SubType>
@@ -309,7 +309,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Trophy.cpp" />
+    <ClCompile Include="Chest.cpp" />
     <ClCompile Include="UIManager.cpp">
       <SubType>
       </SubType>

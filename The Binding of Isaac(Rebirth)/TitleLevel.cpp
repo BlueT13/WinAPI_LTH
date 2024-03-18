@@ -40,6 +40,7 @@ void UTitleLevel::Tick(float _DeltaTime)
 	if (true == AIntroBackground::IntroEnd)
 	{
 		TitleSound.On();
+		TitleSound.Loop();
 	}
 
 	if (UEngineInput::IsDown(VK_SPACE))
