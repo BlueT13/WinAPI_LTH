@@ -161,7 +161,7 @@ void AFly::MonsterStateChange(EMonsterState _State)
 void AFly::IdleStart()
 {
 	FlyingSound = UEngineSound::SoundPlay("insect swarm.wav");
-	FlyingSound.SetVolume(0.1f);
+	FlyingSound.SetVolume(0.2f);
 	FlyingSound.Loop();
 	IsFlyingSoundOn = true;
 }
@@ -178,7 +178,7 @@ void AFly::MoveStart()
 	if (false == IsFlyingSoundOn)
 	{
 		FlyingSound = UEngineSound::SoundPlay("insect swarm.wav");
-		FlyingSound.SetVolume(0.1f);
+		FlyingSound.SetVolume(0.2f);
 		FlyingSound.Loop();
 	}
 }

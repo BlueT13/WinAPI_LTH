@@ -1,5 +1,8 @@
 #pragma once
 #include <EngineCore/Level.h>
+#include <EngineBase/EngineDirectory.h>
+#include <EngineBase/EngineFile.h>
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class UTitleLevel : public ULevel
@@ -20,6 +23,7 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 private:
-
+	std::list<UEngineFile> SoundFileList;
+	UEngineSoundPlayer TitleSound;
 };
 

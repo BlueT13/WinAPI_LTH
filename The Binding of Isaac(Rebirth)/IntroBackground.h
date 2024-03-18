@@ -18,6 +18,8 @@ public:
 	AIntroBackground& operator=(const AIntroBackground& _Other) = delete;
 	AIntroBackground& operator=(AIntroBackground&& _Other) noexcept = delete;
 
+	static bool IntroEnd;
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -31,4 +33,5 @@ private:
 	std::list<UEngineFile>::iterator CurIter;
 
 	UEngineSoundPlayer IntroSound;
+	UEngineSoundPlayer TitleSound;
 };

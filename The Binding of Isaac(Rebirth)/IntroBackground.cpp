@@ -2,9 +2,10 @@
 #include "IsaacCore.h"
 #include <iostream>
 #include <string>
-#include <EngineBase/EngineDirectory.h>
 #include <EngineCore/EngineResourcesManager.h>
 #include "IntroLevel.h"
+
+bool AIntroBackground::IntroEnd = false;
 
 AIntroBackground::AIntroBackground()
 {
@@ -49,7 +50,7 @@ void AIntroBackground::Tick(float _DeltaTime)
 	{
 		AllFileList.clear();
 		IntroSound.Off();
-		SoundFileList.clear();
+		IntroEnd = true;
 		GEngine->ChangeLevel("TitleLevel");
 		return;
 	}
@@ -58,7 +59,7 @@ void AIntroBackground::Tick(float _DeltaTime)
 	{
 		AllFileList.clear();
 		IntroSound.Off();
-		SoundFileList.clear();
+		IntroEnd = true;
 		GEngine->ChangeLevel("TitleLevel");
 		return;
 	}
