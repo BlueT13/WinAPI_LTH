@@ -139,13 +139,15 @@ void ABomb::Explosion(float _DeltaTime)
 			{
 				MsgBoxAssert("충돌된 Collision의 몬스터가 nullptr입니다.");
 			}
-
-			FVector Dir = (Monster->GetActorLocation() - GetActorLocation()).Normalize2DReturn();
-			Monster->HitPower = Dir * BombPower;
-			Monster->GetHit(BombDamage);
+			else
+			{
+				FVector Dir = (Monster->GetActorLocation() - GetActorLocation()).Normalize2DReturn();
+				Monster->HitPower = Dir * BombPower;
+				Monster->GetHit(BombDamage);
+			}
 		}
 	}
-	
+
 	if (ExplosionCollision->CollisionCheck(IsaacCollisionOrder::Player, Results))
 	{
 		APlayer* Player = APlayer::GetMainPlayer();
@@ -153,10 +155,13 @@ void ABomb::Explosion(float _DeltaTime)
 		{
 			MsgBoxAssert("충돌된 Collision의 Player가 nullptr입니다.");
 		}
+		else
+		{
+			FVector Dir = (Player->GetActorLocation() - GetActorLocation()).Normalize2DReturn();
+			Player->HitPower = Dir * BombPower;
+			Player->HeadStateChange(EPlayerHeadState::GetHit);
+		}
 
-		FVector Dir = (Player->GetActorLocation() - GetActorLocation()).Normalize2DReturn();
-		Player->HitPower = Dir * BombPower;
-		Player->HeadStateChange(EPlayerHeadState::GetHit);
 	}
 
 	BombStateChange(EBombState::Destroy);
