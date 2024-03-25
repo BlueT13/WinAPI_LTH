@@ -454,6 +454,7 @@ void APlayer::Die(float _DeltaTime)
 		Level->SetAllTimeScale(0.0f);
 		if (UEngineInput::IsDown(VK_SPACE))
 		{
+			UPlayLevel::IsEnd = false;
 			GEngine->DestroyLevel("PlayLevel");
 		}
 	}
