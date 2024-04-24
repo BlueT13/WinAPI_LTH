@@ -606,9 +606,9 @@ void APlayer::AddMoveVector(const FVector& _DirDelta)
 
 void APlayer::BodyMoveUpdate(float _DeltaTime)
 {
-	CalLastMoveVector(_DeltaTime);
 	CalMoveVector(_DeltaTime);
 	CalHitPower(_DeltaTime);
+	CalLastMoveVector(_DeltaTime);
 	MoveLastMoveVector(_DeltaTime);
 }
 
